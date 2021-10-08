@@ -43,3 +43,8 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 # Implementation Timeline
 
+Friday Afternoon & Weekend
+Monday
+Tuesday
+Wednesday
+Thursday Morning
