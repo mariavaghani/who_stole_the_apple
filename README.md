@@ -35,8 +35,13 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 # Wireframes
 
+Frontend Setup
+
 ![Wireframe_1 0](https://user-images.githubusercontent.com/54246143/136493945-bedd2991-35ff-464d-8dc9-5b2ca23cb671.jpg)
 
+Class Structure
+
+![who_stole_the_apple_class_structure drawio](https://user-images.githubusercontent.com/54246143/136586590-f8c8d362-bef6-423a-bfb9-399f0d5eca6f.png)
 
 # Technologies, Libraries, APIs
 
