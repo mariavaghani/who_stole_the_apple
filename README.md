@@ -42,7 +42,7 @@ Frontend Setup
 
 Class Structure
 
-![who_stole_the_apple_class_structure drawio](https://user-images.githubusercontent.com/54246143/136586590-f8c8d362-bef6-423a-bfb9-399f0d5eca6f.png)
+![who_stole_the_apple_class_structure drawio](https://user-images.githubusercontent.com/54246143/136610519-b3afaae1-873c-45a6-8c78-9b2df8e62fd3.png)
 
 # Technologies, Libraries, APIs
 
