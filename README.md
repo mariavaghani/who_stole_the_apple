@@ -35,7 +35,7 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 # Wireframes
 
-
+![Wireframe_1 0](https://user-images.githubusercontent.com/54246143/136493487-8c16a60e-17b9-4d0e-bc70-a272519e9c83.jpg)
 
 # Technologies, Libraries, APIs
 
