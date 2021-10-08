@@ -37,6 +37,7 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 ![Wireframe_1 0](https://user-images.githubusercontent.com/54246143/136493945-bedd2991-35ff-464d-8dc9-5b2ca23cb671.jpg)
 
+
 # Technologies, Libraries, APIs
 
 - Vanila JS to create animations and game logic
