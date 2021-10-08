@@ -32,6 +32,7 @@ The entire game would be on one workplace, but the toolbox would get different t
 - Ability to mute/unmute the sound
 - Run the sequence using keyboard shortcuts
 - An animated tutorial that guides a player through the first basic level
+- Resize the window and have the canvas to resize as well
 
 # Wireframes
 
