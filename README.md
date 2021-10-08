@@ -35,6 +35,8 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 # Wireframes
 
+
+
 # Technologies, Libraries, APIs
 
 - Vanila JS to create animations and game logic
@@ -43,8 +45,27 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 # Implementation Timeline
 
-Friday Afternoon & Weekend
-Monday
-Tuesday
-Wednesday
-Thursday Morning
+### Friday Afternoon & Weekend
+
+- Game design, outline classes, inheritance structure, backend methods
+- Create the frontend mockup, create a basic frontend for testing the backend
+- Create design of the first three levels 
+
+### Monday
+
+- Continue creating the backend and testing the gameplay on the frontend
+- Add event listeners to the blocks, make them draggable
+- Make blocks to stick-snap to each other when being placed on the work area
+
+### Tuesday
+
+- Start working on the frontend and animations
+- Add character design, make the character to move parts of the body
+
+### Wednesday
+
+- Keep working on frontend, animations, and add levels 2 - 3
+
+### Thursday Morning
+
+- Deploy the game on github pages
