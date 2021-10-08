@@ -1,4 +1,4 @@
-# who_stole_the_apple
+# Who Stole The Apple
 
 # Background and Overview
 
@@ -17,7 +17,7 @@ The entire game would be on one workplace, but the toolbox would get different t
 
 # Functionality and MVPs
 
-In "Who Stole The Apple?", users will be able to:
+### In "Who Stole The Apple?", users will be able to:
 
 - Drag tool blocks into a work area;
 - Connect tool blocks to create a sequence
@@ -27,9 +27,19 @@ In "Who Stole The Apple?", users will be able to:
 - Win a level by having the character reach the target when the assests are collected
 
 
-In addition, this project will include:
+### In addition, this project will include:
 
 - Ability to mute/unmute the sound
 - Run the sequence using keyboard shortcuts
 - An animated tutorial that guides a player through the first basic level
+
+# Wireframes
+
+# Technologies, Libraries, APIs
+
+- Vanila JS to create animations and game logic
+- CSS for styling
+- HTML canvas 
+
+# Implementation Timeline
 
