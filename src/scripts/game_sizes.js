@@ -30,9 +30,9 @@ class GameSizes {
     this.BOARD_DY = this.DIM_Y * (16 / 20);
   }
 
-  // TODO: check if the tool is inside tool box
   toolInsideToolBox(tool) {
-
+    //  returns a boolean value
+    // indicating whether temporary location of the tool is inside the toolbox
     return (
       // check X coordinates
       tool.tempX >= this.TOOL_X &&
@@ -45,19 +45,27 @@ class GameSizes {
       tool.tempY <= this.TOOL_Y + this.TOOL_DY &&
       tool.tempY + tool.side >= this.TOOL_Y &&
       tool.tempY + tool.side <= this.TOOL_Y + this.TOOL_DY
-
     )
   }
 
-  // TODO: check if the tool is inside work area
   toolInsideWorkArea(tool) {
-    console.log(`tool.tempX ⬇⬇⬇ `);
-    console.log(tool.tempX);
 
-    console.log(`tool.x ⬇⬇⬇ `);
-    console.log(tool.x);
+    //  returns a boolean value
+    // indicating whether temporary locationof the tool is inside the toolbox
 
+    return (
+      // check X coordinates
+      tool.tempX >= this.WORK_X &&
+      tool.tempX <= this.WORK_X + this.WORK_DX &&
+      tool.tempX + tool.side >= this.WORK_X &&
+      tool.tempX + tool.side <= this.WORK_X + this.WORK_DX &&
 
+      // check Y coordinates
+      tool.tempY >= this.WORK_Y &&
+      tool.tempY <= this.WORK_Y + this.WORK_DY &&
+      tool.tempY + tool.side >= this.WORK_Y &&
+      tool.tempY + tool.side <= this.WORK_Y + this.WORK_DY
+    )
   }
 };
 

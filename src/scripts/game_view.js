@@ -13,7 +13,7 @@ class GameView {
     let that = this;
     setInterval(function () {
       that.ctxA.clearRect(0, 0, that.game.size.DIM_X, that.game.size.DIM_Y);
-      that.game.tools.forEach(tool => {
+      that.game.allTools().forEach(tool => {
         if (tool.isDragging) {
           tool.drawWhileDragging(that.ctxA, tool.tempX, tool.tempY);
         } else {
