@@ -10,6 +10,9 @@
 </head>
 <body>
   <h1>Who Stole The Apple</h1>
-  <canvas id="game-canvas" width="800px" height="500px"></canvas>
+  <div style="position: relative;">
+    <canvas id="game-canvas-static" width="1200px" height="700px" style="position: absolute; left: 0; top: 0; z-index: 0;"></canvas>
+    <canvas id="game-canvas-active" width="1200px" height="700px" style="position: absolute; left: 0; top: 0; z-index: 1;"></canvas>
+  </div>
 </body>
 </html>

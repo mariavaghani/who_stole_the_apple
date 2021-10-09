@@ -7,16 +7,20 @@ console.log(COLOR_PALETTE);
 
 
 class Tool {
-  constructor(name, method) {
+  constructor(name, method, icon) {
     this.name = name;
     this.method = method;
-    // this.icon = icon
+    this.icon = icon;
+    this.isDragging = false;
+    this.side = 30;
+    
   }
-
-  draw(ctx) {
-    console.log("draw");
-    ctx.fillStyle = COLOR_PALETTE.toolColor;
-    ctx.fillRect(0, 0, 30, 30);
+  
+  draw(ctxA, x, y) {
+    this.x = x;
+    this.y = y;
+    ctxA.fillStyle = this.icon;
+    ctxA.fillRect(this.x, this.y, this.side, this.side);
   }
 
 
