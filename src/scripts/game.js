@@ -73,7 +73,10 @@ class Game {
     
     this.tools.forEach(tool => {
       if (tool.isDragging) {
-        this.size.toolInsideToolBox(tool);
+        if (this.size.toolInsideToolBox(tool)) {
+          tool.x = tool.tempX;
+          tool.y = tool.tempY;
+        }
       }
       tool.isDragging = false;
     });
