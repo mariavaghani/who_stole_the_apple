@@ -1,18 +1,12 @@
 import COLOR_PALETTE from './styling';
 
-
-console.log(`COLOR_PALETTE ⬇⬇⬇ `);
-console.log(COLOR_PALETTE);
-
-
-
 class Tool {
   constructor(name, method, icon) {
     this.name = name;
     this.method = method;
     this.icon = icon;
     this.isDragging = false;
-    this.side = 30;
+    this.side = 40;
     
   }
   
@@ -21,6 +15,13 @@ class Tool {
     this.y = y;
     ctxA.fillStyle = this.icon;
     ctxA.fillRect(this.x, this.y, this.side, this.side);
+  }
+
+  drawWhileDragging(ctxA, x, y) {
+    this.tempX = x;
+    this.tempY = y;
+    ctxA.fillStyle = this.icon;
+    ctxA.fillRect(this.tempX, this.tempY, this.side, this.side);
   }
 
 
