@@ -1,20 +1,29 @@
 // import COLOR_PALETTE from './styling';
 
+
 class Tool {
   constructor(name, method, icon) {
     this.name = name;
     this.method = method;
     this.icon = icon;
     this.isDragging = false;
-    this.side = 40;
     
+  }
+
+  size(sideX, sideY) {
+    this.sideX = sideX;
+    this.sideY = sideY;
+
   }
   
   draw(ctxA, x, y) {
+
     this.x = x;
     this.y = y;
+
+    
     ctxA.fillStyle = this.icon;
-    ctxA.fillRect(this.x, this.y, this.side, this.side);
+    ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
     ctxA.font = "10px Arial";
     ctxA.fillText(this.name, this.x, this.y);
 
@@ -23,8 +32,9 @@ class Tool {
   drawWhileDragging(ctxA, x, y) {
     this.tempX = x;
     this.tempY = y;
+
     ctxA.fillStyle = this.icon;
-    ctxA.fillRect(this.tempX, this.tempY, this.side, this.side);
+    ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
     ctxA.font = "10px Arial";
     ctxA.fillText(this.name, this.tempX, this.tempY);
   }

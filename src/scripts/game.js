@@ -1,110 +1,17 @@
 import LEVELS from './level_const';
 import COLOR_PALETTE from './styling';
-import GameSizes from "./game_sizes";
+// import GameSizes from "./game_sizes";
 
 class Game {
-  constructor (canvasS, canvasA, level) {
+  constructor (level, size) {
 
-    this.size = new GameSizes(canvasS);
-
+    this.size = size;
     // Level that this instance is rendering
     this.level = level;
-
     // Fill the tools with current level specific tools
     this.tools = this.resetToolBox(this.level);
-
     // initialize empty workspace
     this.inWorkArea = [];
-
-    // Make tools draggable
-    this.mouseDownHandler = this.mouseDownHandler.bind(this);
-    this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
-    this.mouseUpHandler = this.mouseUpHandler.bind(this);
-    this.mouseClickHandler = this.mouseClickHandler.bind(this);
-    this.bindEvents(canvasA)
-    
-  }
-
-  bindEvents(canvasA) {
-    canvasA.addEventListener("mousedown", this.mouseDownHandler);
-    canvasA.addEventListener("mousemove", this.mouseMoveHandler);
-    canvasA.addEventListener("mouseup", this.mouseUpHandler);
-    canvasA.addEventListener("click", this.mouseClickHandler);
-  }
-
-  mouseClickHandler (e) {
-    // Save current mouse position
-    this.mouseX = e.x - this.size.origX;
-    this.mouseY = e.y - this.size.origY;
-    
-    if (this.size.resetButtonClicked(this.mouseX, this.mouseY)) {
-      console.log("Reset!!")
-      this.resetGame()
-    }
-
-    if (this.size.execButtonClicked(this.mouseX, this.mouseY)) {
-      console.log("Execute!!")
-    }
-  }
-
-  mouseDownHandler (e) {
-    // Save current mouse position
-    this.mouseX = e.x - this.size.origX;
-    this.mouseY = e.y - this.size.origY;
-
-    // Search if there are any tool that are being dragged
-    this.allTools().forEach(tool => {
-      
-      if (this.size.mouseOverTool(this.mouseX, this.mouseY, tool)) {
-        tool.tempX = tool.x;
-        tool.tempY = tool.y;
-        tool.isDragging = true; 
-      }
-    });
-  }
-
-  mouseMoveHandler (e) {
-    
-    this.allTools().forEach(tool => {
-      if (tool.isDragging) {
-        tool.tempX += e.movementX;
-        tool.tempY += e.movementY;
-        
-      }
-    });
-  }
-
-  mouseUpHandler (e) {
-
-    const allGameTools = this.allTools();
-    
-    allGameTools.forEach(tool => {
-      if (tool.isDragging) {
-        // If the tool ended up in the toolbox
-        if (this.size.toolInsideToolBox(tool)) {
-          tool.x = tool.tempX;
-          tool.y = tool.tempY;
-          this.ensureToolInTools(tool);
-          this.ensureToolOutOfWorkArea(tool);
-        }
-
-        // If the tool ended up in the work area
-        if (this.size.toolInsideWorkArea(tool)) {
-          tool.x = tool.tempX;
-          tool.y = tool.tempY;
-          this.ensureToolInWorkArea(tool);
-          this.ensureWorkToolOutOfTools(tool);
-        }
-      }
-      // Remove dragging flag from all tools
-      tool.isDragging = false;
-    });
-    console.log(`this.tools ⬇⬇⬇ `);
-    console.log(this.tools);
-
-    console.log(`this.inWorkArea ⬇⬇⬇ `);
-    console.log(this.inWorkArea);
-    
     
   }
 
@@ -138,44 +45,9 @@ class Game {
     }
   }
   
-  resetStaticGameSetup (ctxS) {
-  
-    // Creates non-level-specific elements on the screen
-
-    // Clear the game area
-    ctxS.clearRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
-    ctxS.save();
-    
-    // Draw the background
-    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
-    ctxS.fillRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
-
-    // Draw the toolbox container
-    this.drawToolBoxContainer(ctxS);
-
-    // TODO: refactor the following into their own methods
-    // TODO: figure out internal grid that the tools could snap to
-    // Draw the Work Area container
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.WORK_X, this.size.WORK_Y, this.size.WORK_DX, this.size.WORK_DY);
-
-    // Draw the Board container
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.BOARD_X, this.size.BOARD_Y, this.size.BOARD_DX, this.size.BOARD_DY);
-
-    // Draw grid on top
-    // this.drawGridOnGameArea(ctxS);
-
-    ctxS.restore();
-
-    // 
-    
-  }
-
   drawToolBoxContainer(ctxS) {
     ctxS.fillStyle = COLOR_PALETTE.containerColor;
     ctxS.fillRect(this.size.TOOL_X, this.size.TOOL_Y, this.size.TOOL_DX, this.size.TOOL_DY);
-    
   }
 
   drawGridOnGameArea(ctxS) {
@@ -198,12 +70,12 @@ class Game {
     }
   }
 
-
   resetToolBox (level) {
     
     let tools = [];
 
     LEVELS[level].tools.forEach(tool => {
+      tool.size(this.size.toolSideX, this.size.toolSideY);
       tools.push(tool);
     });
     return tools
@@ -211,13 +83,13 @@ class Game {
 
   populateToolBox(ctxA) {
     ctxA.save();
-    let dx = this.size.TOOL_X + 10;
-    let dy = this.size.TOOL_Y + 10;
+    let dx = this.size.TOOL_X + this.size.gapX;
+    let dy = this.size.TOOL_Y + this.size.gapY;
     
     
     this.tools.forEach(tool => {
       tool.draw(ctxA, dx, dy);
-      dx += tool.side + 10;
+      dx += tool.sideX + this.size.gapX;
     });
     ctxA.restore();
   }
@@ -257,33 +129,96 @@ class Game {
 
   }
 
-  createWorkArea () {
-
+  executeWorkingTools () {
+    this.inWorkArea.forEach(tool => {
+      tool.execute();
+    });
   }
 
   createBoard (level) {
 
   }
+
+  resetStaticGameSetup(ctxS) {
+
+    // Creates non-level-specific elements on the screen
+    // Clear the game area
+    ctxS.clearRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
+    ctxS.save();
+
+    // Draw the background
+    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
+    ctxS.fillRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
+
+    // Draw the Name of the game container
+    this.drawNameContainer(ctxS);
+    
+
+    // Draw the toolbox container
+    this.drawToolBoxContainer(ctxS);
+
+    // TODO: refactor the following into their own methods
+    // TODO: figure out internal grid that the tools could snap to
+    // Draw the Work Area container
+    ctxS.fillStyle = COLOR_PALETTE.containerColor;
+    ctxS.fillRect(this.size.WORK_X, this.size.WORK_Y, this.size.WORK_DX, this.size.WORK_DY);
+
+    // Draw the Board container
+    ctxS.fillStyle = COLOR_PALETTE.containerColor;
+    ctxS.fillRect(this.size.BOARD_X, this.size.BOARD_Y, this.size.BOARD_DX, this.size.BOARD_DY);
+
+    // Draw grid on top
+    // this.drawGridOnGameArea(ctxS);
+
+    ctxS.restore();
+
+  }
+
+  drawNameContainer(ctxS) {
+    ctxS.fillStyle = COLOR_PALETTE.containerColor;
+    ctxS.fillRect(this.size.TITLE_X, this.size.TITLE_Y,
+      this.size.TITLE_DX, this.size.TITLE_DY);
+    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
+
+    const that = this.size;
+    
+    printText("Who Stole/nThe Apple", 30);
+    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 70);
+    
+    
+    function printText(titleTxt, lh, offset = 0) {
+      let lines = titleTxt.split("/n");
+      ctxS.font = `${lh}px Arial`;
+      for (let i = 1; i <= lines.length; i++) {
+        const line = lines[i - 1];
+        ctxS.fillText(line,
+          that.TITLE_X + 5,
+          that.TITLE_Y + i * lh + offset);
+
+      }
+    }
+  }
 };
 
 export default Game;
 
-// TODO: add execute sequence function
+// TODO: add name on the game to the play area
 // TODO: make tools to snap to the grid inside workarea
 // TODO: make tools to snap to the grid inside tool box
 // TODO: add the ability to reshuffle the tools by dragging them in between 
 // other tools. so other tools whould snap to the next grid line.
 // the tools sohould also change they posiiton in respective arrays on the 
 // backend
-// TODO: add name on the game to the play area
-// TODO: add reset button
-// TODO: make reset button render the level like new
-// TODO: add a button that would execute the sequence
 // TODO: add links to github, linkedin
-// TODO: add obstacles class 
-// TODO: add collectibles class
+// TODO: add obstacles class, that would be a parent class for
+// different types of obstacles
+// TODO: add collectibles class, that would be a parent class for
+// collectible items
 // TODO: add a character class
 // TODO: add a class that would handle the escape
 // TODO: populate the board with with character
 // TODO: populate the board with collectibles
+// TODO: draw a grid of cells on the board, these cells would reflect 
+// the pos of characters and other items on the board
 // TODO: add graphic icons to tools
+// TODO: add different icons for other items on the board

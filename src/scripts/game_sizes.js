@@ -3,13 +3,28 @@ class GameSizes {
     this.DIM_X = canvasS.width;
     this.DIM_Y = canvasS.height;
 
+    
     const gridBase = 80;
     this.gridBase = gridBase;
-
     const rect = canvasS.getBoundingClientRect();
 
     this.origX = rect.x;
     this.origY = rect.y;
+
+    // Grid 
+    this.gapX = this.DIM_X * (1 / gridBase);
+    this.gapY = this.DIM_Y * (2 / gridBase);
+
+    // Tool size
+    this.toolSideX = this.DIM_X * (3 / gridBase);
+    this.toolSideY = this.DIM_Y * (4 / gridBase);
+
+    // Title location
+    this.TITLE_X = this.DIM_X * (4 / gridBase);
+    this.TITLE_DX = this.DIM_X * (11 / gridBase);
+
+    this.TITLE_Y = this.DIM_Y * (8 / gridBase);
+    this.TITLE_DY = this.DIM_Y * (25 / gridBase);
 
     // Toolbox location
     this.TOOL_X = this.DIM_X * (16 / gridBase);
@@ -54,14 +69,14 @@ class GameSizes {
       // check X coordinates
       tool.tempX >= this.TOOL_X &&
       tool.tempX <= this.TOOL_X + this.TOOL_DX &&
-      tool.tempX + tool.side >= this.TOOL_X &&
-      tool.tempX + tool.side <= this.TOOL_X + this.TOOL_DX &&
+      tool.tempX + tool.sideX >= this.TOOL_X &&
+      tool.tempX + tool.sideX <= this.TOOL_X + this.TOOL_DX &&
 
       // check Y coordinates
       tool.tempY >= this.TOOL_Y &&
       tool.tempY <= this.TOOL_Y + this.TOOL_DY &&
-      tool.tempY + tool.side >= this.TOOL_Y &&
-      tool.tempY + tool.side <= this.TOOL_Y + this.TOOL_DY
+      tool.tempY + tool.sideY >= this.TOOL_Y &&
+      tool.tempY + tool.sideY <= this.TOOL_Y + this.TOOL_DY
     )
   }
 
@@ -74,22 +89,22 @@ class GameSizes {
       // check X coordinates
       tool.tempX >= this.WORK_X &&
       tool.tempX <= this.WORK_X + this.WORK_DX &&
-      tool.tempX + tool.side >= this.WORK_X &&
-      tool.tempX + tool.side <= this.WORK_X + this.WORK_DX &&
+      tool.tempX + tool.sideX >= this.WORK_X &&
+      tool.tempX + tool.sideX <= this.WORK_X + this.WORK_DX &&
 
       // check Y coordinates
       tool.tempY >= this.WORK_Y &&
       tool.tempY <= this.WORK_Y + this.WORK_DY &&
-      tool.tempY + tool.side >= this.WORK_Y &&
-      tool.tempY + tool.side <= this.WORK_Y + this.WORK_DY
+      tool.tempY + tool.sideX >= this.WORK_Y &&
+      tool.tempY + tool.sideX <= this.WORK_Y + this.WORK_DY
     )
   }
 
   mouseOverTool (mouseX, mouseY, tool) {
     return (mouseX >= tool.x &&
-            mouseX <= tool.x + tool.side &&
+            mouseX <= tool.x + tool.sideX &&
             mouseY >= tool.y &&
-            mouseY <= tool.y + tool.side
+            mouseY <= tool.y + tool.sideX
     )
   }
 
