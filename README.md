@@ -42,13 +42,14 @@ Frontend Setup
 
 Class Structure
 
-![who_stole_the_apple_class_structure drawio](https://user-images.githubusercontent.com/54246143/136610519-b3afaae1-873c-45a6-8c78-9b2df8e62fd3.png)
+![who_stole_the_apple_class_structure drawio](https://user-images.githubusercontent.com/54246143/136670302-6bb7e521-a48c-4061-a714-ea8e618274e5.png)
 
 # Technologies, Libraries, APIs
 
 - Vanila JS to create animations and game logic
 - CSS for styling
 - HTML canvas 
+
 
 # Implementation Timeline
 
