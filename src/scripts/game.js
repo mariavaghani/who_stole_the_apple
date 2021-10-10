@@ -11,7 +11,7 @@ class Game {
     this.level = level;
 
     // Fill the tools with current level specific tools
-    this.tools = this.createToolBox(this.level);
+    this.tools = this.resetToolBox(this.level);
 
     // initialize empty workspace
     this.inWorkArea = [];
@@ -20,33 +20,42 @@ class Game {
     this.mouseDownHandler = this.mouseDownHandler.bind(this);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this);
     this.mouseUpHandler = this.mouseUpHandler.bind(this);
+    this.mouseClickHandler = this.mouseClickHandler.bind(this);
     this.bindEvents(canvasA)
     
   }
 
-  bindEvents(canvas) {
-    canvas.addEventListener("mousedown", this.mouseDownHandler);
-    canvas.addEventListener("mousemove", this.mouseMoveHandler);
-    canvas.addEventListener("mouseup", this.mouseUpHandler);
+  bindEvents(canvasA) {
+    canvasA.addEventListener("mousedown", this.mouseDownHandler);
+    canvasA.addEventListener("mousemove", this.mouseMoveHandler);
+    canvasA.addEventListener("mouseup", this.mouseUpHandler);
+    canvasA.addEventListener("click", this.mouseClickHandler);
+  }
+
+  mouseClickHandler (e) {
+    // Save current mouse position
+    this.mouseX = e.x - this.size.origX;
+    this.mouseY = e.y - this.size.origY;
+    
+    if (this.size.resetButtonClicked(this.mouseX, this.mouseY)) {
+      console.log("Reset!!")
+      this.resetGame()
+    }
+
+    if (this.size.execButtonClicked(this.mouseX, this.mouseY)) {
+      console.log("Execute!!")
+    }
   }
 
   mouseDownHandler (e) {
     // Save current mouse position
-    this.mouseX = e.clientX;
-    this.mouseY = e.clientY;
+    this.mouseX = e.x - this.size.origX;
+    this.mouseY = e.y - this.size.origY;
 
     // Search if there are any tool that are being dragged
     this.allTools().forEach(tool => {
-      let xMin = tool.x + this.size.origX;
-      let xMax = tool.x + tool.side + this.size.origX;
-      let yMin = tool.y + this.size.origY;
-      let yMax = tool.y + tool.side + this.size.origY;
       
-      if (this.mouseX >= xMin &&
-          this.mouseX <= xMax &&
-          this.mouseY >= yMin &&
-          this.mouseY <= yMax
-          ) {
+      if (this.size.mouseOverTool(this.mouseX, this.mouseY, tool)) {
         tool.tempX = tool.x;
         tool.tempY = tool.y;
         tool.isDragging = true; 
@@ -129,7 +138,7 @@ class Game {
     }
   }
   
-  drawStaticGameSetup (ctxS) {
+  resetStaticGameSetup (ctxS) {
   
     // Creates non-level-specific elements on the screen
 
@@ -170,19 +179,19 @@ class Game {
   }
 
   drawGridOnGameArea(ctxS) {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < this.size.gridBase; i++) {
       // X dir
       ctxS.beginPath();
-      ctxS.moveTo(i * (this.size.DIM_X / 20), 0);
-      ctxS.lineTo(i * (this.size.DIM_X / 20), this.size.DIM_Y);
+      ctxS.moveTo(i * (this.size.DIM_X / this.size.gridBase), 0);
+      ctxS.lineTo(i * (this.size.DIM_X / this.size.gridBase), this.size.DIM_Y);
       ctxS.lineWidth = "0.5";
       ctxS.strokeStyle = "#C0CBA8"; 
       ctxS.stroke();
 
       // Y dir
       ctxS.beginPath();
-      ctxS.moveTo(0, i * (this.size.DIM_Y / 20));
-      ctxS.lineTo(this.size.DIM_X, i * (this.size.DIM_Y / 20));
+      ctxS.moveTo(0, i * (this.size.DIM_Y / this.size.gridBase));
+      ctxS.lineTo(this.size.DIM_X, i * (this.size.DIM_Y / this.size.gridBase));
       ctxS.lineWidth = "0.5";
       ctxS.strokeStyle = "#C0CBA8"; 
       ctxS.stroke();
@@ -190,7 +199,7 @@ class Game {
   }
 
 
-  createToolBox (level) {
+  resetToolBox (level) {
     
     let tools = [];
 
@@ -217,6 +226,37 @@ class Game {
     return this.tools.concat(this.inWorkArea);
   }
 
+  drawResetButton(ctxA) {
+    // console.log("Hi!");
+    ctxA.fillStyle = COLOR_PALETTE.resetButtonColor;
+    ctxA.fillRect(this.size.RESET_X, this.size.RESET_Y,
+                  this.size.RESET_DX, this.size.RESET_DY);
+
+    ctxA.font = "16px Arial";
+    ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    ctxA.fillText("Reset", this.size.RESET_X, this.size.RESET_Y + 16);
+  }
+
+  drawExecuteButton(ctxA) {
+    // console.log("Hi!");
+    ctxA.fillStyle = COLOR_PALETTE.execButtonColor;
+    ctxA.fillRect(this.size.EXEC_X, this.size.EXEC_Y,
+                  this.size.EXEC_DX, this.size.EXEC_DY);
+
+    ctxA.font = "16px Arial";
+    ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    ctxA.fillText("Execute", this.size.EXEC_X, this.size.EXEC_Y + 16);
+
+  }
+
+  resetGame(ctxS, ctxA) {
+    this.resetStaticGameSetup(ctxS);
+    this.tools = this.resetToolBox(this.level);
+    this.populateToolBox(ctxA)
+    this.inWorkArea = [];
+
+  }
+
   createWorkArea () {
 
   }
@@ -227,3 +267,23 @@ class Game {
 };
 
 export default Game;
+
+// TODO: add execute sequence function
+// TODO: make tools to snap to the grid inside workarea
+// TODO: make tools to snap to the grid inside tool box
+// TODO: add the ability to reshuffle the tools by dragging them in between 
+// other tools. so other tools whould snap to the next grid line.
+// the tools sohould also change they posiiton in respective arrays on the 
+// backend
+// TODO: add name on the game to the play area
+// TODO: add reset button
+// TODO: make reset button render the level like new
+// TODO: add a button that would execute the sequence
+// TODO: add links to github, linkedin
+// TODO: add obstacles class 
+// TODO: add collectibles class
+// TODO: add a character class
+// TODO: add a class that would handle the escape
+// TODO: populate the board with with character
+// TODO: populate the board with collectibles
+// TODO: add graphic icons to tools

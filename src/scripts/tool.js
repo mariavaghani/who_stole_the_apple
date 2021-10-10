@@ -1,4 +1,4 @@
-import COLOR_PALETTE from './styling';
+// import COLOR_PALETTE from './styling';
 
 class Tool {
   constructor(name, method, icon) {
@@ -15,6 +15,9 @@ class Tool {
     this.y = y;
     ctxA.fillStyle = this.icon;
     ctxA.fillRect(this.x, this.y, this.side, this.side);
+    ctxA.font = "10px Arial";
+    ctxA.fillText(this.name, this.x, this.y);
+
   }
 
   drawWhileDragging(ctxA, x, y) {
@@ -22,6 +25,12 @@ class Tool {
     this.tempY = y;
     ctxA.fillStyle = this.icon;
     ctxA.fillRect(this.tempX, this.tempY, this.side, this.side);
+    ctxA.font = "10px Arial";
+    ctxA.fillText(this.name, this.tempX, this.tempY);
+  }
+
+  execute() {
+    this.method();
   }
 
 

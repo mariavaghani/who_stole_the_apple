@@ -8,11 +8,12 @@ class GameView {
   }
 
   start () {
-    this.game.drawStaticGameSetup(this.ctxS);
-    this.game.populateToolBox(this.ctxA);
+    this.game.resetGame(this.ctxS, this.ctxA);
     let that = this;
     setInterval(function () {
       that.ctxA.clearRect(0, 0, that.game.size.DIM_X, that.game.size.DIM_Y);
+      that.game.drawExecuteButton(that.ctxA);
+      that.game.drawResetButton(that.ctxA);
       that.game.allTools().forEach(tool => {
         if (tool.isDragging) {
           tool.drawWhileDragging(that.ctxA, tool.tempX, tool.tempY);
