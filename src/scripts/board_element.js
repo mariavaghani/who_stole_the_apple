@@ -4,11 +4,9 @@ class BoardElement {
     this.icon = "#BE879C"
     this.pos = pos;
   }
-  
-  moveTo(pos) {
-    console.log(`pos ⬇⬇⬇ `);
-    console.log(pos);
 
+  moveTo(pos) {
+    
     this.pos = pos;
     this.x = this.pos[0] * this.cellWidth + this.origX;
     this.y = this.pos[1] * this.cellWidth + this.origY;
@@ -20,8 +18,10 @@ class BoardElement {
       this.y,
       this.cellWidth,
       this.cellWidth);
-    ctxA.font = "10px Arial";
-    ctxA.fillText(this.name, this.x, this.y);
+
+    ctxA.fillStyle = "#C0CBA8";
+    ctxA.font = "15px Arial";
+    ctxA.fillText(this.name, this.x, this.y + 15);
 
   }
 

@@ -1,5 +1,6 @@
 import Tool from "./tool";
 import Character from "./character";
+import EscapeElement from "./escape_element";
 
 // TOOLS -----------------------
 const moveUp = new Tool("Up", () => {
@@ -27,6 +28,10 @@ const collectItem = new Tool("Collect", () => {
 
 const fox = new Character ("Fox", [0,0]);
 
+// ESCAPE ELEMENTS -----------------------
+
+const hole = new EscapeElement ("Hole", [4,5]);
+
 
 const LEVELS = {
   1: {
@@ -37,7 +42,8 @@ const LEVELS = {
       moveRight,
       collectItem
     ],
-    character: fox
+    character: fox,
+    escape: hole
   }
 }
 

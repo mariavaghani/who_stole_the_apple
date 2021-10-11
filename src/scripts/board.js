@@ -1,12 +1,12 @@
 import COLOR_PALETTE from "./styling";
 import LEVELS from "./level_const";
-import Character from "./character";
 
 class Board {
   constructor(size, level) {
     this.size = size;
     
     this.char = LEVELS[level].character;
+    this.escape = LEVELS[level].escape;
     this.populateBoard(level);
     
     
@@ -23,15 +23,23 @@ class Board {
   drawActiveElements(ctxA) {
     
     this.char.draw(ctxA);
+    this.escape.draw(ctxA);
 
   }
 
   populateBoard(level) {
+    // Character
     this.char.connectToBoard(this.size.origX,
                             this.size.origY,
                             this.size.cellWidth)
     
     this.char.moveTo(LEVELS[level].character.pos);
+    // Escape
+    this.escape.connectToBoard(this.size.origX,
+                              this.size.origY,
+                              this.size.cellWidth)
+
+    this.escape.moveTo(LEVELS[level].escape.pos);
 
   }
 
