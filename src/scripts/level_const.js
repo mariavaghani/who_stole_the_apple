@@ -1,26 +1,36 @@
 import Tool from "./tool";
 import Character from "./character";
 import EscapeElement from "./escape_element";
+import CollectableElement from "./collectable_element";
 
 // TOOLS -----------------------
-const moveUp = new Tool("Up", () => {
-  console.log("Up")
+const moveUp = new Tool("Up", (board) => {
+  const moveVect = [0, -1];
+
+  board.char.moveInDir(moveVect);
   
 }, "#9C615A");
 
-const moveDown = new Tool("Down", () => {
-  console.log("Down");
+const moveDown = new Tool("Down", (board) => {
+  const moveVect = [0, 1];
+
+  board.char.moveInDir(moveVect);
+
 }, "#CDBD87")
 
-const moveLeft = new Tool("Left", () => {
-  console.log("Left");
+const moveLeft = new Tool("Left", (board) => {
+  const moveVect = [-1, 0];
+
+  board.char.moveInDir(moveVect);
 }, "#BE879C")
 
-const moveRight = new Tool("Right", () => {
-  console.log("Right");
+const moveRight = new Tool("Right", (board) => {
+  const moveVect = [1, 0];
+
+  board.char.moveInDir(moveVect);
 }, "#8E6A81")
 
-const collectItem = new Tool("Collect", () => {
+const collectItem = new Tool("Collect", (board) => {
   console.log("Collecting");
 }, "#576C71")
 
@@ -32,6 +42,11 @@ const fox = new Character ("Fox", [0,0]);
 
 const hole = new EscapeElement ("Hole", [4,5]);
 
+// COLLECTABLE ELEMENTS -----------------------
+
+const carrot = new CollectableElement("Carrot", [3,0]);
+
+
 
 const LEVELS = {
   1: {
@@ -42,8 +57,11 @@ const LEVELS = {
       moveRight,
       collectItem
     ],
-    character: fox,
-    escape: hole
+    boardElements: [
+      fox,
+      hole,
+      carrot
+    ]
   }
 }
 

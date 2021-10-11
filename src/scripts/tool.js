@@ -39,8 +39,14 @@ class Tool {
     ctxA.fillText(this.name, this.tempX, this.tempY);
   }
 
-  execute() {
-    this.method();
+  execute(board) {
+    console.log("One more!");
+    this.method(board);
+  }
+
+  isValid() {
+    console.log("Checking if move is valid");
+    return true;
   }
 
 

@@ -51,7 +51,7 @@ class GameView {
 
     if (this.game.size.execButtonClicked(this.mouseX, this.mouseY)) {
       console.log("Executing!!")
-      this.game.executeWorkingTools();
+      this.game.inExecution = true;
     }
   }
 
@@ -107,12 +107,6 @@ class GameView {
       // Remove dragging flag from all tools
       tool.isDragging = false;
     });
-    console.log(`this.tools ⬇⬇⬇ `);
-    console.log(this.tools);
-
-    console.log(`this.inWorkArea ⬇⬇⬇ `);
-    console.log(this.inWorkArea);
-
 
   }
 
@@ -126,14 +120,11 @@ class GameView {
 
       this.game.drawBoard(this.ctxA);
 
-      this.game.allTools().forEach(tool => {
-        if (tool.isDragging) {
-          tool.drawWhileDragging(this.ctxA,
-                                tool.tempX, tool.tempY);
-        } else {
-          tool.draw(this.ctxA, tool.x, tool.y);
-        }
-      });
+      // Draw tools
+      this.game.drawTools(this.ctxA);
+
+      // Draw Execution Board
+      this.game.executeWorkingTools();
       
     }, 20);
 

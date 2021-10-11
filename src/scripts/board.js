@@ -5,8 +5,10 @@ class Board {
   constructor(size, level) {
     this.size = size;
     
-    this.char = LEVELS[level].character;
-    this.escape = LEVELS[level].escape;
+    this.char = LEVELS[level].boardElements[0];
+    this.escape = LEVELS[level].boardElements[1];
+    this.toCollect = LEVELS[level].boardElements[2];
+    this.char.reset();
     this.populateBoard(level);
     
     
@@ -24,22 +26,28 @@ class Board {
     
     this.char.draw(ctxA);
     this.escape.draw(ctxA);
+    this.toCollect.draw(ctxA);
+
+    // at this point we are drawing all elements in this method on the
+    // active canvas. Later, when we have more elements, will separate them
+    // into static and active contexts
 
   }
 
   populateBoard(level) {
     // Character
-    this.char.connectToBoard(this.size.origX,
-                            this.size.origY,
-                            this.size.cellWidth)
-    
-    this.char.moveTo(LEVELS[level].character.pos);
-    // Escape
-    this.escape.connectToBoard(this.size.origX,
+
+    LEVELS[level].boardElements.forEach(element => {
+
+      
+      element.connectToBoard(this.size.origX,
                               this.size.origY,
                               this.size.cellWidth)
-
-    this.escape.moveTo(LEVELS[level].escape.pos);
+      
+      element.placeTo(element.pos);
+    });
+   
+    
 
   }
 

@@ -7,6 +7,7 @@ class Game {
   constructor (level, sizeG, sizeB) {
 
     this.size = sizeG;
+    this.sizeB = sizeB;
     // Level that this instance is rendering
     this.level = level;
     // Fill the tools with current level specific tools
@@ -14,6 +15,7 @@ class Game {
     // initialize empty workspace
     this.inWorkArea = [];
     this.board = new Board(sizeB, level);
+    this.inExecution = false;
 
     
   }
@@ -125,6 +127,10 @@ class Game {
   }
 
   resetGame(ctxS, ctxA) {
+    this.board = new Board(this.sizeB, this.level);
+    console.log(`this.board ⬇⬇⬇ `);
+    console.log(this.board);
+    
     this.resetStaticGameSetup(ctxS);
     this.tools = this.resetToolBox(this.level);
     this.populateToolBox(ctxA)
@@ -133,13 +139,20 @@ class Game {
   }
 
   executeWorkingTools () {
-    this.inWorkArea.forEach(tool => {
-      tool.execute();
-    });
-  }
+    if (this.inExecution) {
 
-  createBoard (level) {
-
+      let i = 0;
+      const execution = setInterval(() => {
+        if (i < this.inWorkArea.length) {
+          const tool = this.inWorkArea[i];
+          tool.execute(this.board);
+          i++;
+        } else {
+          clearInterval(execution);
+        }
+      }, 500);
+      this.inExecution = false;
+    }
   }
 
   resetStaticGameSetup(ctxS) {
@@ -181,6 +194,20 @@ class Game {
     this.board.drawActiveElements(ctxA);
   }
 
+  drawTools (ctxA) {
+    // Drawing tools, called in the GameView#start
+    this.allTools().forEach(tool => {
+      if (tool.isDragging) {
+        tool.drawWhileDragging(ctxA,
+          tool.tempX, tool.tempY);
+      } else {
+        tool.draw(ctxA, tool.x, tool.y);
+      }
+    });
+  }
+
+
+
   drawNameContainer(ctxS) {
     ctxS.fillStyle = COLOR_PALETTE.containerColor;
     ctxS.fillRect(this.size.TITLE_X, this.size.TITLE_Y,
@@ -205,26 +232,24 @@ class Game {
       }
     }
   }
+
+
 };
 
 export default Game;
 
+// TODO: make the execute button to call the methods on the character on the board
 // TODO: make tools to snap to the grid inside workarea
 // TODO: make tools to snap to the grid inside tool box
 // TODO: add the ability to reshuffle the tools by dragging them in between 
 // other tools. so other tools whould snap to the next grid line.
-// the tools sohould also change they posiiton in respective arrays on the 
+// the tools should also change they posiiton in respective arrays on the 
 // backend
-// TODO: add links to github, linkedin
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for
 // collectible items
-// TODO: add a character class
-// TODO: add a class that would handle the escape
-// TODO: populate the board with with character
 // TODO: populate the board with collectibles
-// TODO: draw a grid of cells on the board, these cells would reflect 
-// the pos of characters and other items on the board
 // TODO: add graphic icons to tools
 // TODO: add different icons for other items on the board
+// TODO: add links to github, linkedin

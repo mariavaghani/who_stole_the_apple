@@ -5,7 +5,7 @@ class BoardElement {
     this.pos = pos;
   }
 
-  moveTo(pos) {
+  placeTo(pos) {
     
     this.pos = pos;
     this.x = this.pos[0] * this.cellWidth + this.origX;
