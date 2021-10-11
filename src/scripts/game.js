@@ -128,8 +128,7 @@ class Game {
 
   resetGame(ctxS, ctxA) {
     this.board = new Board(this.sizeB, this.level);
-    console.log(`this.board ⬇⬇⬇ `);
-    console.log(this.board);
+
     
     this.resetStaticGameSetup(ctxS);
     this.tools = this.resetToolBox(this.level);
@@ -143,9 +142,9 @@ class Game {
 
       let i = 0;
       const execution = setInterval(() => {
-        if (i < this.inWorkArea.length) {
-          const tool = this.inWorkArea[i];
-          tool.execute(this.board);
+        const tool = this.inWorkArea[i];
+
+        if (tool !== undefined && tool.execute(this.board)) {
           i++;
         } else {
           clearInterval(execution);
@@ -153,6 +152,40 @@ class Game {
       }, 500);
       this.inExecution = false;
     }
+  }
+
+  fulfilledLevel() {
+    return (this.board.char.pos[0] === this.board.escape.pos[0] &&
+            this.board.char.pos[1] === this.board.escape.pos[1])
+
+  }
+  
+
+  endOfExecution(ctxA) {
+    
+    if ( this.fulfilledLevel() ) {
+      this.board.msg = "Great Job, you thief!!";
+      this.board.status = "VICTORY";
+    }
+
+    if (this.board.status !== "OK") {
+      this.printMsg(ctxA);
+      
+    }
+  }
+  printMsg(ctxA) {
+    ctxA.save();
+    ctxA.fillStyle = COLOR_PALETTE.msgColor;
+    ctxA.fillRect(this.sizeB.origX, this.sizeB.origY,
+      this.sizeB.boardWidth, this.sizeB.boardWidth);
+
+    ctxA.font = "16px Arial";
+    ctxA.textAlign = "center";
+    ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    ctxA.fillText(this.board.msg,
+      this.sizeB.origX + this.sizeB.boardWidth / 2,
+      this.sizeB.origY + this.sizeB.boardWidth / 2);
+    ctxA.restore();
   }
 
   resetStaticGameSetup(ctxS) {

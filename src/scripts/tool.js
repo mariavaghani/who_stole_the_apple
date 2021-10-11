@@ -7,6 +7,7 @@ class Tool {
     this.method = method;
     this.icon = icon;
     this.isDragging = false;
+
     
   }
 
@@ -40,14 +41,11 @@ class Tool {
   }
 
   execute(board) {
-    console.log("One more!");
-    this.method(board);
+
+    return this.method(board);
   }
 
-  isValid() {
-    console.log("Checking if move is valid");
-    return true;
-  }
+
 
 
 }

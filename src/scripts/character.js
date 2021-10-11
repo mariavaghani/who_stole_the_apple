@@ -9,11 +9,18 @@ class Character extends BoardElement{
   reset () {
     this.pos = this.orig;
   }
-  
-  moveInDir(moveVect) {
+
+  moveInDir(moveVect, board) {
     const newPos = [this.pos[0] + moveVect[0],
                     this.pos[1] + moveVect[1]];
-    this.placeTo(newPos);
+                    
+    if (board.validMove(newPos)) {
+      this.placeTo(newPos);
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 }
 

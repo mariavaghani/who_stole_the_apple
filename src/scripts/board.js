@@ -4,6 +4,8 @@ import LEVELS from "./level_const";
 class Board {
   constructor(size, level) {
     this.size = size;
+    this.msg = "";
+    this.status = "OK";
     
     this.char = LEVELS[level].boardElements[0];
     this.escape = LEVELS[level].boardElements[1];
@@ -80,6 +82,24 @@ class Board {
       ctxS.stroke();
     }
     ctxS.restore();
+  }
+
+  validMove(newPos) {
+
+    // check if position is on the board
+    if (
+      newPos[0] < 0 ||
+      newPos[0] >= this.size.cols ||
+      newPos[1] < 0 ||
+      newPos[1] >= this.size.cols
+    ) {
+      this.msg = `${this.char.name} is leaving the board!!`;
+      this.status = "ERROR";
+      return false;
+    }
+
+    // when all checks passed
+    return true;
   }
 }
 

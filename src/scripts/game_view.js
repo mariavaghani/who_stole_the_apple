@@ -1,3 +1,5 @@
+import Game from "./game";
+
 class GameView {
   constructor(game, canvasStatic, canvasActive) {
     this.game = game;
@@ -111,6 +113,7 @@ class GameView {
   }
 
   start () {
+    
     this.game.resetGame(this.ctxS, this.ctxA);
     setInterval( () => {
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
@@ -125,9 +128,18 @@ class GameView {
 
       // Draw Execution Board
       this.game.executeWorkingTools();
+      this.game.endOfExecution(this.ctxA);
+
+      if (this.game.board.status === "VICTORY") {
+        this.game = new Game(this.game.level + 1,
+                            this.game.size,
+                            this.game.sizeB)
+        this.start();
+
+      }
       
     }, 20);
-
+    
   }
 }
 
