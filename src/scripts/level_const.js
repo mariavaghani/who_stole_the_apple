@@ -1,9 +1,9 @@
 import Tool from "./tool";
+import Character from "./character";
 
-
+// TOOLS -----------------------
 const moveUp = new Tool("Up", () => {
   console.log("Up")
-  
   
 }, "#9C615A");
 
@@ -23,6 +23,10 @@ const collectItem = new Tool("Collect", () => {
   console.log("Collecting");
 }, "#576C71")
 
+// CHARACTERS -----------------------
+
+const fox = new Character ("Fox", [0,0]);
+
 
 const LEVELS = {
   1: {
@@ -32,7 +36,8 @@ const LEVELS = {
       moveLeft,
       moveRight,
       collectItem
-    ]
+    ],
+    character: fox
   }
 }
 

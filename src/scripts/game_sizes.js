@@ -40,12 +40,7 @@ class GameSizes {
     this.WORK_Y = this.DIM_Y * (36 / gridBase);
     this.WORK_DY = this.DIM_Y * (32 / gridBase);
 
-    // Board location
-    this.BOARD_X = this.DIM_X * (40 / gridBase);
-    this.BOARD_DX = this.DIM_X * (36 / gridBase);
-
-    this.BOARD_Y = this.DIM_Y * (8 / gridBase);
-    this.BOARD_DY = this.DIM_Y * (66 / gridBase);
+  
 
     // Execute button location
     this.EXEC_X = this.DIM_X * (31 / gridBase);

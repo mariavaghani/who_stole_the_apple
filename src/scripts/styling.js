@@ -1,8 +1,8 @@
 const COLOR_PALETTE = {
 
-  backgroundColor: "#717C59",
+  backgroundColor: "#969F78",
   containerColor: "#E3D4BA",
-  toolColor: "#A86A62",
+  boardColor: "#C0CBA8",
   execButtonColor: "#B28568",
   resetButtonColor: "#BE9979"
 };

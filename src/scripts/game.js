@@ -1,17 +1,20 @@
 import LEVELS from './level_const';
 import COLOR_PALETTE from './styling';
-// import GameSizes from "./game_sizes";
+import Board from "./board";
+
 
 class Game {
-  constructor (level, size) {
+  constructor (level, sizeG, sizeB) {
 
-    this.size = size;
+    this.size = sizeG;
     // Level that this instance is rendering
     this.level = level;
     // Fill the tools with current level specific tools
     this.tools = this.resetToolBox(this.level);
     // initialize empty workspace
     this.inWorkArea = [];
+    this.board = new Board(sizeB, level);
+
     
   }
 
@@ -161,17 +164,21 @@ class Game {
     // TODO: figure out internal grid that the tools could snap to
     // Draw the Work Area container
     ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.WORK_X, this.size.WORK_Y, this.size.WORK_DX, this.size.WORK_DY);
+    ctxS.fillRect(this.size.WORK_X, this.size.WORK_Y,
+                  this.size.WORK_DX, this.size.WORK_DY);
 
     // Draw the Board container
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.BOARD_X, this.size.BOARD_Y, this.size.BOARD_DX, this.size.BOARD_DY);
+    this.board.drawStatic(ctxS);
 
     // Draw grid on top
     // this.drawGridOnGameArea(ctxS);
 
     ctxS.restore();
 
+  }
+
+  drawBoard (ctxA) {
+    this.board.drawActiveElements(ctxA);
   }
 
   drawNameContainer(ctxS) {
@@ -202,7 +209,6 @@ class Game {
 
 export default Game;
 
-// TODO: add name on the game to the play area
 // TODO: make tools to snap to the grid inside workarea
 // TODO: make tools to snap to the grid inside tool box
 // TODO: add the ability to reshuffle the tools by dragging them in between 

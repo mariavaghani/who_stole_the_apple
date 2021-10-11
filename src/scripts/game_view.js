@@ -1,5 +1,3 @@
-
-
 class GameView {
   constructor(game, canvasStatic, canvasActive) {
     this.game = game;
@@ -122,10 +120,12 @@ class GameView {
     this.game.resetGame(this.ctxS, this.ctxA);
     setInterval( () => {
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
-      // this.ctxA.scale(this.dpr, this.dpr);
 
       this.game.drawExecuteButton(this.ctxA);
       this.game.drawResetButton(this.ctxA);
+
+      this.game.drawBoard(this.ctxA);
+
       this.game.allTools().forEach(tool => {
         if (tool.isDragging) {
           tool.drawWhileDragging(this.ctxA,
