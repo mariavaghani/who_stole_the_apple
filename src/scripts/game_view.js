@@ -139,19 +139,19 @@ class GameView {
       this.game.drawResetButton(this.ctxA);
       
       this.game.drawBoard(this.ctxA);
+      // Draw tools
       this.game.drawTools(this.ctxA);
       
-      // Draw tools
+      
+      // Draw Execution Board
+      this.game.executeWorkingTools(this.ctxS, this.ctxA);
+      
       if (this.game.board.status !== "OK") {
         
         // this.game.printMsg(this.ctxA);
-        this.game.painter.printMsg(this.ctxA);
+        this.game.painter.printMsg(this.ctxA, this.game.board.msg);
       }
-        
-
-      // Draw Execution Board
-      this.game.executeWorkingTools(this.ctxS, this.ctxA);
- 
+      
     }, 20);
   }
 }

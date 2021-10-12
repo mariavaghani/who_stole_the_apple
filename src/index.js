@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const sizeB = new BoardSizes(canvasStatic);
   
 
-  let level = 1;
+  let level = 2;
   const game = new Game(level, sizeG, sizeB); 
 
   const gameView = new GameView(game, canvasStatic, canvasActive); 

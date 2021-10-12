@@ -4,7 +4,6 @@ class GamePainter {
   constructor (ctxS, size, board) {
 
     this.size = size;
-    this.board = board;
     // this.ctxS = ctxS;
 
     // Creates non-level-specific elements on the screen
@@ -30,7 +29,7 @@ class GamePainter {
     board.drawStatic(ctxS);
 
     // Draw grid on top
-    this.drawGridOnGameArea(ctxS);
+    // this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
     // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
@@ -42,7 +41,7 @@ class GamePainter {
 
   }
 
-  printMsg(ctxA) {
+  printMsg(ctxA, msg) {
     ctxA.save();
     ctxA.fillStyle = COLOR_PALETTE.msgColor;
     ctxA.fillRect(this.size.dialogX, this.size.dialogY,
@@ -51,7 +50,7 @@ class GamePainter {
     ctxA.font = "16px Arial";
     ctxA.textAlign = "center";
     ctxA.fillStyle = COLOR_PALETTE.containerColor;
-    ctxA.fillText(this.board.msg,
+    ctxA.fillText(msg,
       this.size.dialogX + this.size.dialogDX / 2,
       this.size.dialogY + this.size.dialogDY / 2);
 

@@ -30,12 +30,15 @@ const movingDown = (board) => {
 
 };
 
-// TOOLS -----------------------
-
-const collectItem = new Tool("Collect", (board) => {
+const collectingItem = (board) => {
   console.log("Collecting");
-  return true;
-}, "#576C71")
+  return board.char.addToBag(board);
+}
+
+// TOOLS
+
+
+
 
 // CHARACTERS -----------------------
 
@@ -57,35 +60,48 @@ const LEVELS = {
       new Tool("Left", movingLeft, "#BE879C"),
       new Tool("Right", movingRight, "#8E6A81"),
       new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Down", movingDown, "#CDBD87"),
       new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Down", movingDown, "#CDBD87"),
       new Tool("Right", movingRight, "#8E6A81"),
-      new Tool("Collect", (board) => {
-        console.log("Collecting");
-        return true;
-      }, "#576C71"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Collect", collectingItem, "#576C71"),
+      new Tool("Right", movingRight, "#8E6A81"),
       new Tool("Left", movingLeft, "#BE879C")
     ],
-    boardElements: [
-      fox,
-      hole,
-      carrot
+    character: new Character("Fox", [0, 0]),
+    escape: new EscapeElement("Hole", [4, 5]),
+    collectables: [
+      new CollectableElement("Carrot", [1, 3])
     ]
   },
 
   2: {
     tools: [
-      new Tool("Left", movingLeft, "#BE879C"),
+      new Tool("Down", movingDown, "#CDBD87"),
       new Tool("Right", movingRight, "#8E6A81"),
-      new Tool("Collect", (board) => {
-        console.log("Collecting");
-        return true;
-      }, "#576C71")
+      new Tool("Left", movingLeft, "#BE879C"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Collect", collectingItem, "#576C71"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Up", movingUp, "#A56D73"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Collect", collectingItem, "#576C71")
     ],
-    boardElements: [
-      fox,
-      hole,
-      carrot
+    character: new Character("Fox", [0, 1]),
+    escape: new EscapeElement("Hole", [4, 5]),
+    collectables: [
+      new CollectableElement("Carrot", [3, 0]),
+      new CollectableElement("Raddish", [4, 3])
     ]
+
   }
 }
 

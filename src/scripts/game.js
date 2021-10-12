@@ -158,17 +158,24 @@ class Game {
   checkVictory() {
     
     if (this.fulfilledLevel()) {
+      console.log("here");
+
       this.board.msg = "Great Job, you thief!!";
       this.board.status = "VICTORY";
-    } else {
-      this.board.msg = "Try again, hun!";
+      console.log(`this.board.msg ⬇⬇⬇ `);
+      console.log(this.board.msg);
+      
+    } else if (this.board.status === "OK") {
+      this.board.msg = `${this.board.char.name} did not complete the challenge!`;
       this.board.status = "NOPE";
     }
   }
 
   fulfilledLevel() {
     return (this.board.char.pos[0] === this.board.escape.pos[0] &&
-            this.board.char.pos[1] === this.board.escape.pos[1])
+            this.board.char.pos[1] === this.board.escape.pos[1] &&
+            this.board.char.bag.length === 1
+            )
 
   }
 
@@ -235,7 +242,11 @@ class Game {
 
 export default Game;
 
-// TODO: style error messages
+// TODO: Create a method that would determine if there is a win for the level
+// TODO: add design of level 2
+// TODO: add design of level 3
+// TODO: add instructions. popup? welcome screen? 
+// TODO: Level completion requirements should show up at the title
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for

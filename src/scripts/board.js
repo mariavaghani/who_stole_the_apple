@@ -7,9 +7,9 @@ class Board {
     this.msg = "";
     this.status = "OK";
     
-    this.char = LEVELS[level].boardElements[0];
-    this.escape = LEVELS[level].boardElements[1];
-    this.toCollect = LEVELS[level].boardElements[2];
+    this.char = LEVELS[level].character;
+    this.escape = LEVELS[level].escape;
+    this.collectables = LEVELS[level].collectables.slice();
     this.char.reset();
     this.populateBoard(level);
     
@@ -26,9 +26,10 @@ class Board {
     
   drawActiveElements(ctxA) {
     
-    this.char.draw(ctxA);
-    this.escape.draw(ctxA);
-    this.toCollect.draw(ctxA);
+    this.allBoardElements().forEach(element => element.draw(ctxA))
+    // this.char.draw(ctxA);
+    // this.escape.draw(ctxA);
+    // this.collectables.forEach(element => element.draw(ctxA));
 
     // at this point we are drawing all elements in this method on the
     // active canvas. Later, when we have more elements, will separate them
@@ -36,10 +37,14 @@ class Board {
 
   }
 
+  allBoardElements () {
+    return [].concat(this.char, this.escape, this.collectables);
+  }
+
   populateBoard(level) {
     // Character
 
-    LEVELS[level].boardElements.forEach(element => {
+    this.allBoardElements().forEach(element => {
 
       
       element.connectToBoard(this.size.origX,
