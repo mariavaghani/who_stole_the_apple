@@ -16,44 +16,63 @@ class GameSizes {
     this.gapY = this.DIM_Y * (2 / gridBase);
 
     // Tool size
-    this.toolSideX = this.DIM_X * (3 / gridBase);
-    this.toolSideY = this.DIM_Y * (4 / gridBase);
+    // this.toolSideX = this.DIM_X * (3 / gridBase);
+    // this.toolSideY = this.DIM_Y * (4 / gridBase);
 
     // Title location
-    this.TITLE_X = this.DIM_X * (4 / gridBase);
+    this.TITLE_X = this.DIM_X * (2 / gridBase);
     this.TITLE_DX = this.DIM_X * (11 / gridBase);
 
     this.TITLE_Y = this.DIM_Y * (8 / gridBase);
-    this.TITLE_DY = this.DIM_Y * (25 / gridBase);
+    this.TITLE_DY = this.DIM_Y * (30 / gridBase);
 
     // Toolbox location
-    this.TOOL_X = this.DIM_X * (16 / gridBase);
-    this.TOOL_DX = this.DIM_X * (22 / gridBase);
+    this.TOOL_X = this.DIM_X * (14 / gridBase);
+    this.TOOL_DX = this.DIM_X * (26 / gridBase);
 
     this.TOOL_Y = this.DIM_Y * (8 / gridBase);
-    this.TOOL_DY = this.DIM_Y * (25 / gridBase);
+    this.TOOL_DY = this.DIM_Y * (30 / gridBase);
 
     // Work Area location
-    this.WORK_X = this.DIM_X * (4 / gridBase);
-    this.WORK_DX = this.DIM_X * (26 / gridBase);
+    this.WORK_X = this.DIM_X * (2 / gridBase);
+    this.WORK_DX = this.TOOL_DX; //this.DIM_X * (26 / gridBase);
 
-    this.WORK_Y = this.DIM_Y * (36 / gridBase);
-    this.WORK_DY = this.DIM_Y * (32 / gridBase);
+    this.WORK_Y = this.DIM_Y * (40 / gridBase);
+    this.WORK_DY = this.TOOL_DY; //this.DIM_Y * (30 / gridBase);
+
+    // Work Area Grid ============================
+    // X dir
+    this.borderX = this.TOOL_DX / 20;
+    this.width = this.TOOL_DX - 2 * this.borderX;
+    this.cols = 6;
+    this.cellWidth = this.width / this.cols;
+    
+    // Y dir
+    this.borderY = this.TOOL_DY / 20;
+    this.height = this.TOOL_DY - 2 * this.borderY;
+    this.rows = 4;
+    this.cellHeight = this.height / this.rows;
+
+    this.wOrigX = this.WORK_X + this.borderX;
+    this.wOrigY = this.WORK_Y + this.borderY;
+
+    this.tOrigX = this.TOOL_X + this.borderX;
+    this.tOrigY = this.TOOL_Y + this.borderY;
 
   
 
     // Execute button location
-    this.EXEC_X = this.DIM_X * (31 / gridBase);
-    this.EXEC_DX = this.DIM_X * (7 / gridBase);
+    this.EXEC_X = this.DIM_X * (30 / gridBase);
+    this.EXEC_DX = this.DIM_X * (10 / gridBase);
 
-    this.EXEC_Y = this.DIM_Y * (53 / gridBase);
+    this.EXEC_Y = this.DIM_Y * (56 / gridBase);
     this.EXEC_DY = this.DIM_Y * (14 / gridBase);
 
     // Reset button location
-    this.RESET_X = this.DIM_X * (31 / gridBase);
-    this.RESET_DX = this.DIM_X * (7 / gridBase);
+    this.RESET_X = this.DIM_X * (30 / gridBase);
+    this.RESET_DX = this.DIM_X * (10 / gridBase);
 
-    this.RESET_Y = this.DIM_Y * (37 / gridBase);
+    this.RESET_Y = this.DIM_Y * (40 / gridBase);
     this.RESET_DY = this.DIM_Y * (14 / gridBase);
   }
 

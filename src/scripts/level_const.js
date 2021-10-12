@@ -16,28 +16,21 @@ const movingRight = (board) => {
   return board.char.moveInDir(moveVect, board);
 }
 
-// TOOLS -----------------------
-const moveUp = new Tool("Up", (board) => {
+const movingUp = (board) => {
   const moveVect = [0, -1];
 
   return board.char.moveInDir(moveVect, board);
-  
-}, "#9C615A");
 
-const moveDown = new Tool("Down", (board) => {
+};
+
+const movingDown = (board) => {
   const moveVect = [0, 1];
 
   return board.char.moveInDir(moveVect, board);
 
-}, "#CDBD87")
+};
 
-const moveLeft = new Tool("Left", movingLeft, "#BE879C")
-const moveLeft2 = new Tool("Left", movingLeft, "#BE879C")
-const moveLeft3 = new Tool("Left", movingLeft, "#BE879C")
-
-const moveRight = new Tool("Right", movingRight, "#8E6A81")
-const moveRight2 = new Tool("Right", movingRight, "#8E6A81")
-const moveRight3 = new Tool("Right", movingRight, "#8E6A81")
+// TOOLS -----------------------
 
 const collectItem = new Tool("Collect", (board) => {
   console.log("Collecting");
@@ -61,12 +54,13 @@ const carrot = new CollectableElement("Carrot", [3,0]);
 const LEVELS = {
   1: {
     tools: [
-      moveLeft,
-      moveRight2,
-      moveDown,
-      moveRight3,
-      moveRight,
-      collectItem
+      new Tool("Left", movingLeft, "#BE879C"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      collectItem,
+      new Tool("Left", movingLeft, "#BE879C")
     ],
     boardElements: [
       fox,
@@ -77,8 +71,8 @@ const LEVELS = {
 
   2: {
     tools: [
-      moveLeft,
-      moveRight2,
+      new Tool("Left", movingLeft, "#BE879C"),
+      new Tool("Right", movingRight, "#8E6A81"),
       collectItem
     ],
     boardElements: [

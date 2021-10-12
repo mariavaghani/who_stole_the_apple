@@ -7,7 +7,6 @@ class GameView {
     this.ctxA = this.createHiResAwareCtx(canvasActive);
     this.ctxS = this.createHiResAwareCtx(canvasStatic);
     
-    // Make tools draggable
     // Bind event handlers to the game
     this.mouseDownHandler = this.mouseDownHandler.bind(this.game);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this.game);
@@ -94,6 +93,10 @@ class GameView {
         if (this.size.toolInsideToolBox(tool)) {
           tool.x = tool.tempX;
           tool.y = tool.tempY;
+
+          this.snapToGrid(tool.tempX, tool.tempY,
+                          this.size.tOrigX,
+                          this.size.tOrigY, tool);
           this.ensureToolInTools(tool);
           this.ensureToolOutOfWorkArea(tool);
         }
@@ -102,6 +105,9 @@ class GameView {
         if (this.size.toolInsideWorkArea(tool)) {
           tool.x = tool.tempX;
           tool.y = tool.tempY;
+          this.snapToGrid(tool.tempX, tool.tempY,
+                          this.size.wOrigX,
+                          this.size.wOrigY, tool);
           this.ensureToolInWorkArea(tool);
           this.ensureWorkToolOutOfTools(tool);
         }

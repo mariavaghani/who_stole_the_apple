@@ -7,6 +7,7 @@ class Tool {
     this.method = method;
     this.icon = icon;
     this.isDragging = false;
+    // this.pos = pos;
 
     
   }
@@ -14,20 +15,17 @@ class Tool {
   size(sideX, sideY) {
     this.sideX = sideX;
     this.sideY = sideY;
-
   }
-  
+
   draw(ctxA, x, y) {
 
     this.x = x;
     this.y = y;
 
-    
     ctxA.fillStyle = this.icon;
     ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
     ctxA.font = "10px Arial";
     ctxA.fillText(this.name, this.x, this.y);
-
   }
 
   drawWhileDragging(ctxA, x, y) {
@@ -41,12 +39,8 @@ class Tool {
   }
 
   execute(board) {
-
     return this.method(board);
   }
-
-
-
 
 }
 

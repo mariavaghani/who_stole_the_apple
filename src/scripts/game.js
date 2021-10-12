@@ -1,6 +1,7 @@
 import LEVELS from './level_const';
 import COLOR_PALETTE from './styling';
 import Board from "./board";
+import GamePainter from "./game_painter";
 
 
 class Game {
@@ -18,6 +19,19 @@ class Game {
     this.inExecution = false;
 
     
+  }
+
+  snapToGrid(x, y, origX, origY, tool) {
+
+    x = x - origX;
+    y = y - origY;
+
+    x = Math.round(x / this.size.cellWidth); // * this.size.cellWidth;
+    y = Math.round(y / this.size.cellHeight); // * this.size.cellHeight;
+  
+    tool.pos = [x,y];
+    tool.x = x * this.size.cellWidth + origX;
+    tool.y = y * this.size.cellHeight + origY;
   }
 
   ensureToolInTools(tool) {
@@ -50,51 +64,27 @@ class Game {
     }
   }
   
-  drawToolBoxContainer(ctxS) {
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.TOOL_X, this.size.TOOL_Y, this.size.TOOL_DX, this.size.TOOL_DY);
-  }
-
-  drawGridOnGameArea(ctxS) {
-    for (let i = 0; i < this.size.gridBase; i++) {
-      // X dir
-      ctxS.beginPath();
-      ctxS.moveTo(i * (this.size.DIM_X / this.size.gridBase), 0);
-      ctxS.lineTo(i * (this.size.DIM_X / this.size.gridBase), this.size.DIM_Y);
-      ctxS.lineWidth = "0.5";
-      ctxS.strokeStyle = "#C0CBA8"; 
-      ctxS.stroke();
-
-      // Y dir
-      ctxS.beginPath();
-      ctxS.moveTo(0, i * (this.size.DIM_Y / this.size.gridBase));
-      ctxS.lineTo(this.size.DIM_X, i * (this.size.DIM_Y / this.size.gridBase));
-      ctxS.lineWidth = "0.5";
-      ctxS.strokeStyle = "#C0CBA8"; 
-      ctxS.stroke();
-    }
-  }
-
   resetToolBox (level) {
     
     let tools = [];
 
     LEVELS[level].tools.forEach(tool => {
-      tool.size(this.size.toolSideX, this.size.toolSideY);
+      tool.size(this.size.cellWidth, this.size.cellHeight);
       tools.push(tool);
     });
     return tools
   }
 
   populateToolBox(ctxA) {
+
     ctxA.save();
-    let dx = this.size.TOOL_X + this.size.gapX;
-    let dy = this.size.TOOL_Y + this.size.gapY;
+    let dx = this.size.tOrigX; 
+    let dy = this.size.tOrigY;
     
     
     this.tools.forEach(tool => {
       tool.draw(ctxA, dx, dy);
-      dx += tool.sideX + this.size.gapX;
+      dx += tool.sideX;
     });
     ctxA.restore();
   }
@@ -159,7 +149,6 @@ class Game {
             this.board.char.pos[1] === this.board.escape.pos[1])
 
   }
-  
 
   endOfExecution(ctxA) {
     
@@ -190,36 +179,7 @@ class Game {
 
   resetStaticGameSetup(ctxS) {
 
-    // Creates non-level-specific elements on the screen
-    // Clear the game area
-    ctxS.clearRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
-    ctxS.save();
-
-    // Draw the background
-    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
-    ctxS.fillRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
-
-    // Draw the Name of the game container
-    this.drawNameContainer(ctxS);
-    
-
-    // Draw the toolbox container
-    this.drawToolBoxContainer(ctxS);
-
-    // TODO: refactor the following into their own methods
-    // TODO: figure out internal grid that the tools could snap to
-    // Draw the Work Area container
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.WORK_X, this.size.WORK_Y,
-                  this.size.WORK_DX, this.size.WORK_DY);
-
-    // Draw the Board container
-    this.board.drawStatic(ctxS);
-
-    // Draw grid on top
-    // this.drawGridOnGameArea(ctxS);
-
-    ctxS.restore();
+    const painter = new GamePainter(ctxS, this.size, this.board);
 
   }
 
@@ -240,44 +200,11 @@ class Game {
   }
 
 
-
-  drawNameContainer(ctxS) {
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.TITLE_X, this.size.TITLE_Y,
-      this.size.TITLE_DX, this.size.TITLE_DY);
-    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
-
-    const that = this.size;
-    
-    printText("Who Stole/nThe Apple", 30);
-    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 70);
-    
-    
-    function printText(titleTxt, lh, offset = 0) {
-      let lines = titleTxt.split("/n");
-      ctxS.font = `${lh}px Arial`;
-      for (let i = 1; i <= lines.length; i++) {
-        const line = lines[i - 1];
-        ctxS.fillText(line,
-          that.TITLE_X + 5,
-          that.TITLE_Y + i * lh + offset);
-
-      }
-    }
-  }
-
-
 };
 
 export default Game;
 
-// TODO: make the execute button to call the methods on the character on the board
-// TODO: make tools to snap to the grid inside workarea
-// TODO: make tools to snap to the grid inside tool box
-// TODO: add the ability to reshuffle the tools by dragging them in between 
-// other tools. so other tools whould snap to the next grid line.
-// the tools should also change they posiiton in respective arrays on the 
-// backend
+// TODO: make tools wrap the line as they are being rendered
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for
@@ -286,3 +213,8 @@ export default Game;
 // TODO: add graphic icons to tools
 // TODO: add different icons for other items on the board
 // TODO: add links to github, linkedin
+// TODO: Add a button to message popup to make the message wait for user's input
+// TODO: add the ability to reshuffle the tools by dragging them in between 
+// other tools. so other tools whould snap to the next grid line.
+// the tools should also change they posiiton in respective arrays on the 
+// backend

@@ -7,7 +7,7 @@ class BoardSizes {
     const gridBase = 80;
 
     // Board location
-    this.BOARD_X = this.DIM_X * (40 / gridBase);
+    this.BOARD_X = this.DIM_X * (42 / gridBase);
     this.BOARD_DX = this.DIM_X * (36 / gridBase);
 
     this.BOARD_Y = this.DIM_Y * (8 / gridBase);
