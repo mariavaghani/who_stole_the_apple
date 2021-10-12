@@ -75,12 +75,19 @@ class GameSizes {
     this.RESET_Y = this.DIM_Y * (40 / gridBase);
     this.RESET_DY = this.DIM_Y * (14 / gridBase);
 
-    // Continue Button Location
-    this.CONT_X = this.DIM_X * (60 / gridBase);
-    this.CONT_DX = this.DIM_X * (10 / gridBase);
+    // Dialogs
+    this.dialogX = this.DIM_X * (10 / gridBase);
+    this.dialogY = this.DIM_X * (18 / gridBase);
 
-    this.CONT_Y = this.DIM_Y * (56 / gridBase);
-    this.CONT_DY = this.DIM_Y * (14 / gridBase);
+    this.dialogDX = this.DIM_Y * (40 / gridBase);
+    this.dialogDY = this.DIM_Y * (24 / gridBase);
+
+    // Continue Button Location
+    this.CONT_DX = this.dialogDX / 2; //this.DIM_X * (10 / gridBase);
+    this.CONT_X = this.dialogX + (this.dialogDX - this.CONT_DX) / 2 ;//this.DIM_X * (20 / gridBase);
+
+    this.CONT_DY = this.dialogDY / 4; //this.DIM_Y * (7 / gridBase);
+    this.CONT_Y = this.dialogY + this.dialogDY - 70; //this.DIM_Y * (35 / gridBase);
 
     
   }

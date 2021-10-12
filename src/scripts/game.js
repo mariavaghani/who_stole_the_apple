@@ -179,41 +179,16 @@ class Game {
         this.level++;
         this.resetGame(ctxS, ctxA);
 
-      case "ERROR":
+      // case "ERROR":
 
-        this.board = new Board(this.sizeB, this.level);
-        case "NOPE":
+      //   this.board = new Board(this.sizeB, this.level);
+      //   case "NOPE":
           
-          this.board = new Board(this.sizeB, this.level);
+      //     this.board = new Board(this.sizeB, this.level);
       default:
-        break;
+        this.board = new Board(this.sizeB, this.level);
     }
-    
-
-    // if (this.board.status !== "OK") {
-    //   this.inDialog = true;
-    //   // this.printMsg(ctxA);
-    // }
-    // this.board = new Board(this.sizeB, this.level)
-  }
-  printMsg(ctxA) {
-      ctxA.save();
-      ctxA.fillStyle = COLOR_PALETTE.msgColor;
-      ctxA.fillRect(this.sizeB.origX, this.sizeB.origY,
-        this.sizeB.boardWidth, this.sizeB.boardWidth);
   
-      ctxA.font = "16px Arial";
-      ctxA.textAlign = "center";
-      ctxA.fillStyle = COLOR_PALETTE.containerColor;
-      ctxA.fillText(this.board.msg,
-        this.sizeB.origX + this.sizeB.boardWidth / 2,
-        this.sizeB.origY + this.sizeB.boardWidth / 2);
-  
-      ctxA.fillRect(this.size.CONT_X, this.size.CONT_Y,
-                    this.size.CONT_DX, this.size.CONT_DY);
-      
-      ctxA.restore();
-
   }
 
   resetStaticGameSetup(ctxS) {
@@ -260,7 +235,7 @@ class Game {
 
 export default Game;
 
-// TODO: Add a button to message popup to make the message wait for user's input
+// TODO: style error messages
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for

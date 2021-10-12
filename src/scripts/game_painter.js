@@ -4,6 +4,7 @@ class GamePainter {
   constructor (ctxS, size, board) {
 
     this.size = size;
+    this.board = board;
     // this.ctxS = ctxS;
 
     // Creates non-level-specific elements on the screen
@@ -38,6 +39,26 @@ class GamePainter {
     // this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
 
     ctxS.restore();
+
+  }
+
+  printMsg(ctxA) {
+    ctxA.save();
+    ctxA.fillStyle = COLOR_PALETTE.msgColor;
+    ctxA.fillRect(this.size.dialogX, this.size.dialogY,
+      this.size.dialogDX, this.size.dialogDY);
+
+    ctxA.font = "16px Arial";
+    ctxA.textAlign = "center";
+    ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    ctxA.fillText(this.board.msg,
+      this.size.dialogX + this.size.dialogDX / 2,
+      this.size.dialogY + this.size.dialogDY / 2);
+
+    ctxA.fillRect(this.size.CONT_X, this.size.CONT_Y,
+      this.size.CONT_DX, this.size.CONT_DY);
+
+    ctxA.restore();
 
   }
 

@@ -34,15 +34,6 @@ class GameView {
   }
 
   bindEvents(canvasA) {
-
-    // Bind event handlers to the game
-    // this.mouseDownHandler = this.mouseDownHandler.bind(this.game);
-    // this.mouseMoveHandler = this.mouseMoveHandler.bind(this.game);
-    // this.mouseUpHandler = this.mouseUpHandler.bind(this.game);
-
-    // Make buttons pressable
-    // this.mouseClickHandler = this.mouseClickHandler.bind(this);
-
     canvasA.addEventListener("mousedown", this.mouseDownHandler);
     canvasA.addEventListener("mousemove", this.mouseMoveHandler);
     canvasA.addEventListener("mouseup", this.mouseUpHandler);
@@ -71,7 +62,6 @@ class GameView {
       console.log("continue!!")
       this.game.stateMachine(this.ctxS, this.ctxA);
       
-      // this.game.inDialog = false;
     }
   }
 
@@ -153,7 +143,9 @@ class GameView {
       
       // Draw tools
       if (this.game.board.status !== "OK") {
-        this.game.printMsg(this.ctxA);
+        
+        // this.game.printMsg(this.ctxA);
+        this.game.painter.printMsg(this.ctxA);
       }
         
 
