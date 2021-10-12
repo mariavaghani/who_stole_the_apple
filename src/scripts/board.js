@@ -88,13 +88,15 @@ class Board {
 
     // check if position is on the board
     if (
+      
       newPos[0] < 0 ||
       newPos[0] >= this.size.cols ||
       newPos[1] < 0 ||
       newPos[1] >= this.size.cols
-    ) {
+      ) {
       this.msg = `${this.char.name} is leaving the board!!`;
       this.status = "ERROR";
+
       return false;
     }
 

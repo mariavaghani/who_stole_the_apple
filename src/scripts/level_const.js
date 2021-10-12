@@ -59,7 +59,10 @@ const LEVELS = {
       new Tool("Down", movingDown, "#CDBD87"),
       new Tool("Right", movingRight, "#8E6A81"),
       new Tool("Right", movingRight, "#8E6A81"),
-      collectItem,
+      new Tool("Collect", (board) => {
+        console.log("Collecting");
+        return true;
+      }, "#576C71"),
       new Tool("Left", movingLeft, "#BE879C")
     ],
     boardElements: [
@@ -73,7 +76,10 @@ const LEVELS = {
     tools: [
       new Tool("Left", movingLeft, "#BE879C"),
       new Tool("Right", movingRight, "#8E6A81"),
-      collectItem
+      new Tool("Collect", (board) => {
+        console.log("Collecting");
+        return true;
+      }, "#576C71")
     ],
     boardElements: [
       fox,

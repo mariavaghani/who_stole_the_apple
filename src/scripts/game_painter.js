@@ -29,7 +29,7 @@ class GamePainter {
     board.drawStatic(ctxS);
 
     // Draw grid on top
-    // this.drawGridOnGameArea(ctxS);
+    this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
     // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);

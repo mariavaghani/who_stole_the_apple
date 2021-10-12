@@ -70,6 +70,7 @@ class Game {
 
     LEVELS[level].tools.forEach(tool => {
       tool.size(this.size.cellWidth, this.size.cellHeight);
+      
       tools.push(tool);
     });
     return tools
@@ -134,20 +135,34 @@ class Game {
 
   }
 
-  executeWorkingTools () {
+  executeWorkingTools (ctxS, ctxA) {
+    
     if (this.inExecution) {
-
+      
       let i = 0;
       const execution = setInterval(() => {
         const tool = this.inWorkArea[i];
-
+        
         if (tool !== undefined && tool.execute(this.board)) {
           i++;
         } else {
           clearInterval(execution);
+          this.checkVictory();
         }
       }, 500);
       this.inExecution = false;
+
+    }
+  }
+
+  checkVictory() {
+    
+    if (this.fulfilledLevel()) {
+      this.board.msg = "Great Job, you thief!!";
+      this.board.status = "VICTORY";
+    } else {
+      this.board.msg = "Try again, hun!";
+      this.board.status = "NOPE";
     }
   }
 
@@ -157,36 +172,53 @@ class Game {
 
   }
 
-  endOfExecution(ctxA) {
-    
-    if ( this.fulfilledLevel() ) {
-      this.board.msg = "Great Job, you thief!!";
-      this.board.status = "VICTORY";
-    }
+  stateMachine(ctxS, ctxA) {
 
-    if (this.board.status !== "OK") {
-      this.printMsg(ctxA);
-      
+    switch (this.board.status) {
+      case "VICTORY":
+        this.level++;
+        this.resetGame(ctxS, ctxA);
+
+      case "ERROR":
+
+        this.board = new Board(this.sizeB, this.level);
+        case "NOPE":
+          
+          this.board = new Board(this.sizeB, this.level);
+      default:
+        break;
     }
+    
+
+    // if (this.board.status !== "OK") {
+    //   this.inDialog = true;
+    //   // this.printMsg(ctxA);
+    // }
+    // this.board = new Board(this.sizeB, this.level)
   }
   printMsg(ctxA) {
-    ctxA.save();
-    ctxA.fillStyle = COLOR_PALETTE.msgColor;
-    ctxA.fillRect(this.sizeB.origX, this.sizeB.origY,
-      this.sizeB.boardWidth, this.sizeB.boardWidth);
+      ctxA.save();
+      ctxA.fillStyle = COLOR_PALETTE.msgColor;
+      ctxA.fillRect(this.sizeB.origX, this.sizeB.origY,
+        this.sizeB.boardWidth, this.sizeB.boardWidth);
+  
+      ctxA.font = "16px Arial";
+      ctxA.textAlign = "center";
+      ctxA.fillStyle = COLOR_PALETTE.containerColor;
+      ctxA.fillText(this.board.msg,
+        this.sizeB.origX + this.sizeB.boardWidth / 2,
+        this.sizeB.origY + this.sizeB.boardWidth / 2);
+  
+      ctxA.fillRect(this.size.CONT_X, this.size.CONT_Y,
+                    this.size.CONT_DX, this.size.CONT_DY);
+      
+      ctxA.restore();
 
-    ctxA.font = "16px Arial";
-    ctxA.textAlign = "center";
-    ctxA.fillStyle = COLOR_PALETTE.containerColor;
-    ctxA.fillText(this.board.msg,
-      this.sizeB.origX + this.sizeB.boardWidth / 2,
-      this.sizeB.origY + this.sizeB.boardWidth / 2);
-    ctxA.restore();
   }
 
   resetStaticGameSetup(ctxS) {
 
-    const painter = new GamePainter(ctxS, this.size, this.board);
+    this.painter = new GamePainter(ctxS, this.size, this.board);
 
   }
 
@@ -228,7 +260,7 @@ class Game {
 
 export default Game;
 
-// TODO: Execute button should reset the board
+// TODO: Add a button to message popup to make the message wait for user's input
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for
@@ -237,7 +269,6 @@ export default Game;
 // TODO: add graphic icons to tools
 // TODO: add different icons for other items on the board
 // TODO: add links to github, linkedin
-// TODO: Add a button to message popup to make the message wait for user's input
 // TODO: add the ability to reshuffle the tools by dragging them in between 
 // other tools. so other tools whould snap to the next grid line.
 // the tools should also change they posiiton in respective arrays on the 

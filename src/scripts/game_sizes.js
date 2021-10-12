@@ -74,6 +74,15 @@ class GameSizes {
 
     this.RESET_Y = this.DIM_Y * (40 / gridBase);
     this.RESET_DY = this.DIM_Y * (14 / gridBase);
+
+    // Continue Button Location
+    this.CONT_X = this.DIM_X * (60 / gridBase);
+    this.CONT_DX = this.DIM_X * (10 / gridBase);
+
+    this.CONT_Y = this.DIM_Y * (56 / gridBase);
+    this.CONT_DY = this.DIM_Y * (14 / gridBase);
+
+    
   }
 
   toolInsideToolBox(tool) {
@@ -138,6 +147,15 @@ class GameSizes {
       this.EXEC_Y,
       this.EXEC_DX,
       this.EXEC_DY)
+  }
+
+  contButtonClicked(mouseX, mouseY) {
+    return this.mouseEventInArea(mouseX,
+      mouseY,
+      this.CONT_X,
+      this.CONT_Y,
+      this.CONT_DX,
+      this.CONT_DY)
   }
 
   mouseEventInArea (mouseX, mouseY, originX, originY, sideDimX, sideDimY = sideDimX) {

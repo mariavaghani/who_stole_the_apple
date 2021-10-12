@@ -1,18 +1,18 @@
-import Game from "./game";
 
 class GameView {
   constructor(game, canvasStatic, canvasActive) {
     this.game = game;
+    this.canvasA = canvasActive;
 
     this.ctxA = this.createHiResAwareCtx(canvasActive);
     this.ctxS = this.createHiResAwareCtx(canvasStatic);
     
-    // Bind event handlers to the game
+    // // Bind event handlers to the game
     this.mouseDownHandler = this.mouseDownHandler.bind(this.game);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this.game);
     this.mouseUpHandler = this.mouseUpHandler.bind(this.game);
 
-    // Make buttons pressable
+    // // Make buttons pressable
     this.mouseClickHandler = this.mouseClickHandler.bind(this);
 
     // Install events on the active canvas
@@ -34,6 +34,15 @@ class GameView {
   }
 
   bindEvents(canvasA) {
+
+    // Bind event handlers to the game
+    // this.mouseDownHandler = this.mouseDownHandler.bind(this.game);
+    // this.mouseMoveHandler = this.mouseMoveHandler.bind(this.game);
+    // this.mouseUpHandler = this.mouseUpHandler.bind(this.game);
+
+    // Make buttons pressable
+    // this.mouseClickHandler = this.mouseClickHandler.bind(this);
+
     canvasA.addEventListener("mousedown", this.mouseDownHandler);
     canvasA.addEventListener("mousemove", this.mouseMoveHandler);
     canvasA.addEventListener("mouseup", this.mouseUpHandler);
@@ -52,7 +61,17 @@ class GameView {
 
     if (this.game.size.execButtonClicked(this.mouseX, this.mouseY)) {
       console.log("Executing!!")
+      
       this.game.inExecution = true;
+    }
+
+    if (this.game.size.contButtonClicked(this.mouseX, this.mouseY)
+        && this.game.board.status !== "OK"
+        ) {
+      console.log("continue!!")
+      this.game.stateMachine(this.ctxS, this.ctxA);
+      
+      // this.game.inDialog = false;
     }
   }
 
@@ -110,43 +129,38 @@ class GameView {
                           this.size.wOrigY, tool);
           this.ensureToolInWorkArea(tool);
           this.ensureWorkToolOutOfTools(tool);
-          this.ensureWorkingOrder();
         }
       }
       // Remove dragging flag from all tools
       tool.isDragging = false;
     });
+    this.ensureWorkingOrder();
 
   }
 
   start () {
     
     this.game.resetGame(this.ctxS, this.ctxA);
-    setInterval( () => {
+    const runLevel = setInterval( () => {
+      
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
 
       this.game.drawExecuteButton(this.ctxA);
       this.game.drawResetButton(this.ctxA);
-
+      
       this.game.drawBoard(this.ctxA);
-
-      // Draw tools
       this.game.drawTools(this.ctxA);
+      
+      // Draw tools
+      if (this.game.board.status !== "OK") {
+        this.game.printMsg(this.ctxA);
+      }
+        
 
       // Draw Execution Board
-      this.game.executeWorkingTools();
-      this.game.endOfExecution(this.ctxA);
-
-      if (this.game.board.status === "VICTORY") {
-        this.game = new Game(this.game.level + 1,
-                            this.game.size,
-                            this.game.sizeB)
-        this.start();
-
-      }
-      
+      this.game.executeWorkingTools(this.ctxS, this.ctxA);
+ 
     }, 20);
-    
   }
 }
 
