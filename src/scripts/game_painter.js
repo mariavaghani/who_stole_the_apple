@@ -22,7 +22,6 @@ class GamePainter {
     // Draw the toolbox container
     this.drawToolBoxContainer(ctxS);
 
-    // TODO: figure out internal grid that the tools could snap to
     // Draw the Work Area container
     this.drawWorkArea(ctxS);
 
@@ -33,10 +32,10 @@ class GamePainter {
     // this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
-    this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
+    // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
   
     // Draw Grid in work area box
-    this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
+    // this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
 
     ctxS.restore();
 

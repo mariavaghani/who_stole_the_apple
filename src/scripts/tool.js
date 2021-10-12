@@ -7,9 +7,6 @@ class Tool {
     this.method = method;
     this.icon = icon;
     this.isDragging = false;
-    // this.pos = pos;
-
-    
   }
 
   size(sideX, sideY) {
@@ -36,6 +33,13 @@ class Tool {
     ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
     ctxA.font = "10px Arial";
     ctxA.fillText(this.name, this.tempX, this.tempY);
+  }
+
+  placeTo(pos, origX, origY) {
+
+    this.pos = pos;
+    this.x = this.pos[0] * this.sideX + origX;
+    this.y = this.pos[1] * this.sideY + origY;
   }
 
   execute(board) {

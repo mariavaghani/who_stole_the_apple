@@ -110,6 +110,7 @@ class GameView {
                           this.size.wOrigY, tool);
           this.ensureToolInWorkArea(tool);
           this.ensureWorkToolOutOfTools(tool);
+          this.ensureWorkingOrder();
         }
       }
       // Remove dragging flag from all tools

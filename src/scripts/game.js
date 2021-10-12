@@ -81,10 +81,17 @@ class Game {
     let dx = this.size.tOrigX; 
     let dy = this.size.tOrigY;
     
-    
+    let iRow = 0;
+    let iCol = 0;
     this.tools.forEach(tool => {
-      tool.draw(ctxA, dx, dy);
-      dx += tool.sideX;
+      let pos = [iCol, iRow];
+      tool.placeTo(pos, dx, dy);
+      iCol++;
+      if (iCol === this.size.cols) {
+        iCol = 0;
+        iRow++;
+      }
+      
     });
     ctxA.restore();
   }
@@ -199,12 +206,29 @@ class Game {
     });
   }
 
+  ensureWorkingOrder() {
+
+    this.inWorkArea.sort((t1, t2) => {
+      const pos1 = t1.pos[1] * this.size.cols + t1.pos[0];
+      const pos2 = t2.pos[1] * this.size.cols + t2.pos[0];
+      
+      if (pos1 > pos2) {
+        return 1;
+      } else if ( pos1 === pos2 ) {
+        return 0;
+      } else {
+        return -1;
+      }
+    })
+
+  }
+
 
 };
 
 export default Game;
 
-// TODO: make tools wrap the line as they are being rendered
+// TODO: Execute button should reset the board
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for
