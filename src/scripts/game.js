@@ -16,15 +16,15 @@ class Game {
     // initialize empty workspace
     this.inWorkArea = [];
     this.board = new Board(sizeB, level);
-    this.inExecution = false;
+    this.showInstructions = false;
 
     
   }
 
-  snapToGrid(x, y, origX, origY, tool) {
+  snapToGrid(origX, origY, tool) {
 
-    x = x - origX;
-    y = y - origY;
+    let x = tool.tempX - origX;
+    let y = tool.tempY - origY;
 
     x = Math.round(x / this.size.cellWidth); // * this.size.cellWidth;
     y = Math.round(y / this.size.cellHeight); // * this.size.cellHeight;
@@ -32,6 +32,42 @@ class Game {
     tool.pos = [x,y];
     tool.x = x * this.size.cellWidth + origX;
     tool.y = y * this.size.cellHeight + origY;
+  }
+
+  pushOverlappingTools(toolO, origX, origY, collection) {
+    collection.forEach(tool => {
+      if (
+        tool !== toolO &&
+        tool.pos[0] === toolO.pos[0] &&
+        tool.pos[1] === toolO.pos[1]
+        ) {
+        const toolNextPos = this.nextPos(tool.pos); //[tool.pos[0]+1, tool.pos[1]];
+        tool.placeTo(toolNextPos, origX, origY);
+        this.pushOverlappingTools(tool, origX, origY, collection);
+      }
+    });
+  }
+
+  nextPos (pos) {
+    let f = pos[0] + 1;
+    let s = pos[1];
+    if (f >= this.size.cols) {
+      f = 0;
+      s++;
+    }
+    if (s >= this.size.rows) {
+      s = 0;
+      f = 0;
+    }
+    return [f,s];
+  }
+
+  placeToolIn(collection, tool, origX, origY) {
+    tool.x = tool.tempX;
+    tool.y = tool.tempY;
+
+    this.snapToGrid(origX, origY, tool);
+    this.pushOverlappingTools(tool, origX, origY, collection);
   }
 
   ensureToolInTools(tool) {
@@ -112,6 +148,17 @@ class Game {
     ctxA.fillText("Reset", this.size.RESET_X, this.size.RESET_Y + 16);
   }
 
+  drawInstructionButton(ctxA) {
+    // console.log("Hi!");
+    ctxA.fillStyle = COLOR_PALETTE.resetButtonColor;
+    ctxA.fillRect(this.size.INST_X, this.size.INST_Y,
+      this.size.INST_DX, this.size.INST_DY);
+
+    ctxA.font = "16px Arial";
+    ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    ctxA.fillText("Instructions", this.size.INST_X, this.size.INST_Y + 16);
+  }
+
   drawExecuteButton(ctxA) {
     // console.log("Hi!");
     ctxA.fillStyle = COLOR_PALETTE.execButtonColor;
@@ -127,7 +174,7 @@ class Game {
   resetGame(ctxS, ctxA) {
     this.board = new Board(this.sizeB, this.level);
 
-    
+    // this.painter = new GamePainter(ctxS, this.size, this.board);
     this.resetStaticGameSetup(ctxS);
     this.tools = this.resetToolBox(this.level);
     this.populateToolBox(ctxA)
@@ -136,23 +183,19 @@ class Game {
   }
 
   executeWorkingTools () {
-    
-    if (this.inExecution) {
-      
-      let i = 0;
-      const execution = setInterval(() => {
-        const tool = this.inWorkArea[i];
-        
-        if (tool !== undefined && tool.execute(this.board)) {
-          i++;
-        } else {
-          clearInterval(execution);
-          this.checkVictory();
-        }
-      }, 500);
-      this.inExecution = false;
 
-    }
+    let i = 0;
+    const execution = setInterval(() => {
+      const tool = this.inWorkArea[i];
+      
+      if (tool !== undefined && tool.execute(this.board)) {
+        i++;
+      } else {
+        clearInterval(execution);
+        this.checkVictory();
+      }
+    }, 500);
+
   }
 
   checkVictory() {
@@ -172,10 +215,7 @@ class Game {
   }
 
   fulfilledLevel() {
-    // return (this.board.char.pos[0] === this.board.escape.pos[0] &&
-    //         this.board.char.pos[1] === this.board.escape.pos[1] &&
-    //         this.board.char.bag.length === 1
-    //         )
+    
     console.log(`this.board.char.bag ⬇⬇⬇ `);
     console.log(this.board.char.bag);
 
@@ -208,7 +248,7 @@ class Game {
 
   resetStaticGameSetup(ctxS) {
 
-    this.painter = new GamePainter(ctxS, this.size, this.board);
+    this.painter = new GamePainter(ctxS, this.size, this.board, this.level);
 
   }
 
@@ -250,7 +290,6 @@ class Game {
 
 export default Game;
 
-// TODO: Create a method that would determine if there is a win for the level
 // TODO: add design of level 2
 // TODO: add design of level 3
 // TODO: add instructions. popup? welcome screen? 
@@ -263,7 +302,8 @@ export default Game;
 // TODO: add graphic icons to tools
 // TODO: add different icons for other items on the board
 // TODO: add links to github, linkedin
-// TODO: add the ability to reshuffle the tools by dragging them in between 
-// other tools. so other tools whould snap to the next grid line.
-// the tools should also change they posiiton in respective arrays on the 
-// backend
+
+// TODO: refactor start method, and some game logic to work with request
+// animation frame
+// TODO: figure out a better strategy on how to draw and press button animation
+// TODO: create a fox animation, figure out a good strategy for 

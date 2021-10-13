@@ -82,6 +82,20 @@ class GameSizes {
     this.dialogDX = this.DIM_Y * (40 / gridBase);
     this.dialogDY = this.DIM_Y * (24 / gridBase);
 
+    // Instructions button location
+    this.INST_X = this.DIM_X * (4 / gridBase);
+    this.INST_DX = this.DIM_X * (7 / gridBase);
+
+    this.INST_Y = this.DIM_Y * (30 / gridBase);
+    this.INST_DY = this.DIM_Y * (3 / gridBase);
+
+    // Instructions Dialog
+    this.instX = this.DIM_X * (10 / gridBase);
+    this.instY = this.DIM_X * (18 / gridBase);
+
+    this.instDX = this.DIM_Y * (40 / gridBase);
+    this.instDY = this.DIM_Y * (24 / gridBase);
+
     // Continue Button Location
     this.CONT_DX = this.dialogDX / 2; //this.DIM_X * (10 / gridBase);
     this.CONT_X = this.dialogX + (this.dialogDX - this.CONT_DX) / 2 ;//this.DIM_X * (20 / gridBase);
@@ -135,6 +149,14 @@ class GameSizes {
             mouseX <= tool.x + tool.sideX &&
             mouseY >= tool.y &&
             mouseY <= tool.y + tool.sideX
+    )
+  }
+
+  overInstructions(mouseX, mouseY) {
+    return (mouseX >= this.INST_X &&
+            mouseX <= this.INST_X + this.INST_DX &&
+            mouseY >= this.INST_Y &&
+            mouseY <= this.INST_Y + this.INST_DY
     )
   }
 

@@ -1,7 +1,7 @@
 import COLOR_PALETTE from "./styling";
 
 class GamePainter {
-  constructor (ctxS, size, board) {
+  constructor (ctxS, size, board, level) {
 
     this.size = size;
     // this.ctxS = ctxS;
@@ -16,7 +16,7 @@ class GamePainter {
     ctxS.fillRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
 
     // Draw the Name of the game container
-    this.drawNameContainer(ctxS);
+    this.drawNameContainer(ctxS, level);
 
 
     // Draw the toolbox container
@@ -29,7 +29,7 @@ class GamePainter {
     board.drawStatic(ctxS);
 
     // Draw grid on top
-    // this.drawGridOnGameArea(ctxS);
+    this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
     // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
@@ -61,7 +61,7 @@ class GamePainter {
 
   }
 
-  drawNameContainer(ctxS) {
+  drawNameContainer(ctxS, level) {
     ctxS.fillStyle = COLOR_PALETTE.containerColor;
     ctxS.fillRect(this.size.TITLE_X, this.size.TITLE_Y,
       this.size.TITLE_DX, this.size.TITLE_DY);
@@ -70,7 +70,8 @@ class GamePainter {
     const that = this.size;
 
     printText("Who Stole/nThe Apple", 30);
-    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 70);
+    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 65);
+    printText(`Level: ${level}`, 16, 145);
 
 
     function printText(titleTxt, lh, offset = 0) {
@@ -145,6 +146,8 @@ class GamePainter {
       ctxS.stroke();
     }
   }
+
+
 
 
 }

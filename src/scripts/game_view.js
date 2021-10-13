@@ -2,7 +2,6 @@
 class GameView {
   constructor(game, canvasStatic, canvasActive) {
     this.game = game;
-    this.canvasA = canvasActive;
 
     this.ctxA = this.createHiResAwareCtx(canvasActive);
     this.ctxS = this.createHiResAwareCtx(canvasStatic);
@@ -53,7 +52,7 @@ class GameView {
     if (this.game.size.execButtonClicked(this.mouseX, this.mouseY)) {
       console.log("Executing!!")
       
-      this.game.inExecution = true;
+      this.game.executeWorkingTools();
     }
 
     if (this.game.size.contButtonClicked(this.mouseX, this.mouseY)
@@ -61,7 +60,6 @@ class GameView {
         ) {
       console.log("continue!!")
       this.game.stateMachine(this.ctxS, this.ctxA);
-      
     }
   }
 
@@ -90,6 +88,17 @@ class GameView {
 
       }
     });
+    
+    
+    this.mouseX = e.x - this.size.origX;
+    this.mouseY = e.y - this.size.origY;
+
+    if (this.size.overInstructions(this.mouseX, this.mouseY)) {
+      console.log("Showing Instructions!!")
+      this.showInstructions = true;
+    } else {
+      this.showInstructions = false;
+    }
   }
 
   mouseUpHandler(e) {
@@ -100,23 +109,22 @@ class GameView {
       if (tool.isDragging) {
         // If the tool ended up in the toolbox
         if (this.size.toolInsideToolBox(tool)) {
-          tool.x = tool.tempX;
-          tool.y = tool.tempY;
-
-          this.snapToGrid(tool.tempX, tool.tempY,
+          this.placeToolIn(this.tools,
+                          tool,
                           this.size.tOrigX,
-                          this.size.tOrigY, tool);
+                          this.size.tOrigY)
+          
           this.ensureToolInTools(tool);
           this.ensureToolOutOfWorkArea(tool);
         }
 
         // If the tool ended up in the work area
         if (this.size.toolInsideWorkArea(tool)) {
-          tool.x = tool.tempX;
-          tool.y = tool.tempY;
-          this.snapToGrid(tool.tempX, tool.tempY,
+          this.placeToolIn(this.inWorkArea,
+                          tool,
                           this.size.wOrigX,
-                          this.size.wOrigY, tool);
+                          this.size.wOrigY)
+          
           this.ensureToolInWorkArea(tool);
           this.ensureWorkToolOutOfTools(tool);
         }
@@ -128,31 +136,62 @@ class GameView {
 
   }
 
-  start () {
+
+  // STANDARD WAY TO ANIMATE
+  // start () {
     
+  //   this.game.resetGame(this.ctxS, this.ctxA);
+  //   const runLevel = setInterval( () => {
+      
+  //     this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
+
+  //     this.game.drawExecuteButton(this.ctxA);
+  //     this.game.drawResetButton(this.ctxA);
+  //     this.game.drawInstructionButton(this.ctxA);
+      
+  //     this.game.drawBoard(this.ctxA);
+  //     // Draw tools
+  //     this.game.drawTools(this.ctxA);
+      
+      
+  //     // Draw Execution Board
+  //     this.game.executeWorkingTools();
+      
+  //     if (this.game.board.status !== "OK") {
+  //       this.game.painter.printMsg(this.ctxA, this.game.board.msg);
+  //     }
+      
+  //   }, 20);
+  // }
+
+
+  // ATTEMPTING TO MIGRATE TO REQUEST ANIMATION FRAME
+  start () {
     this.game.resetGame(this.ctxS, this.ctxA);
-    const runLevel = setInterval( () => {
+
+    let gameAnimationStep = () => {
+      // Do whatever
+      
       
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
 
       this.game.drawExecuteButton(this.ctxA);
       this.game.drawResetButton(this.ctxA);
-      
+      this.game.drawInstructionButton(this.ctxA);
+
       this.game.drawBoard(this.ctxA);
       // Draw tools
       this.game.drawTools(this.ctxA);
-      
-      
-      // Draw Execution Board
-      this.game.executeWorkingTools();
-      
+
+
       if (this.game.board.status !== "OK") {
-        
-        // this.game.printMsg(this.ctxA);
         this.game.painter.printMsg(this.ctxA, this.game.board.msg);
       }
-      
-    }, 20);
+
+      requestAnimationFrame(gameAnimationStep);
+    }
+    this.animation = requestAnimationFrame(gameAnimationStep);
+
   }
 }
 
