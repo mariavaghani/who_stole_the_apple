@@ -9,6 +9,7 @@ class Character extends BoardElement{
 
   reset () {
     this.pos = this.orig;
+    this.bag = [];
   }
 
   moveInDir(moveVect, board) {

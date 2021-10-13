@@ -135,7 +135,7 @@ class Game {
 
   }
 
-  executeWorkingTools (ctxS, ctxA) {
+  executeWorkingTools () {
     
     if (this.inExecution) {
       
@@ -172,10 +172,18 @@ class Game {
   }
 
   fulfilledLevel() {
-    return (this.board.char.pos[0] === this.board.escape.pos[0] &&
-            this.board.char.pos[1] === this.board.escape.pos[1] &&
-            this.board.char.bag.length === 1
-            )
+    // return (this.board.char.pos[0] === this.board.escape.pos[0] &&
+    //         this.board.char.pos[1] === this.board.escape.pos[1] &&
+    //         this.board.char.bag.length === 1
+    //         )
+    console.log(`this.board.char.bag ⬇⬇⬇ `);
+    console.log(this.board.char.bag);
+
+    console.log(`LEVELS[this.level].collectables ⬇⬇⬇ `);
+    console.log(LEVELS[this.level].collectables);
+    
+    
+    return LEVELS[this.level].levelCompletion(this.board, this.level);
 
   }
 

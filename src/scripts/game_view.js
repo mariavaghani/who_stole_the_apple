@@ -144,7 +144,7 @@ class GameView {
       
       
       // Draw Execution Board
-      this.game.executeWorkingTools(this.ctxS, this.ctxA);
+      this.game.executeWorkingTools();
       
       if (this.game.board.status !== "OK") {
         

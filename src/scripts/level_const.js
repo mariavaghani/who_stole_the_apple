@@ -35,7 +35,14 @@ const collectingItem = (board) => {
   return board.char.addToBag(board);
 }
 
-// TOOLS
+// WIN REQUIREMENT
+
+const collectAllCollectablesEscapeToHole = (board, level) => {
+  return (board.char.pos[0] === board.escape.pos[0] &&
+            board.char.pos[1] === board.escape.pos[1] &&
+            board.char.bag.length === LEVELS[level].collectables.length
+            )
+}
 
 
 
@@ -74,7 +81,8 @@ const LEVELS = {
     escape: new EscapeElement("Hole", [4, 5]),
     collectables: [
       new CollectableElement("Carrot", [1, 3])
-    ]
+    ],
+    levelCompletion: collectAllCollectablesEscapeToHole
   },
 
   2: {
@@ -100,7 +108,8 @@ const LEVELS = {
     collectables: [
       new CollectableElement("Carrot", [3, 0]),
       new CollectableElement("Raddish", [4, 3])
-    ]
+    ],
+    levelCompletion: collectAllCollectablesEscapeToHole
 
   }
 }
