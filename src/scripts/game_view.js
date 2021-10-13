@@ -96,6 +96,7 @@ class GameView {
     if (this.size.overInstructions(this.mouseX, this.mouseY)) {
       console.log("Showing Instructions!!")
       this.showInstructions = true;
+      
     } else {
       this.showInstructions = false;
     }
@@ -186,6 +187,10 @@ class GameView {
 
       if (this.game.board.status !== "OK") {
         this.game.painter.printMsg(this.ctxA, this.game.board.msg);
+      }
+
+      if (this.game.showInstructions) {
+        this.game.painter.drawInstructionsContainer(this.ctxA);
       }
 
       requestAnimationFrame(gameAnimationStep);

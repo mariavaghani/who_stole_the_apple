@@ -8,6 +8,8 @@ window.addEventListener('DOMContentLoaded', () => {
   let canvasStatic = document.getElementById('game-canvas-static');
   let canvasActive = document.getElementById('game-canvas-active');
 
+  canvasStatic.height = Math.min(document.documentElement.clientHeight, 700);
+  canvasActive.height = Math.min(document.documentElement.clientHeight, 700);
   
   const sizeG = new GameSizes(canvasStatic);
   const sizeB = new BoardSizes(canvasStatic);

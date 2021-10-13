@@ -29,7 +29,7 @@ class GamePainter {
     board.drawStatic(ctxS);
 
     // Draw grid on top
-    this.drawGridOnGameArea(ctxS);
+    // this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
     // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
@@ -59,6 +59,28 @@ class GamePainter {
 
     ctxA.restore();
 
+  }
+
+  drawInstructionsContainer (ctxA) {
+
+    ctxA.save();
+    // ctxA.fillStyle = COLOR_PALETTE.msgColor;
+    // ctxA.fillRect(this.size.instX, this.size.instY,
+    //   this.size.instDX, this.size.instDY);
+
+    // ctxA.font = "16px Arial";
+    // ctxA.textAlign = "center";
+    // ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    // ctxA.fillText("Hi",
+    //   this.size.instX + this.size.instDX / 2,
+    //   this.size.instY + this.size.instDY / 2);
+
+    let drawing = new Image();
+    drawing.src = "./src/assets/instructions-overlay.png"; // can also be a remote URL e.g. http://
+    ctxA.drawImage(drawing, 0, this.size.origY, this.size.DIM_X, this.size.DIM_Y);
+   
+
+    ctxA.restore();
   }
 
   drawNameContainer(ctxS, level) {
