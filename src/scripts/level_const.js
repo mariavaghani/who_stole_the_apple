@@ -31,7 +31,7 @@ const movingDown = (board) => {
 };
 
 const collectingItem = (board) => {
-  console.log("Collecting");
+  // console.log("Collecting");
   return board.char.addToBag(board);
 }
 
@@ -107,6 +107,37 @@ const LEVELS = {
     escape: new EscapeElement("Hole", [4, 5]),
     collectables: [
       new CollectableElement("Carrot", [3, 0]),
+      new CollectableElement("Raddish", [4, 3])
+    ],
+    levelCompletion: collectAllCollectablesEscapeToHole
+
+  }, 
+
+  3: {
+    tools: [
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Left", movingLeft, "#BE879C"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Left", movingLeft, "#BE879C"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Down", movingDown, "#CDBD87"),
+      new Tool("Collect", collectingItem, "#576C71"),
+      new Tool("Collect", collectingItem, "#576C71"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Up", movingUp, "#A56D73"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Up", movingUp, "#A56D73"),
+      new Tool("Up", movingUp, "#A56D73"),
+      new Tool("Right", movingRight, "#8E6A81"),
+      new Tool("Up", movingUp, "#A56D73"),
+      new Tool("Collect", collectingItem, "#576C71")
+    ],
+    character: new Character("Tiger", [0, 2]),
+    escape: new EscapeElement("Hole", [2, 0]),
+    collectables: [
+      new CollectableElement("Carrot", [4, 0]),
+      new CollectableElement("Broccoli", [0, 4]),
       new CollectableElement("Raddish", [4, 3])
     ],
     levelCompletion: collectAllCollectablesEscapeToHole

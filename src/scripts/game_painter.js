@@ -1,4 +1,4 @@
-import COLOR_PALETTE from "./styling";
+import {COLOR_PALETTE, GAME_ELE} from "./styling";
 
 class GamePainter {
   constructor (ctxS, size, board, level) {
@@ -26,7 +26,7 @@ class GamePainter {
     this.drawWorkArea(ctxS);
 
     // Draw the Board container
-    board.drawStatic(ctxS);
+    board.drawStatic(ctxS, this.roundRect);
 
     // Draw grid on top
     // this.drawGridOnGameArea(ctxS);
@@ -64,36 +64,24 @@ class GamePainter {
   drawInstructionsContainer (ctxA) {
 
     ctxA.save();
-    // ctxA.fillStyle = COLOR_PALETTE.msgColor;
-    // ctxA.fillRect(this.size.instX, this.size.instY,
-    //   this.size.instDX, this.size.instDY);
-
-    // ctxA.font = "16px Arial";
-    // ctxA.textAlign = "center";
-    // ctxA.fillStyle = COLOR_PALETTE.containerColor;
-    // ctxA.fillText("Hi",
-    //   this.size.instX + this.size.instDX / 2,
-    //   this.size.instY + this.size.instDY / 2);
 
     let drawing = new Image();
     drawing.src = "./src/assets/instructions-overlay.png"; // can also be a remote URL e.g. http://
     ctxA.drawImage(drawing, 0, this.size.origY, this.size.DIM_X, this.size.DIM_Y);
    
-
     ctxA.restore();
   }
 
   drawNameContainer(ctxS, level) {
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.TITLE_X, this.size.TITLE_Y,
-      this.size.TITLE_DX, this.size.TITLE_DY);
-    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
+    this.roundRect(ctxS, this.size.TITLE_X, this.size.TITLE_Y,
+      this.size.TITLE_DX, this.size.TITLE_DY,
+      GAME_ELE.name);
 
     const that = this.size;
 
-    printText("Who Stole/nThe Apple", 30);
-    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 65);
-    printText(`Level: ${level}`, 16, 145);
+    printText("Who Stole/nThe Apple", 30, 10);
+    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 80);
+    printText(`Level: ${level}`, 16, 160);
 
 
     function printText(titleTxt, lh, offset = 0) {
@@ -110,10 +98,42 @@ class GamePainter {
   }
 
   drawToolBoxContainer(ctxS) {
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.TOOL_X, this.size.TOOL_Y, this.size.TOOL_DX, this.size.TOOL_DY);
+    this.roundRect(ctxS, this.size.TOOL_X, this.size.TOOL_Y,
+      this.size.TOOL_DX, this.size.TOOL_DY,
+      GAME_ELE.workArea);
 
+  }
 
+  roundRect (ctx, x, y, xd, yd, options) {
+    let rad;
+    if (options.rad) {
+      rad = options.rad;
+    } else {
+      rad = 0;
+    }
+    
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.beginPath();
+    ctx.moveTo(rad, 0);
+    ctx.lineTo(xd-rad, 0);
+    ctx.quadraticCurveTo(xd, 0, xd, rad);
+    ctx.lineTo(xd, yd-rad);
+    ctx.quadraticCurveTo(xd, yd, xd-rad, yd);
+    ctx.lineTo(rad, yd);
+    ctx.quadraticCurveTo(0, yd, 0, yd-rad);
+    ctx.lineTo(0, rad);
+    ctx.quadraticCurveTo(0, 0, rad, 0);
+    ctx.fillStyle = options.fillColor;
+    ctx.fill();
+    if (options.outline) {
+      ctx.strokeStyle = options.outline.color;
+      ctx.lineWidth = options.outline.thickness;
+      ctx.stroke();
+
+    }
+    ctx.closePath();
+    ctx.restore();
   }
 
   drawToolGrid(ctxS, origX, origY) {
@@ -144,9 +164,10 @@ class GamePainter {
   }
 
   drawWorkArea(ctxS) {
-    ctxS.fillStyle = COLOR_PALETTE.containerColor;
-    ctxS.fillRect(this.size.WORK_X, this.size.WORK_Y,
-      this.size.WORK_DX, this.size.WORK_DY);
+    this.roundRect(ctxS,
+      this.size.WORK_X, this.size.WORK_Y,
+      this.size.WORK_DX, this.size.WORK_DY, GAME_ELE.workArea)
+
   }
 
   drawGridOnGameArea(ctxS) {

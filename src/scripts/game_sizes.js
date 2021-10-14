@@ -11,13 +11,10 @@ class GameSizes {
     this.origX = rect.x;
     this.origY = rect.y;
 
-    // Grid 
-    this.gapX = this.DIM_X * (1 / gridBase);
-    this.gapY = this.DIM_Y * (2 / gridBase);
+    // // Grid 
+    // this.gapX = this.DIM_X * (1 / gridBase);
+    // this.gapY = this.DIM_Y * (2 / gridBase);
 
-    // Tool size
-    // this.toolSideX = this.DIM_X * (3 / gridBase);
-    // this.toolSideY = this.DIM_Y * (4 / gridBase);
 
     // Title location
     this.TITLE_X = this.DIM_X * (2 / gridBase);
@@ -48,7 +45,7 @@ class GameSizes {
     this.cellWidth = this.width / this.cols;
     
     // Y dir
-    this.borderY = this.TOOL_DY / 20;
+    this.borderY = this.TOOL_DY / 15;
     this.height = this.TOOL_DY - 2 * this.borderY;
     this.rows = 4;
     this.cellHeight = this.height / this.rows;
@@ -65,15 +62,18 @@ class GameSizes {
     this.EXEC_X = this.DIM_X * (30 / gridBase);
     this.EXEC_DX = this.DIM_X * (10 / gridBase);
 
-    this.EXEC_Y = this.DIM_Y * (56 / gridBase);
-    this.EXEC_DY = this.DIM_Y * (14 / gridBase);
+    this.EXEC_Y = this.DIM_Y * (50 / gridBase);
+    this.EXEC_DY = this.DIM_Y * (20 / gridBase);
 
     // Reset button location
     this.RESET_X = this.DIM_X * (30 / gridBase);
-    this.RESET_DX = this.DIM_X * (10 / gridBase);
+    this.RESET_DX = this.EXEC_DX; //this.DIM_X * (10 / gridBase);
 
     this.RESET_Y = this.DIM_Y * (40 / gridBase);
-    this.RESET_DY = this.DIM_Y * (14 / gridBase);
+    this.RESET_DY = this.DIM_Y * (8 / gridBase);
+
+    
+    
 
     // Dialogs
     this.dialogX = this.DIM_X * (10 / gridBase);

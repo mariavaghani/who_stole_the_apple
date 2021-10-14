@@ -1,5 +1,5 @@
 import LEVELS from './level_const';
-import COLOR_PALETTE from './styling';
+import {BTN_STYLES} from './styling';
 import Board from "./board";
 import GamePainter from "./game_painter";
 
@@ -137,38 +137,37 @@ class Game {
     return this.tools.concat(this.inWorkArea);
   }
 
-  drawResetButton(ctxA) {
-    // console.log("Hi!");
-    ctxA.fillStyle = COLOR_PALETTE.resetButtonColor;
-    ctxA.fillRect(this.size.RESET_X, this.size.RESET_Y,
-                  this.size.RESET_DX, this.size.RESET_DY);
+  drawButton (ctxA, x, y, width, height, style) {
+    ctxA.save();
+    this.painter.roundRect(ctxA, x, y,
+                          width, height,
+                          style);
 
-    ctxA.font = "16px Arial";
-    ctxA.fillStyle = COLOR_PALETTE.containerColor;
-    ctxA.fillText("Reset", this.size.RESET_X, this.size.RESET_Y + 16);
+    ctxA.font = `${style.fontSize}px ${style.font}`;
+    ctxA.fillStyle = style.textColor;
+    ctxA.textAlign = "center";
+    ctxA.fillText(style.txt,
+      x + width / 2,
+      y + (height + style.fontSize / 2) / 2);
+    ctxA.restore();
   }
 
-  drawInstructionButton(ctxA) {
-    // console.log("Hi!");
-    ctxA.fillStyle = COLOR_PALETTE.resetButtonColor;
-    ctxA.fillRect(this.size.INST_X, this.size.INST_Y,
-      this.size.INST_DX, this.size.INST_DY);
+  drawAllButtons(ctxA) {
+    this.drawButton(ctxA,
+      this.size.EXEC_X, this.size.EXEC_Y,
+      this.size.EXEC_DX, this.size.EXEC_DY,
+      BTN_STYLES.execBtn);
 
-    ctxA.font = "16px Arial";
-    ctxA.fillStyle = COLOR_PALETTE.containerColor;
-    ctxA.fillText("Instructions", this.size.INST_X, this.size.INST_Y + 16);
-  }
+    this.drawButton(ctxA,
+      this.size.RESET_X, this.size.RESET_Y,
+      this.size.RESET_DX, this.size.RESET_DY,
+      BTN_STYLES.resetBtn
+    );
 
-  drawExecuteButton(ctxA) {
-    // console.log("Hi!");
-    ctxA.fillStyle = COLOR_PALETTE.execButtonColor;
-    ctxA.fillRect(this.size.EXEC_X, this.size.EXEC_Y,
-                  this.size.EXEC_DX, this.size.EXEC_DY);
-
-    ctxA.font = "16px Arial";
-    ctxA.fillStyle = COLOR_PALETTE.containerColor;
-    ctxA.fillText("Execute", this.size.EXEC_X, this.size.EXEC_Y + 16);
-
+    this.drawButton(ctxA,
+      this.size.INST_X, this.size.INST_Y,
+      this.size.INST_DX, this.size.INST_DY,
+      BTN_STYLES.instBtn);
   }
 
   resetGame(ctxS, ctxA) {
@@ -201,12 +200,11 @@ class Game {
   checkVictory() {
     
     if (this.fulfilledLevel()) {
-      console.log("here");
 
       this.board.msg = "Great Job, you thief!!";
       this.board.status = "VICTORY";
-      console.log(`this.board.msg ⬇⬇⬇ `);
-      console.log(this.board.msg);
+      // console.log(`this.board.msg ⬇⬇⬇ `);
+      // console.log(this.board.msg);
       
     } else if (this.board.status === "OK") {
       this.board.msg = `${this.board.char.name} did not complete the challenge!`;
@@ -215,14 +213,7 @@ class Game {
   }
 
   fulfilledLevel() {
-    
-    console.log(`this.board.char.bag ⬇⬇⬇ `);
-    console.log(this.board.char.bag);
 
-    console.log(`LEVELS[this.level].collectables ⬇⬇⬇ `);
-    console.log(LEVELS[this.level].collectables);
-    
-    
     return LEVELS[this.level].levelCompletion(this.board, this.level);
 
   }
@@ -290,20 +281,14 @@ class Game {
 
 export default Game;
 
-// TODO: add design of level 2
-// TODO: add design of level 3
-// TODO: add instructions. popup? welcome screen? 
 // TODO: Level completion requirements should show up at the title
 // TODO: add obstacles class, that would be a parent class for
 // different types of obstacles
 // TODO: add collectibles class, that would be a parent class for
 // collectible items
-// TODO: populate the board with collectibles
 // TODO: add graphic icons to tools
 // TODO: add different icons for other items on the board
 // TODO: add links to github, linkedin
 
-// TODO: refactor start method, and some game logic to work with request
-// animation frame
 // TODO: figure out a better strategy on how to draw and press button animation
 // TODO: create a fox animation, figure out a good strategy for 

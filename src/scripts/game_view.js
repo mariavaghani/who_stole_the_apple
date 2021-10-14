@@ -1,3 +1,4 @@
+import { COLOR_PALETTE, STYLES } from "./styling";
 
 class GameView {
   constructor(game, canvasStatic, canvasActive) {
@@ -10,6 +11,7 @@ class GameView {
     this.mouseDownHandler = this.mouseDownHandler.bind(this.game);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this.game);
     this.mouseUpHandler = this.mouseUpHandler.bind(this.game);
+
 
     // // Make buttons pressable
     this.mouseClickHandler = this.mouseClickHandler.bind(this);
@@ -45,12 +47,12 @@ class GameView {
     this.mouseY = e.y - this.game.size.origY;
 
     if (this.game.size.resetButtonClicked(this.mouseX, this.mouseY)) {
-      console.log("Reset!!")
+      // console.log("Reset!!")
       this.game.resetGame(this.ctxS, this.ctxA);
     }
 
     if (this.game.size.execButtonClicked(this.mouseX, this.mouseY)) {
-      console.log("Executing!!")
+      // console.log("Executing!!")
       
       this.game.executeWorkingTools();
     }
@@ -58,7 +60,7 @@ class GameView {
     if (this.game.size.contButtonClicked(this.mouseX, this.mouseY)
         && this.game.board.status !== "OK"
         ) {
-      console.log("continue!!")
+      // console.log("continue!!")
       this.game.stateMachine(this.ctxS, this.ctxA);
     }
   }
@@ -94,7 +96,7 @@ class GameView {
     this.mouseY = e.y - this.size.origY;
 
     if (this.size.overInstructions(this.mouseX, this.mouseY)) {
-      console.log("Showing Instructions!!")
+      // console.log("Showing Instructions!!")
       this.showInstructions = true;
       
     } else {
@@ -137,48 +139,14 @@ class GameView {
 
   }
 
-
-  // STANDARD WAY TO ANIMATE
-  // start () {
-    
-  //   this.game.resetGame(this.ctxS, this.ctxA);
-  //   const runLevel = setInterval( () => {
-      
-  //     this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
-
-  //     this.game.drawExecuteButton(this.ctxA);
-  //     this.game.drawResetButton(this.ctxA);
-  //     this.game.drawInstructionButton(this.ctxA);
-      
-  //     this.game.drawBoard(this.ctxA);
-  //     // Draw tools
-  //     this.game.drawTools(this.ctxA);
-      
-      
-  //     // Draw Execution Board
-  //     this.game.executeWorkingTools();
-      
-  //     if (this.game.board.status !== "OK") {
-  //       this.game.painter.printMsg(this.ctxA, this.game.board.msg);
-  //     }
-      
-  //   }, 20);
-  // }
-
-
-  // ATTEMPTING TO MIGRATE TO REQUEST ANIMATION FRAME
   start () {
     this.game.resetGame(this.ctxS, this.ctxA);
 
     let gameAnimationStep = () => {
-      // Do whatever
-      
-      
+
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
 
-      this.game.drawExecuteButton(this.ctxA);
-      this.game.drawResetButton(this.ctxA);
-      this.game.drawInstructionButton(this.ctxA);
+      this.game.drawAllButtons(this.ctxA);
 
       this.game.drawBoard(this.ctxA);
       // Draw tools

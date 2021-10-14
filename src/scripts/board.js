@@ -1,4 +1,4 @@
-import COLOR_PALETTE from "./styling";
+import {COLOR_PALETTE, GAME_ELE} from "./styling";
 import LEVELS from "./level_const";
 
 class Board {
@@ -16,10 +16,13 @@ class Board {
     
   }
   
-  drawStatic(ctxS) {
-    ctxS.fillStyle = COLOR_PALETTE.boardColor;
-    ctxS.fillRect(this.size.BOARD_X, this.size.BOARD_Y,
-                  this.size.BOARD_DX, this.size.BOARD_DY);
+  drawStatic(ctxS, painterMethod) {
+    painterMethod(ctxS, this.size.BOARD_X, this.size.BOARD_Y,
+      this.size.BOARD_DX, this.size.BOARD_DY,
+      GAME_ELE.board)
+    // ctxS.fillStyle = COLOR_PALETTE.boardColor;
+    // ctxS.fillRect(this.size.BOARD_X, this.size.BOARD_Y,
+    //               this.size.BOARD_DX, this.size.BOARD_DY);
       
     this.drawGridOnBoard(ctxS)
   }
