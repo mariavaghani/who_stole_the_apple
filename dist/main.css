@@ -1,3 +1,31 @@
-body{background-color:#969f78}.game{display:flex;width:100%;flex-direction:column;align-items:center;justify-content:flex-start}.game div{width:1200px}#links-footer{display:flex;align-self:flex-end;justify-content:flex-end;align-items:center;color:#888e72}.links{display:flex;justify-content:center}
+/*!*************************************************************************************************************************************!*\
+  !*** css ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[1].use[1]!./node_modules/sass-loader/dist/cjs.js!./src/index.scss ***!
+  \*************************************************************************************************************************************/
+body {
+  background-color: #969F78;
+}
 
-/*# sourceMappingURL=main.css.map*/
+.game {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.game div {
+  width: 1200px;
+}
+
+#links-footer {
+  display: flex;
+  align-self: flex-end;
+  justify-content: flex-end;
+  align-items: center;
+  color: #888E72;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+}

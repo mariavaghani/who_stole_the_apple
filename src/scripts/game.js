@@ -288,7 +288,6 @@ export default Game;
 // collectible items
 // TODO: add graphic icons to tools
 // TODO: add different icons for other items on the board
-// TODO: add links to github, linkedin
 
 // TODO: figure out a better strategy on how to draw and press button animation
 // TODO: create a fox animation, figure out a good strategy for 

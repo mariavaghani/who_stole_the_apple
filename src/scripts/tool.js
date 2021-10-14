@@ -19,20 +19,23 @@ class Tool {
     this.x = x;
     this.y = y;
 
-    ctxA.fillStyle = this.icon;
-    ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
-    ctxA.font = "10px Arial";
-    ctxA.fillText(this.name, this.x, this.y);
+    ctxA.drawImage(this.icon, this.x, this.y, this.sideX, this.sideY);
+    // ctxA.fillStyle = this.icon;
+    // ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
+    ctxA.font = "12px Arial";
+    ctxA.fillText(this.name, this.x, this.y + 5);
   }
 
   drawWhileDragging(ctxA, x, y) {
     this.tempX = x;
     this.tempY = y;
 
-    ctxA.fillStyle = this.icon;
-    ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
-    ctxA.font = "10px Arial";
-    ctxA.fillText(this.name, this.tempX, this.tempY);
+    
+    ctxA.drawImage(this.icon, this.tempX, this.tempY, this.sideX, this.sideY);
+    // ctxA.fillStyle = this.icon;
+    // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
+    ctxA.font = "12px Arial";
+    ctxA.fillText(this.name, this.tempX, this.tempY+5);
   }
 
   placeTo(pos, origX, origY) {
