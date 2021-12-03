@@ -1,5 +1,33 @@
 // if styling related constants are not generated based on user window,
+// if styling related constants are not generated based on user window,
 // these numbers go in this file
+
+function LightenDarkenColor(col,amt) {
+    var usePound = false;
+    if ( col[0] == "#" ) {
+        col = col.slice(1);
+        usePound = true;
+    }
+
+    var num = parseInt(col,16);
+
+    var r = (num >> 16) + amt;
+
+    if ( r > 255 ) r = 255;
+    else if  (r < 0) r = 0;
+
+    var b = ((num >> 8) & 0x00FF) + amt;
+
+    if ( b > 255 ) b = 255;
+    else if  (b < 0) b = 0;
+
+    var g = (num & 0x0000FF) + amt;
+
+    if ( g > 255 ) g = 255;
+    else if  ( g < 0 ) g = 0;
+
+    return (usePound?"#":"") + (g | (b << 8) | (r << 16)).toString(16);
+}
 
 export const COLOR_PALETTE = {
 
@@ -11,9 +39,9 @@ export const COLOR_PALETTE = {
   boardColor: "#C0CBA8",
   boardOutlineColor: "#888E72",
 
-  execButtonColor: "#B28568",
-  resetButtonColor: "#BE9979",
-  // instructionsButtonColor: "#BE9979",
+  execButtonColor: "#576C65",
+  resetButtonColor: "#B76969",
+  instructionsButtonColor: "#BE9979",
   msgColor: "#B37C7C",
 
   nameContainer: "#CDBD87"
@@ -33,7 +61,15 @@ export const BTN_STYLES = {
     txt: "Execute",
     fontSize: STYLES.h2FontSize,
     font: STYLES.h2Font,
-    textColor: COLOR_PALETTE.containerColor
+    textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.execButtonColor, -20),
+    },
+    hover: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.execButtonColor, 20),
+    }
   },
 
   resetBtn: {
@@ -42,16 +78,32 @@ export const BTN_STYLES = {
     txt: "Reset",
     fontSize: STYLES.h2FontSize,
     font: STYLES.h2Font,
-    textColor: COLOR_PALETTE.containerColor
+    textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.resetButtonColor, -20),
+    },
+    hover: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.resetButtonColor, 20),
+    },
   },
 
   instBtn: {
     rad: STYLES.btnRadSm,
-    fillColor: COLOR_PALETTE.resetButtonColor,
+    fillColor: COLOR_PALETTE.instructionsButtonColor,
     txt: "Instructions",
     fontSize: STYLES.h2FontSize,
     font: STYLES.h2Font,
-    textColor: COLOR_PALETTE.containerColor
+    textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRadSm,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.instructionsButtonColor, -20),
+    },
+    hover: {
+      rad: STYLES.btnRadSm,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.instructionsButtonColor, 20),
+    },
   }
 
 }

@@ -17,6 +17,11 @@ class Game {
     this.inWorkArea = [];
     this.board = new Board(sizeB, level);
     this.showInstructions = false;
+    this.buttonHoverState = {
+      instructions: false,
+      reset: false,
+      execute: false,
+    }
 
     
   }
@@ -137,11 +142,15 @@ class Game {
     return this.tools.concat(this.inWorkArea);
   }
 
-  drawButton (ctxA, x, y, width, height, style) {
+  drawButton (ctxA, x, y, width, height, style, hovered) {
     ctxA.save();
+    const btnFaceStyle = hovered ? style.hover : style
+    this.painter.roundRect(ctxA, x+0.008*x, y+0.008*y,
+                          width, height,
+                          style.accent);
     this.painter.roundRect(ctxA, x, y,
                           width, height,
-                          style);
+                          btnFaceStyle);
 
     ctxA.font = `${style.fontSize}px ${style.font}`;
     ctxA.fillStyle = style.textColor;
@@ -156,18 +165,20 @@ class Game {
     this.drawButton(ctxA,
       this.size.EXEC_X, this.size.EXEC_Y,
       this.size.EXEC_DX, this.size.EXEC_DY,
-      BTN_STYLES.execBtn);
+      BTN_STYLES.execBtn, this.buttonHoverState.execute
+      );
 
     this.drawButton(ctxA,
       this.size.RESET_X, this.size.RESET_Y,
       this.size.RESET_DX, this.size.RESET_DY,
-      BTN_STYLES.resetBtn
+      BTN_STYLES.resetBtn, this.buttonHoverState.reset
     );
 
     this.drawButton(ctxA,
       this.size.INST_X, this.size.INST_Y,
       this.size.INST_DX, this.size.INST_DY,
-      BTN_STYLES.instBtn);
+      BTN_STYLES.instBtn, this.buttonHoverState.instructions
+      );
   }
 
   resetGame(ctxS, ctxA) {
@@ -182,7 +193,7 @@ class Game {
   }
 
   executeWorkingTools () {
-
+      
     let i = 0;
     const execution = setInterval(() => {
       const tool = this.inWorkArea[i];
@@ -192,9 +203,10 @@ class Game {
       } else {
         clearInterval(execution);
         this.checkVictory();
+        return true;
       }
     }, 500);
-
+    
   }
 
   checkVictory() {

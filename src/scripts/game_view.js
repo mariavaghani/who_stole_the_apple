@@ -3,7 +3,7 @@ import { COLOR_PALETTE, STYLES } from "./styling";
 class GameView {
   constructor(game, canvasStatic, canvasActive) {
     this.game = game;
-
+    this.inExecution = false;
     this.ctxA = this.createHiResAwareCtx(canvasActive);
     this.ctxS = this.createHiResAwareCtx(canvasStatic);
     
@@ -41,7 +41,7 @@ class GameView {
     canvasA.addEventListener("click", this.mouseClickHandler);
   }
 
-  mouseClickHandler(e) {
+  async mouseClickHandler(e) {
     // Save current mouse position
     this.mouseX = e.x - this.game.size.origX;
     this.mouseY = e.y - this.game.size.origY;
@@ -51,9 +51,10 @@ class GameView {
       this.game.resetGame(this.ctxS, this.ctxA);
     }
 
-    if (this.game.size.execButtonClicked(this.mouseX, this.mouseY)) {
+    if (this.game.size.execButtonClicked(this.mouseX, this.mouseY) && !this.inExecution) {
       // console.log("Executing!!")
       
+      this.inExecution = true;
       this.game.executeWorkingTools();
     }
 
@@ -62,6 +63,7 @@ class GameView {
         ) {
       // console.log("continue!!")
       this.game.stateMachine(this.ctxS, this.ctxA);
+      this.inExecution = false;
     }
   }
 
@@ -82,7 +84,7 @@ class GameView {
   }
 
   mouseMoveHandler(e) {
-
+    
     this.allTools().forEach(tool => {
       if (tool.isDragging) {
         tool.tempX += e.movementX;
@@ -98,9 +100,23 @@ class GameView {
     if (this.size.overInstructions(this.mouseX, this.mouseY)) {
       // console.log("Showing Instructions!!")
       this.showInstructions = true;
+      this.buttonHoverState.instructions = true
       
     } else {
       this.showInstructions = false;
+      this.buttonHoverState.instructions = false
+    }
+
+    if (this.size.execButtonClicked(this.mouseX, this.mouseY)) {
+      this.buttonHoverState.execute = true
+    } else {
+      this.buttonHoverState.execute = false
+    }
+
+    if (this.size.resetButtonClicked(this.mouseX, this.mouseY)) {
+      this.buttonHoverState.reset = true
+    } else {
+      this.buttonHoverState.reset = false
     }
   }
 
@@ -146,7 +162,7 @@ class GameView {
 
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
 
-      this.game.drawAllButtons(this.ctxA);
+      this.game.drawAllButtons(this.ctxA, this.game.buttonHoverState);
 
       this.game.drawBoard(this.ctxA);
       // Draw tools

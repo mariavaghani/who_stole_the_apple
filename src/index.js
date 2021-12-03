@@ -31,3 +31,5 @@ window.addEventListener('DOMContentLoaded', () => {
   // console.log("All Loaded, thank you for asking");
 })
 
+// TODO: remove the listeners on pressing the execute button. could add a state 
+// and an if statement to listen to the button press
