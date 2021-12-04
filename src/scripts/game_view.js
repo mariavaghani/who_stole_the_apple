@@ -41,7 +41,7 @@ class GameView {
     canvasA.addEventListener("click", this.mouseClickHandler);
   }
 
-  async mouseClickHandler(e) {
+  mouseClickHandler(e) {
     // Save current mouse position
     this.mouseX = e.x - this.game.size.origX;
     this.mouseY = e.y - this.game.size.origY;
@@ -56,6 +56,13 @@ class GameView {
       
       this.inExecution = true;
       this.game.executeWorkingTools();
+    }
+
+    if (this.game.size.aboutButtonClicked(this.mouseX, this.mouseY)) {
+      this.game.showAboutModal = true;
+    }
+    if (this.game.size.closeAboutButtonClicked(this.mouseX, this.mouseY) && this.game.showAboutModal) {
+      this.game.showAboutModal = false;
     }
 
     if (this.game.size.contButtonClicked(this.mouseX, this.mouseY)
@@ -84,7 +91,7 @@ class GameView {
   }
 
   mouseMoveHandler(e) {
-    
+    let hoverOverButton = false;
     this.allTools().forEach(tool => {
       if (tool.isDragging) {
         tool.tempX += e.movementX;
@@ -97,27 +104,43 @@ class GameView {
     this.mouseX = e.x - this.size.origX;
     this.mouseY = e.y - this.size.origY;
 
-    if (this.size.overInstructions(this.mouseX, this.mouseY)) {
+    if (this.size.overInstructions(this.mouseX, this.mouseY) && !this.showAboutModal) {
+      // document.body.style.cursor = "pointer";
       // console.log("Showing Instructions!!")
       this.showInstructions = true;
       this.buttonHoverState.instructions = true
-      
+      hoverOverButton = true;
     } else {
       this.showInstructions = false;
       this.buttonHoverState.instructions = false
     }
 
-    if (this.size.execButtonClicked(this.mouseX, this.mouseY)) {
-      this.buttonHoverState.execute = true
+    if (this.size.execButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
+      // document.body.style.cursor = "pointer";
+      this.buttonHoverState.execute = true;
+      hoverOverButton = true;
+
     } else {
       this.buttonHoverState.execute = false
     }
+    
+    if (this.size.resetButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
+      this.buttonHoverState.reset = true;
+      // document.body.style.cursor = "pointer";
+      hoverOverButton = true;
 
-    if (this.size.resetButtonClicked(this.mouseX, this.mouseY)) {
-      this.buttonHoverState.reset = true
     } else {
       this.buttonHoverState.reset = false
     }
+    if (this.size.aboutButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
+      // document.body.style.cursor = "pointer";
+      this.buttonHoverState.about = true
+      hoverOverButton = true;
+
+    } else {
+      this.buttonHoverState.about = false
+    }
+    hoverOverButton ? document.body.style.cursor = "pointer" : document.body.style.cursor = "default"
   }
 
   mouseUpHandler(e) {
@@ -172,9 +195,13 @@ class GameView {
       if (this.game.board.status !== "OK") {
         this.game.painter.printMsg(this.ctxA, this.game.board.msg);
       }
-
+      
       if (this.game.showInstructions) {
         this.game.painter.drawInstructionsContainer(this.ctxA);
+      }
+      if (this.game.showAboutModal) {
+        
+        this.game.painter.drawAboutModal(this.ctxA);
       }
 
       requestAnimationFrame(gameAnimationStep);

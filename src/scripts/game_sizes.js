@@ -86,16 +86,37 @@ class GameSizes {
     this.INST_X = this.DIM_X * (4 / gridBase);
     this.INST_DX = this.DIM_X * (7 / gridBase);
 
-    this.INST_Y = this.DIM_Y * (30 / gridBase);
+    this.INST_Y = this.DIM_Y * (29 / gridBase);
     this.INST_DY = this.DIM_Y * (3 / gridBase);
 
+    // About button location
+    this.ABOUT_X = this.DIM_X * (4 / gridBase);
+    this.ABOUT_DX = this.DIM_X * (7 / gridBase);
+
+    this.ABOUT_Y = this.DIM_Y * (33 / gridBase);
+    this.ABOUT_DY = this.DIM_Y * (3 / gridBase);
+
     // Instructions Dialog
-    this.instX = this.DIM_X * (10 / gridBase);
-    this.instY = this.DIM_X * (18 / gridBase);
+    // this.instX = this.DIM_X * (10 / gridBase);
+    // this.instY = this.DIM_X * (18 / gridBase);
 
-    this.instDX = this.DIM_Y * (40 / gridBase);
-    this.instDY = this.DIM_Y * (24 / gridBase);
+    // this.instDX = this.DIM_Y * (40 / gridBase);
+    // this.instDY = this.DIM_Y * (24 / gridBase);
 
+    // About Dialog
+    this.aboutX = this.DIM_X * (20 / gridBase);
+    this.aboutY = this.DIM_Y * (20 / gridBase);
+
+    this.aboutDX = this.DIM_X * (40 / gridBase);
+    this.aboutDY = this.DIM_Y * (40 / gridBase);
+
+    // Close About Button Location
+    this.CLOSE_ABOUT_DX = this.DIM_X * (2 / gridBase); //this.DIM_X * (10 / gridBase);
+    this.CLOSE_ABOUT_X = this.DIM_X * (56 / gridBase);;//this.DIM_X * (20 / gridBase);
+
+    this.CLOSE_ABOUT_DY = this.DIM_Y * (4 / gridBase);; //this.DIM_Y * (7 / gridBase);
+    this.CLOSE_ABOUT_Y = this.DIM_Y * (22 / gridBase);; //this.DIM_Y * (35 / gridBase);
+    
     // Continue Button Location
     this.CONT_DX = this.dialogDX / 2; //this.DIM_X * (10 / gridBase);
     this.CONT_X = this.dialogX + (this.dialogDX - this.CONT_DX) / 2 ;//this.DIM_X * (20 / gridBase);
@@ -185,6 +206,24 @@ class GameSizes {
       this.CONT_Y,
       this.CONT_DX,
       this.CONT_DY)
+  }
+
+  aboutButtonClicked(mouseX, mouseY) {
+    return this.mouseEventInArea(mouseX,
+      mouseY,
+      this.ABOUT_X,
+      this.ABOUT_Y,
+      this.ABOUT_DX,
+      this.ABOUT_DY)
+  }
+
+  closeAboutButtonClicked(mouseX, mouseY) {
+    return this.mouseEventInArea(mouseX,
+      mouseY,
+      this.CLOSE_ABOUT_X,
+      this.CLOSE_ABOUT_Y,
+      this.CLOSE_ABOUT_DX,
+      this.CLOSE_ABOUT_DY)
   }
 
   mouseEventInArea (mouseX, mouseY, originX, originY, sideDimX, sideDimY = sideDimX) {

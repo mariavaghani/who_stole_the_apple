@@ -43,6 +43,7 @@ export const COLOR_PALETTE = {
   resetButtonColor: "#B76969",
   instructionsButtonColor: "#BE9979",
   msgColor: "#B37C7C",
+  aboutBGColor: "#B5BAA0",
 
   nameContainer: "#CDBD87"
 };
@@ -51,7 +52,9 @@ export const STYLES = {
   btnRad: 20,
   btnRadSm: 7,
   h2FontSize: 18,
-  h2Font: "Arial"
+  h2Font: "Arial",
+  h3FontSize: 14,
+  h3Font: "Arial"
 }
 
 export const BTN_STYLES = {
@@ -93,8 +96,24 @@ export const BTN_STYLES = {
     rad: STYLES.btnRadSm,
     fillColor: COLOR_PALETTE.instructionsButtonColor,
     txt: "Instructions",
-    fontSize: STYLES.h2FontSize,
-    font: STYLES.h2Font,
+    fontSize: STYLES.h3FontSize,
+    font: STYLES.h3Font,
+    textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRadSm,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.instructionsButtonColor, -20),
+    },
+    hover: {
+      rad: STYLES.btnRadSm,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.instructionsButtonColor, 20),
+    },
+  },
+  aboutBtn: {
+    rad: STYLES.btnRadSm,
+    fillColor: COLOR_PALETTE.instructionsButtonColor,
+    txt: "About",
+    fontSize: STYLES.h3FontSize,
+    font: STYLES.h3Font,
     textColor: COLOR_PALETTE.containerColor,
     accent: {
       rad: STYLES.btnRadSm,
@@ -115,6 +134,12 @@ export const GAME_ELE = {
     outline: {
       color: COLOR_PALETTE.containerOutlineColor,
       thickness: 5
+    },
+    shadow: {
+      offsetX: 0,
+      offsetY: 0,
+      color: "#6B6B6B",
+      blur: 50
     }
   },
 
@@ -124,6 +149,12 @@ export const GAME_ELE = {
     outline: {
       color: COLOR_PALETTE.nameContainer,
       thickness: 5
+    },
+    shadow: {
+      offsetX: 0,
+      offsetY: 0,
+      color: "#6B6B6B",
+      blur: 50
     }
   },
 
@@ -133,6 +164,27 @@ export const GAME_ELE = {
     outline: {
       color: COLOR_PALETTE.boardOutlineColor,
       thickness: 7
+    },
+    shadow: {
+      offsetX: 0,
+      offsetY: 0,
+      color: "#6B6B6B",
+      blur: 50
+    }
+  },
+
+  aboutDialog: {
+    rad: STYLES.btnRad,
+    fillColor: COLOR_PALETTE.aboutBGColor,
+    outline: {
+      color: COLOR_PALETTE.boardOutlineColor,
+      thickness: 7
+    },
+    shadow: {
+      offsetX: 40,
+      offsetY: 40,
+      color: "#6B6B6B",
+      blur: 50
     }
   }
 }

@@ -14,12 +14,27 @@ class BoardSizes {
     this.BOARD_DY = this.DIM_Y * (66 / gridBase);
 
     // Grid
-    this.borderX = this.BOARD_DX / 20;
-    this.boardWidth = this.BOARD_DX - 2 * this.borderX;
-    this.cols = 6;
-    this.cellWidth = this.boardWidth / this.cols;
-    this.borderY = (this.BOARD_DY - this.cols * this.cellWidth) / 2;
-
+    console.log(`this.BOARD_X: `, this.BOARD_X);
+    console.log(`this.BOARD_DX: `, this.BOARD_DX);
+    console.log(`this.BOARD_Y: `, this.BOARD_Y);
+    console.log(`this.BOARD_DY: `, this.BOARD_DY);
+    if (this.BOARD_DX <= this.BOARD_DY) {
+      this.borderX = this.BOARD_DX / 20;
+      this.boardWidth = this.BOARD_DX - 2 * this.borderX;
+      this.cols = 6;
+      this.cellWidth = this.boardWidth / this.cols;
+      this.borderY = (this.BOARD_DY - this.cols * this.cellWidth) / 2;
+  
+      // this.origX = this.BOARD_X + this.borderX; 
+      // this.origY = this.BOARD_Y + this.borderY;
+    } else {
+      this.borderY = this.BOARD_DY / 20;
+      this.boardWidth = this.BOARD_DY - 2 * this.borderY;
+      this.cols = 6;
+      this.cellWidth = this.boardWidth / this.cols;
+      this.borderX = (this.BOARD_DX - this.cols * this.cellWidth) / 2;
+  
+    }
     this.origX = this.BOARD_X + this.borderX; 
     this.origY = this.BOARD_Y + this.borderY;
   }

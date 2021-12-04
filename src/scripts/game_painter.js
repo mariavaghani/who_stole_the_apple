@@ -1,10 +1,11 @@
 import {COLOR_PALETTE, GAME_ELE} from "./styling";
-
+// import img from "../assets"
 class GamePainter {
   constructor (ctxS, size, board, level) {
 
     this.size = size;
     // this.ctxS = ctxS;
+    this.printText = this.printText.bind(this.size);
 
     // Creates non-level-specific elements on the screen
     // Clear the game area
@@ -61,6 +62,52 @@ class GamePainter {
 
   }
 
+  drawAboutModal(ctxA) {
+    
+    ctxA.save();
+    ctxA.fillStyle = COLOR_PALETTE.aboutBGColor;
+    this.roundRect(ctxA, this.size.aboutX, this.size.aboutY,
+      this.size.aboutDX, this.size.aboutDY,
+      GAME_ELE.aboutDialog);
+    const lh = 42;
+    const lhs = 18;
+    ctxA.font = `${lh}px Permanent Marker`;
+    ctxA.textAlign = "center";
+    ctxA.fillStyle = COLOR_PALETTE.containerColor;
+    ctxA.fillText(
+      "Who Stole the Apple",
+      this.size.aboutX + this.size.aboutDX / 2,
+      this.size.aboutY + this.size.aboutDY / 2
+    );
+    const aboutTxt = "the game where you could steal/nsome apples and practice your/nalgorithmic thinking along the way"
+    const lines = aboutTxt.split("/n");
+    
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      ctxA.font = `${lhs}px Permanent Marker`;
+      ctxA.fillText(
+        line,
+        this.size.aboutX + this.size.aboutDX / 2,
+        this.size.aboutY + this.size.aboutDY / 2 + lh + i * lhs
+        );
+        
+    }
+      
+    // ctxA.fillRect(this.size.CLOSE_ABOUT_X, this.size.CLOSE_ABOUT_Y,
+    //   this.size.CLOSE_ABOUT_DX, this.size.CLOSE_ABOUT_DY
+    // );
+    ctxA.font=`${this.size.CLOSE_ABOUT_DY}px FontAwesome`;
+    ctxA.fillStyle = COLOR_PALETTE.backgroundColor;
+      
+      ctxA.fillText(
+            "\uf057",
+            this.size.CLOSE_ABOUT_X + this.size.CLOSE_ABOUT_DX / 2,
+            this.size.CLOSE_ABOUT_Y + this.size.CLOSE_ABOUT_DY
+      );
+    ctxA.restore();
+
+  }
+
   drawInstructionsContainer (ctxA) {
 
     ctxA.save();
@@ -73,28 +120,54 @@ class GamePainter {
   }
 
   drawNameContainer(ctxS, level) {
+    ctxS.save();
     this.roundRect(ctxS, this.size.TITLE_X, this.size.TITLE_Y,
       this.size.TITLE_DX, this.size.TITLE_DY,
       GAME_ELE.name);
-
-    const that = this.size;
-
-    printText("Who Stole/nThe Apple", 30, 10);
-    printText("the game where/nyou could steal/nsome apples and/npractice your algorithmic/nthinking along the way", 14, 80);
-    printText(`Level: ${level}`, 16, 160);
-
-
-    function printText(titleTxt, lh, offset = 0) {
-      let lines = titleTxt.split("/n");
-      ctxS.font = `${lh}px Arial`;
-      for (let i = 1; i <= lines.length; i++) {
-        const line = lines[i - 1];
-        ctxS.fillText(line,
-          that.TITLE_X + 5,
-          that.TITLE_Y + i * lh + offset);
-
+    ctxS.restore();
+    ctxS.save();
+      let gameLogo = new Image();
+      gameLogo.src = "./src/assets/fox_logo.png";
+      gameLogo.onload = () => {
+        ctxS.drawImage(
+          gameLogo,
+          this.size.TITLE_X + 0.25*this.size.TITLE_DX,
+          this.size.TITLE_Y + 0.04 * this.size.TITLE_DY,
+          this.size.TITLE_DX * 0.5,
+          this.size.TITLE_DX * 0.5
+          );
       }
-    }
+      
+      // ctxS.drawImage(gameLogo, this.size.TITLE_X, this.size.TITLE_Y, 200, 200);
+      const that = this.size;
+    const titleOffset = Math.max(this.size.TITLE_DX * 0.55, this.size.TITLE_DY * 0.25)
+    this.printText(ctxS, 
+      "Who Stole/nThe Apple",
+      this.size.TITLE_DY * 0.1,
+      titleOffset
+    );
+    this.printText(ctxS, 
+      `Level: ${level}`,
+      this.size.TITLE_DY * 0.06,
+      this.size.TITLE_Y + this.size.TITLE_DY * 0.3
+    );
+
+
+    ctxS.restore();
+  }
+
+  printText(ctxS, titleTxt, lh, offset = 0) {
+    let lines = titleTxt.split("/n");
+    ctxS.font = `${lh}px Permanent Marker`;
+    ctxS.textAlign = "center";
+
+   for (let i = 1; i <= lines.length; i++) {
+     const line = lines[i - 1];
+     ctxS.fillText(line,
+       this.TITLE_X + 0.5 * this.TITLE_DX,
+       this.TITLE_Y + i * lh + offset);
+
+   }
   }
 
   drawToolBoxContainer(ctxS) {
@@ -125,7 +198,16 @@ class GamePainter {
     ctx.lineTo(0, rad);
     ctx.quadraticCurveTo(0, 0, rad, 0);
     ctx.fillStyle = options.fillColor;
+    if (options.shadow) {
+      ctx.shadowOffsetX = options.shadow.offsetX;
+      ctx.shadowOffsetY = options.shadow.offsetY;
+      ctx.shadowColor = options.shadow.color;
+      ctx.shadowBlur = options.shadow.blur;
+
+    }
     ctx.fill();
+    ctx.restore();
+    ctx.save();
     if (options.outline) {
       ctx.strokeStyle = options.outline.color;
       ctx.lineWidth = options.outline.thickness;

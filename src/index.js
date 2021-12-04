@@ -9,11 +9,14 @@ window.addEventListener('DOMContentLoaded', () => {
   let canvasActive = document.getElementById('game-canvas-active');
   let displayElement = document.getElementById('dynamic-height');
 
-  displayElement.style.height = `${Math.min(document.documentElement.clientHeight-70, 700)}px`;
+  displayElement.style.height = `${Math.min(document.documentElement.clientHeight-70, 600)}px`;
+  displayElement.style.width = `${Math.min(document.documentElement.clientWidth-70, 1200)}px`;
 
 
-  canvasStatic.height = Math.min(document.documentElement.clientHeight-70, 700);
-  canvasActive.height = Math.min(document.documentElement.clientHeight-70, 700);
+  canvasStatic.height = Math.min(document.documentElement.clientHeight-70, 600);
+  canvasActive.height = Math.min(document.documentElement.clientHeight-70, 600);
+  canvasStatic.width = Math.min(document.documentElement.clientWidth-70, 1200);
+  canvasActive.width = Math.min(document.documentElement.clientWidth-70, 1200);
   
   const sizeG = new GameSizes(canvasStatic);
   const sizeB = new BoardSizes(canvasStatic);
@@ -31,5 +34,6 @@ window.addEventListener('DOMContentLoaded', () => {
   // console.log("All Loaded, thank you for asking");
 })
 
-// TODO: remove the listeners on pressing the execute button. could add a state 
-// and an if statement to listen to the button press
+// TODO: add drop shadow under board, and components
+// TODO: add back highlight to tools on hover
+// TODO: add dynamic resize on window resize
