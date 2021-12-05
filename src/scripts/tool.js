@@ -23,7 +23,7 @@ class Tool {
     ctxA.drawImage(this.icon, this.x, this.y, this.sideX, this.sideY);
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
-    ctxA.font = "12px Arial";
+    ctxA.font = "12px Coming Soon";
     // ctxA.fillText(this.name, this.x, this.y + 5);
   }
 
@@ -35,7 +35,7 @@ class Tool {
     ctxA.drawImage(this.icon, this.tempX, this.tempY, this.sideX, this.sideY);
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
-    ctxA.font = "12px Arial";
+    ctxA.font = "12px Coming Soon";
     // ctxA.fillText(this.name, this.tempX, this.tempY+5);
   }
   drawWhileHovered(ctxA, x, y) {
@@ -50,7 +50,7 @@ class Tool {
     ctxA.drawImage(this.icon, this.x, this.y, this.sideX, this.sideY);
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
-    ctxA.font = "12px Arial";
+    ctxA.font = "12px Coming Soon";
     ctxA.fillText(this.name, this.x, this.y+2);
     ctxA.restore();
   }

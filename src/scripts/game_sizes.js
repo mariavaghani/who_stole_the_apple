@@ -21,20 +21,20 @@ class GameSizes {
     this.TITLE_DX = this.DIM_X * (11 / gridBase);
 
     this.TITLE_Y = this.DIM_Y * (8 / gridBase);
-    this.TITLE_DY = this.DIM_Y * (30 / gridBase);
+    this.TITLE_DY = this.DIM_Y * (32 / gridBase);
 
     // Toolbox location
     this.TOOL_X = this.DIM_X * (14 / gridBase);
     this.TOOL_DX = this.DIM_X * (26 / gridBase);
 
     this.TOOL_Y = this.DIM_Y * (8 / gridBase);
-    this.TOOL_DY = this.DIM_Y * (30 / gridBase);
+    this.TOOL_DY = this.DIM_Y * (32 / gridBase);
 
     // Work Area location
     this.WORK_X = this.DIM_X * (2 / gridBase);
     this.WORK_DX = this.TOOL_DX; //this.DIM_X * (26 / gridBase);
 
-    this.WORK_Y = this.DIM_Y * (40 / gridBase);
+    this.WORK_Y = this.DIM_Y * (42 / gridBase);
     this.WORK_DY = this.TOOL_DY; //this.DIM_Y * (30 / gridBase);
 
     // Work Area Grid ============================
@@ -42,7 +42,7 @@ class GameSizes {
     // console.log(`this.TOOL_DX: `, this.TOOL_DX);
     this.cols = 6;
     this.rows = 4;
-    if (this.TOOL_DY >= 0.6 * this.TOOL_DX) {
+    if (this.TOOL_DY >= (0.6 * this.TOOL_DX + this.TOOL_DX / 25)) {
       this.borderX = this.TOOL_DX / 25;
       this.width = this.TOOL_DX - 2 * this.borderX;
       this.cellWidth = this.width / this.cols;
@@ -78,14 +78,14 @@ class GameSizes {
     this.EXEC_X = this.DIM_X * (30 / gridBase);
     this.EXEC_DX = this.DIM_X * (10 / gridBase);
 
-    this.EXEC_Y = this.DIM_Y * (50 / gridBase);
-    this.EXEC_DY = this.DIM_Y * (20 / gridBase);
+    this.EXEC_Y = this.DIM_Y * (52 / gridBase);
+    this.EXEC_DY = this.DIM_Y * (22 / gridBase);
 
     // Reset button location
     this.RESET_X = this.DIM_X * (30 / gridBase);
     this.RESET_DX = this.EXEC_DX; //this.DIM_X * (10 / gridBase);
 
-    this.RESET_Y = this.DIM_Y * (40 / gridBase);
+    this.RESET_Y = this.DIM_Y * (42 / gridBase);
     this.RESET_DY = this.DIM_Y * (8 / gridBase);
 
     
@@ -102,14 +102,14 @@ class GameSizes {
     this.INST_X = this.DIM_X * (4 / gridBase);
     this.INST_DX = this.DIM_X * (7 / gridBase);
 
-    this.INST_Y = this.DIM_Y * (29 / gridBase);
+    this.INST_Y = this.DIM_Y * (30 / gridBase);
     this.INST_DY = this.DIM_Y * (3 / gridBase);
 
     // About button location
     this.ABOUT_X = this.DIM_X * (4 / gridBase);
     this.ABOUT_DX = this.DIM_X * (7 / gridBase);
 
-    this.ABOUT_Y = this.DIM_Y * (33 / gridBase);
+    this.ABOUT_Y = this.DIM_Y * (34 / gridBase);
     this.ABOUT_DY = this.DIM_Y * (3 / gridBase);
 
     // Instructions Dialog
@@ -134,7 +134,7 @@ class GameSizes {
     this.CLOSE_ABOUT_Y = this.DIM_Y * (22 / gridBase);; //this.DIM_Y * (35 / gridBase);
     
     // Continue Button Location
-    this.CONT_DX = this.dialogDX / 2; //this.DIM_X * (10 / gridBase);
+    this.CONT_DX = 2 * this.dialogDX / 3; //this.DIM_X * (10 / gridBase);
     this.CONT_X = this.dialogX + (this.dialogDX - this.CONT_DX) / 2 ;//this.DIM_X * (20 / gridBase);
 
     this.CONT_DY = this.dialogDY / 4; //this.DIM_Y * (7 / gridBase);

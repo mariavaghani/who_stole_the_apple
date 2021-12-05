@@ -37,12 +37,15 @@ export const COLOR_PALETTE = {
   containerOutlineColor: "#C5AE80",
 
   boardColor: "#C0CBA8",
-  boardOutlineColor: "#888E72",
+  boardOutlineColor: "#737763",
 
   execButtonColor: "#576C65",
   resetButtonColor: "#B76969",
   instructionsButtonColor: "#BE9979",
   errorsColor: "#A56D73",
+  errorsButtonColor: "#B37C7C",
+  successColor: "#8EAB73",
+  successButtonColor: "#A6BB88",
   msgColor: "#B37C7C",
   aboutBGColor: "#B5BAA0",
 
@@ -53,9 +56,9 @@ export const STYLES = {
   btnRad: 20,
   btnRadSm: 7,
   h2FontSize: 18,
-  h2Font: "Arial",
+  h2Font: "Coming Soon",
   h3FontSize: 14,
-  h3Font: "Arial"
+  h3Font: "Coming Soon"
 }
 
 export const BTN_STYLES = {
@@ -73,6 +76,40 @@ export const BTN_STYLES = {
     hover: {
       rad: STYLES.btnRad,
       fillColor: LightenDarkenColor(COLOR_PALETTE.execButtonColor, 20),
+    }
+  },
+
+  errorsContinueBtn:{
+    rad: STYLES.btnRad,
+    fillColor: COLOR_PALETTE.errorsButtonColor,
+    txt: "Try again",
+    fontSize: STYLES.h2FontSize,
+    font: STYLES.h2Font,
+    textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.errorsButtonColor, -20),
+    },
+    hover: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.errorsButtonColor, 20),
+    }
+  },
+
+  successContinueBtn:{
+    rad: STYLES.btnRad,
+    fillColor: COLOR_PALETTE.successButtonColor,
+    txt: "Off to the Next Level",
+    fontSize: STYLES.h2FontSize,
+    font: STYLES.h2Font,
+    textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.successButtonColor, -20),
+    },
+    hover: {
+      rad: STYLES.btnRad,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.successButtonColor, 20),
     }
   },
 
@@ -211,6 +248,20 @@ export const GAME_ELE = {
     fillColor: COLOR_PALETTE.errorsColor,
     outline: {
       color: LightenDarkenColor(COLOR_PALETTE.errorsColor, 20),
+      thickness: 7
+    },
+    shadow: {
+      offsetX: 40,
+      offsetY: 40,
+      color: "#6B6B6B",
+      blur: 50
+    }
+  },
+  successDialog: {
+    rad: STYLES.btnRad,
+    fillColor: COLOR_PALETTE.successColor,
+    outline: {
+      color: LightenDarkenColor(COLOR_PALETTE.successColor, 20),
       thickness: 7
     },
     shadow: {

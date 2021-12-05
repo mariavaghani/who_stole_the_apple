@@ -23,7 +23,8 @@ class Game {
       reset: false,
       execute: false,
       about: false,
-      closeAbout: false
+      closeAbout: false,
+      msgContinue: false,
     }
 
     
@@ -145,54 +146,6 @@ class Game {
     return this.tools.concat(this.inWorkArea);
   }
 
-  drawButton (ctxA, x, y, width, height, style, hovered) {
-    ctxA.save();
-    const btnFaceStyle = hovered ? style.hover : style
-    this.painter.roundRect(ctxA, x+0.008*x, y+0.008*y,
-                          width, height,
-                          style.accent);
-    this.painter.roundRect(ctxA, x, y,
-                          width, height,
-                          btnFaceStyle);
-
-    ctxA.font = `${style.fontSize}px ${style.font}`;
-    ctxA.fillStyle = style.textColor;
-    ctxA.textAlign = "center";
-    ctxA.fillText(style.txt,
-      x + width / 2,
-      y + (height + style.fontSize / 2) / 2);
-    ctxA.restore();
-  }
-
-  drawAllButtons(ctxA) {
-    // Execute button
-    this.drawButton(ctxA,
-      this.size.EXEC_X, this.size.EXEC_Y,
-      this.size.EXEC_DX, this.size.EXEC_DY,
-      BTN_STYLES.execBtn, this.buttonHoverState.execute
-      );
-
-    // Reset Button
-    this.drawButton(ctxA,
-      this.size.RESET_X, this.size.RESET_Y,
-      this.size.RESET_DX, this.size.RESET_DY,
-      BTN_STYLES.resetBtn, this.buttonHoverState.reset
-    );
-
-    // Instructions Button
-    this.drawButton(ctxA,
-      this.size.INST_X, this.size.INST_Y,
-      this.size.INST_DX, this.size.INST_DY,
-      BTN_STYLES.instBtn, this.buttonHoverState.instructions
-      );
-
-    // About Button
-    this.drawButton(ctxA,
-      this.size.ABOUT_X, this.size.ABOUT_Y,
-      this.size.ABOUT_DX, this.size.ABOUT_DY,
-      BTN_STYLES.aboutBtn, this.buttonHoverState.about
-      );
-  }
 
   resetGame(ctxS, ctxA) {
     this.board = new Board(this.sizeB, this.level);

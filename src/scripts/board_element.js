@@ -20,7 +20,7 @@ class BoardElement {
       this.cellWidth);
 
     ctxA.fillStyle = "#C0CBA8";
-    ctxA.font = "15px Arial";
+    ctxA.font = "15px Coming Soon";
     ctxA.fillText(this.name, this.x, this.y + 15);
 
   }

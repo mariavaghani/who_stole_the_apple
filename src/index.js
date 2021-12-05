@@ -37,10 +37,10 @@ window.addEventListener('DOMContentLoaded', () => {
   // console.log("All Loaded, thank you for asking");
 })
 
-// TODO: style errors modal
-// TODO: disable buttons when in errors/success dialog
+
 // TODO: make the canvas to appear in the vertical center and the footer at the bottom
 // TODO: add icons to characters
+// TODO: change button font to something better
 // TODO: make size of font responsive to the size
 
 // TODO: fix appearance of level on the title container (?)

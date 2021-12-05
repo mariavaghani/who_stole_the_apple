@@ -42,25 +42,32 @@ class GamePainter {
 
   }
 
-  printMsg(ctxA, msg) {
+  printMsg(ctxA, msg, hoverState, gameStatus) {
+    
     ctxA.save();
     ctxA.fillStyle = COLOR_PALETTE.msgColor;
     // ctxA.fillRect(this.size.dialogX, this.size.dialogY,
     //   this.size.dialogDX, this.size.dialogDY);
+    const dialogStyle = gameStatus !== "VICTORY" ? GAME_ELE.errorsDialog : GAME_ELE.successDialog
     this.roundRect(ctxA, this.size.dialogX, this.size.dialogY,
       this.size.dialogDX, this.size.dialogDY,
-      GAME_ELE.errorsDialog);
+      dialogStyle);
 
-    ctxA.font = "16px Arial";
+    ctxA.font = "16px Coming Soon";
     ctxA.textAlign = "center";
     ctxA.fillStyle = COLOR_PALETTE.containerColor;
     ctxA.fillText(msg,
       this.size.dialogX + this.size.dialogDX / 2,
       this.size.dialogY + this.size.dialogDY / 2);
 
-    ctxA.fillRect(this.size.CONT_X, this.size.CONT_Y,
-      this.size.CONT_DX, this.size.CONT_DY);
-
+    // ctxA.fillRect(this.size.CONT_X, this.size.CONT_Y,
+    //   this.size.CONT_DX, this.size.CONT_DY);
+    const btnStyle = gameStatus !== "VICTORY" ? BTN_STYLES.errorsContinueBtn : BTN_STYLES.successContinueBtn
+    this.drawButton(ctxA,
+      this.size.CONT_X, this.size.CONT_Y,
+      this.size.CONT_DX, this.size.CONT_DY,
+      btnStyle, hoverState.msgContinue
+    );
     ctxA.restore();
 
   }
@@ -87,7 +94,7 @@ class GamePainter {
     
     for (let i = 0; i < lines.length; i++) {
       const line = lines[i];
-      ctxA.font = `${lhs}px Permanent Marker`;
+      ctxA.font = `${lhs}px Coming Soon`;
       ctxA.fillText(
         line,
         this.size.aboutX + this.size.aboutDX / 2,
@@ -251,6 +258,55 @@ class GamePainter {
       this.size.WORK_X, this.size.WORK_Y,
       this.size.WORK_DX, this.size.WORK_DY, GAME_ELE.workArea)
 
+  }
+
+  drawButton (ctxA, x, y, width, height, style, hovered) {
+    ctxA.save();
+    const btnFaceStyle = hovered ? style.hover : style
+    this.roundRect(ctxA, x+0.008*x, y+0.008*y,
+                          width, height,
+                          style.accent);
+    this.roundRect(ctxA, x, y,
+                          width, height,
+                          btnFaceStyle);
+
+    ctxA.font = `${style.fontSize}px ${style.font}`;
+    ctxA.fillStyle = style.textColor;
+    ctxA.textAlign = "center";
+    ctxA.fillText(style.txt,
+      x + width / 2,
+      y + (height + style.fontSize / 2) / 2);
+    ctxA.restore();
+  }
+
+  drawAllButtons(ctxA, hoverState) {
+    // Execute button
+    this.drawButton(ctxA,
+      this.size.EXEC_X, this.size.EXEC_Y,
+      this.size.EXEC_DX, this.size.EXEC_DY,
+      BTN_STYLES.execBtn, hoverState.execute
+      );
+
+    // Reset Button
+    this.drawButton(ctxA,
+      this.size.RESET_X, this.size.RESET_Y,
+      this.size.RESET_DX, this.size.RESET_DY,
+      BTN_STYLES.resetBtn, hoverState.reset
+    );
+
+    // Instructions Button
+    this.drawButton(ctxA,
+      this.size.INST_X, this.size.INST_Y,
+      this.size.INST_DX, this.size.INST_DY,
+      BTN_STYLES.instBtn, hoverState.instructions
+      );
+
+    // About Button
+    this.drawButton(ctxA,
+      this.size.ABOUT_X, this.size.ABOUT_Y,
+      this.size.ABOUT_DX, this.size.ABOUT_DY,
+      BTN_STYLES.aboutBtn, hoverState.about
+      );
   }
 
   drawGridOnGameArea(ctxS) {

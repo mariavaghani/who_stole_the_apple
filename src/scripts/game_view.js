@@ -83,7 +83,7 @@ class GameView {
     // Search if there are any tool that are being dragged
     this.allTools().forEach(tool => {
 
-      if (this.size.mouseOverTool(this.mouseX, this.mouseY, tool)) {
+      if (this.size.mouseOverTool(this.mouseX, this.mouseY, tool) && this.board.status === "OK") {
         tool.tempX = tool.x;
         tool.tempY = tool.y;
         tool.isDragging = true;
@@ -103,7 +103,7 @@ class GameView {
         tool.tempY += e.movementY;
         hoverOverTool = true
       } 
-      if (this.size.mouseOverTool (this.mouseX, this.mouseY, tool) && !tool.isDragging) {
+      if (this.size.mouseOverTool (this.mouseX, this.mouseY, tool) && !tool.isDragging && this.board.status === "OK") {
         tool.hovered = true;
         hoverOverTool = true;
       } else {
@@ -113,7 +113,7 @@ class GameView {
     
     
 
-    if (this.size.overInstructions(this.mouseX, this.mouseY) && !this.showAboutModal) {
+    if (this.size.overInstructions(this.mouseX, this.mouseY) && !this.showAboutModal && this.board.status === "OK") {
       this.showInstructions = true;
       this.buttonHoverState.instructions = true
       hoverOverButton = true;
@@ -122,7 +122,7 @@ class GameView {
       this.buttonHoverState.instructions = false
     }
 
-    if (this.size.execButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
+    if (this.size.execButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal && this.board.status === "OK") {
       this.buttonHoverState.execute = true;
       hoverOverButton = true;
 
@@ -130,14 +130,14 @@ class GameView {
       this.buttonHoverState.execute = false
     }
     
-    if (this.size.resetButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
+    if (this.size.resetButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal && this.board.status === "OK") {
       this.buttonHoverState.reset = true;
       hoverOverButton = true;
 
     } else {
       this.buttonHoverState.reset = false
     }
-    if (this.size.aboutButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
+    if (this.size.aboutButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal && this.board.status === "OK") {
       this.buttonHoverState.about = true
       hoverOverButton = true;
 
@@ -151,6 +151,14 @@ class GameView {
 
     } else {
       this.buttonHoverState.closeAbout = false
+    }
+
+    if (this.size.contButtonClicked(this.mouseX, this.mouseY)  && this.board.status !== "OK") {
+      this.buttonHoverState.msgContinue = true;
+      hoverOverButton = true;
+
+    } else {
+      this.buttonHoverState.msgContinue = false
     }
 
     if (hoverOverButton || hoverOverTool) {
@@ -203,7 +211,7 @@ class GameView {
 
       this.ctxA.clearRect(0, 0, this.game.size.DIM_X, this.game.size.DIM_Y);
 
-      this.game.drawAllButtons(this.ctxA, this.game.buttonHoverState);
+      this.game.painter.drawAllButtons(this.ctxA, this.game.buttonHoverState);
 
       this.game.drawBoard(this.ctxA);
       // Draw tools
@@ -211,7 +219,7 @@ class GameView {
 
 
       if (this.game.board.status !== "OK") {
-        this.game.painter.printMsg(this.ctxA, this.game.board.msg);
+        this.game.painter.printMsg(this.ctxA, this.game.board.msg, this.game.buttonHoverState, this.game.board.status);
       }
       
       if (this.game.showInstructions) {
