@@ -33,10 +33,10 @@ class GamePainter {
     // this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
-    // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
+    this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
   
     // Draw Grid in work area box
-    // this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
+    this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
 
     ctxS.restore();
 
@@ -149,7 +149,7 @@ class GamePainter {
     this.printText(ctxS, 
       `Level: ${level}`,
       this.size.TITLE_DY * 0.06,
-      this.size.TITLE_Y + this.size.TITLE_DY * 0.3
+      this.size.TITLE_Y + this.size.TITLE_DY * 0.35
     );
 
 

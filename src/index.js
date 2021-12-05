@@ -17,7 +17,10 @@ window.addEventListener('DOMContentLoaded', () => {
   canvasActive.height = Math.min(document.documentElement.clientHeight-70, 600);
   canvasStatic.width = Math.min(document.documentElement.clientWidth-70, 1200);
   canvasActive.width = Math.min(document.documentElement.clientWidth-70, 1200);
-  
+  // window.addEventListener('resize', () => {
+  //   console.log(`document.documentElement.clientWidth: `, document.documentElement.clientWidth);
+
+  // });
   const sizeG = new GameSizes(canvasStatic);
   const sizeB = new BoardSizes(canvasStatic);
   
@@ -34,6 +37,9 @@ window.addEventListener('DOMContentLoaded', () => {
   // console.log("All Loaded, thank you for asking");
 })
 
-// TODO: add drop shadow under board, and components
 // TODO: add back highlight to tools on hover
-// TODO: add dynamic resize on window resize
+// TODO: fix appearance of level on the title container
+// TODO: style errors modal
+// TODO: make the canvas to appear in the vertical center and the footer at the bottom
+// TODO: add icons to characters
+// TODO: add dynamic resize on window resize    

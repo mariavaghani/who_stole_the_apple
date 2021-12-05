@@ -39,16 +39,32 @@ class GameSizes {
 
     // Work Area Grid ============================
     // X dir
-    this.borderX = this.TOOL_DX / 20;
-    this.width = this.TOOL_DX - 2 * this.borderX;
+    // console.log(`this.TOOL_DX: `, this.TOOL_DX);
     this.cols = 6;
-    this.cellWidth = this.width / this.cols;
-    
-    // Y dir
-    this.borderY = this.TOOL_DY / 15;
-    this.height = this.TOOL_DY - 2 * this.borderY;
     this.rows = 4;
-    this.cellHeight = this.height / this.rows;
+    if (this.TOOL_DY >= 0.6 * this.TOOL_DX) {
+      this.borderX = this.TOOL_DX / 25;
+      this.width = this.TOOL_DX - 2 * this.borderX;
+      this.cellWidth = this.width / this.cols;
+      
+      // Y dir
+      
+      // this.borderY = this.TOOL_DY / 15;
+      this.borderY = (this.TOOL_DY - this.rows * this.cellWidth) / 2;
+      this.height = this.TOOL_DY - 2 * this.borderY;//this.TOOL_DY - 2 * this.borderY;
+      this.cellHeight = this.cellWidth;//this.height / this.rows;
+    } else {
+      this.borderY = this.TOOL_DY / 25;
+      this.height = this.TOOL_DY - 2 * this.borderY;
+      this.cellHeight = this.height / this.rows;
+      
+      // Y dir
+      
+      // this.borderY = this.TOOL_DY / 15;
+      this.borderX = (this.TOOL_DX - this.cols * this.cellHeight) / 2;
+      this.width = this.TOOL_DX - 2 * this.borderX;//this.TOOL_DY - 2 * this.borderY;
+      this.cellWidth = this.cellHeight;//this.height / this.rows;
+    }
 
     this.wOrigX = this.WORK_X + this.borderX;
     this.wOrigY = this.WORK_Y + this.borderY;

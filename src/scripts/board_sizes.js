@@ -14,10 +14,6 @@ class BoardSizes {
     this.BOARD_DY = this.DIM_Y * (66 / gridBase);
 
     // Grid
-    console.log(`this.BOARD_X: `, this.BOARD_X);
-    console.log(`this.BOARD_DX: `, this.BOARD_DX);
-    console.log(`this.BOARD_Y: `, this.BOARD_Y);
-    console.log(`this.BOARD_DY: `, this.BOARD_DY);
     if (this.BOARD_DX <= this.BOARD_DY) {
       this.borderX = this.BOARD_DX / 20;
       this.boardWidth = this.BOARD_DX - 2 * this.borderX;
