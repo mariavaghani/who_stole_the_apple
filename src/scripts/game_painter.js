@@ -1,44 +1,54 @@
 import {COLOR_PALETTE, GAME_ELE} from "./styling";
 // import img from "../assets"
 class GamePainter {
-  constructor (ctxS, size, board, level) {
-
+  constructor (ctxS, size, board, level, canvas) {
+    this.ctxS = ctxS;
+    this.canvas = canvas;
+    this.board = board;
+    this.level = level;
     this.size = size;
     // this.ctxS = ctxS;
     this.printText = this.printText.bind(this.size);
-
+    this.drawGame();
+    this.canvas.addEventListener("resize", () => {
+      console.log('game painter log');
+      
+      this.drawGame();
+    })
+  }
+    drawGame () {
     // Creates non-level-specific elements on the screen
     // Clear the game area
-    ctxS.clearRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
-    ctxS.save();
+    this.ctxS.clearRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
+    this.ctxS.save();
 
     // Draw the background
-    ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
-    ctxS.fillRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
+    this.ctxS.fillStyle = COLOR_PALETTE.backgroundColor;
+    this.ctxS.fillRect(0, 0, this.size.DIM_X, this.size.DIM_Y);
 
     // Draw the Name of the game container
-    this.drawNameContainer(ctxS, level);
+    this.drawNameContainer(this.ctxS, this.level);
 
 
     // Draw the toolbox container
-    this.drawToolBoxContainer(ctxS);
+    this.drawToolBoxContainer(this.ctxS);
 
     // Draw the Work Area container
-    this.drawWorkArea(ctxS);
+    this.drawWorkArea(this.ctxS);
 
     // Draw the Board container
-    board.drawStatic(ctxS, this.roundRect);
+    this.board.drawStatic(this.ctxS, this.roundRect);
 
     // Draw grid on top
     // this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
-    this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
+    this.drawToolGrid(this.ctxS, this.size.tOrigX, this.size.tOrigY);
   
     // Draw Grid in work area box
-    this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
+    this.drawToolGrid(this.ctxS, this.size.wOrigX, this.size.wOrigY);
 
-    ctxS.restore();
+    this.ctxS.restore();
 
   }
 

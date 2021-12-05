@@ -6,7 +6,8 @@ class GameView {
     this.inExecution = false;
     this.ctxA = this.createHiResAwareCtx(canvasActive);
     this.ctxS = this.createHiResAwareCtx(canvasStatic);
-    
+    this.canvasA = canvasActive;
+    this.canvasS = canvasStatic;
     // // Bind event handlers to the game
     this.mouseDownHandler = this.mouseDownHandler.bind(this.game);
     this.mouseMoveHandler = this.mouseMoveHandler.bind(this.game);
@@ -39,6 +40,13 @@ class GameView {
     canvasA.addEventListener("mousemove", this.mouseMoveHandler);
     canvasA.addEventListener("mouseup", this.mouseUpHandler);
     canvasA.addEventListener("click", this.mouseClickHandler);
+    canvasA.addEventListener('resize', () => {
+      console.log(`document.documentElement.clientWidth: `, document.documentElement.clientWidth);
+      // this.canvas.width = Math.min(document.documentElement.clientWidth-70, 1200);
+      // this.canvas.width = Math.min(document.documentElement.clientWidth-70, 1200);
+      this.ctxA = this.createHiResAwareCtx(this.canvasA);
+      this.ctxS = this.createHiResAwareCtx(this.canvasS);
+    });
   }
 
   mouseClickHandler(e) {
@@ -178,8 +186,8 @@ class GameView {
 
   }
 
-  start () {
-    this.game.resetGame(this.ctxS, this.ctxA);
+  start (canvas) {
+    this.game.resetGame(this.ctxS, this.ctxA, canvas);
 
     let gameAnimationStep = () => {
 

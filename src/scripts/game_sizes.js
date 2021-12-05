@@ -1,12 +1,24 @@
 class GameSizes {
   constructor(canvasS) {
-    this.DIM_X = canvasS.width;
-    this.DIM_Y = canvasS.height;
+    this.canvas = canvasS;
+    this.sizeGame();
+    this.canvas.addEventListener('resize', () => {
+      console.log(`document.documentElement.clientWidth: `, document.documentElement.clientWidth);
+      // this.canvas.width = Math.min(document.documentElement.clientWidth-70, 1200);
+      // this.canvas.width = Math.min(document.documentElement.clientWidth-70, 1200);
+      this.sizeGame();
+    });
 
+  }
+  sizeGame () {
+    this.DIM_X = this.canvas.width;
+    this.DIM_Y = this.canvas.height;
+    console.log(`this.DIM_X: `, this.DIM_X);
+    
     
     const gridBase = 80;
     this.gridBase = gridBase;
-    const rect = canvasS.getBoundingClientRect();
+    const rect = this.canvas.getBoundingClientRect();
 
     this.origX = rect.x;
     this.origY = rect.y;

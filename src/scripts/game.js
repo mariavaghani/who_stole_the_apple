@@ -6,7 +6,6 @@ import GamePainter from "./game_painter";
 
 class Game {
   constructor (level, sizeG, sizeB) {
-
     this.size = sizeG;
     this.sizeB = sizeB;
     // Level that this instance is rendering
@@ -193,11 +192,11 @@ class Game {
       );
   }
 
-  resetGame(ctxS, ctxA) {
+  resetGame(ctxS, ctxA, canvas) {
     this.board = new Board(this.sizeB, this.level);
 
     // this.painter = new GamePainter(ctxS, this.size, this.board);
-    this.resetStaticGameSetup(ctxS);
+    this.resetStaticGameSetup(ctxS, canvas);
     this.tools = this.resetToolBox(this.level);
     this.populateToolBox(ctxA)
     this.inWorkArea = [];
@@ -261,9 +260,9 @@ class Game {
   
   }
 
-  resetStaticGameSetup(ctxS) {
+  resetStaticGameSetup(ctxS, canvas) {
 
-    this.painter = new GamePainter(ctxS, this.size, this.board, this.level);
+    this.painter = new GamePainter(ctxS, this.size, this.board, this.level, canvas);
 
   }
 

@@ -8,19 +8,43 @@ window.addEventListener('DOMContentLoaded', () => {
   let canvasStatic = document.getElementById('game-canvas-static');
   let canvasActive = document.getElementById('game-canvas-active');
   let displayElement = document.getElementById('dynamic-height');
+  let gameHeight = Math.min(document.documentElement.clientHeight-70, 600);
+  let gameWidth = Math.min(document.documentElement.clientWidth-70, 1200);
 
-  displayElement.style.height = `${Math.min(document.documentElement.clientHeight-70, 600)}px`;
-  displayElement.style.width = `${Math.min(document.documentElement.clientWidth-70, 1200)}px`;
+  displayElement.style.height = `${gameHeight}px`;
+  displayElement.style.width = `${gameWidth}px`;
 
 
-  canvasStatic.height = Math.min(document.documentElement.clientHeight-70, 600);
+  canvasStatic.height = gameHeight;
+  canvasStatic.width = gameWidth;
+
+  canvasStatic.style.height = `${gameHeight}`;
+  canvasStatic.style.width = `${gameWidth}px`;
+
   canvasActive.height = Math.min(document.documentElement.clientHeight-70, 600);
-  canvasStatic.width = Math.min(document.documentElement.clientWidth-70, 1200);
   canvasActive.width = Math.min(document.documentElement.clientWidth-70, 1200);
-  // window.addEventListener('resize', () => {
-  //   console.log(`document.documentElement.clientWidth: `, document.documentElement.clientWidth);
 
-  // });
+  canvasActive.style.height = `${gameHeight}`;
+  canvasActive.style.width = `${gameWidth}`;
+
+  window.addEventListener('resize', (e) => {
+    gameHeight = Math.min(document.documentElement.clientHeight-70, 600);
+    gameWidth = Math.min(document.documentElement.clientWidth-70, 1200);
+
+    displayElement.style.height = `${gameHeight}px`;
+    displayElement.style.width = `${gameWidth}px`;
+    canvasStatic.height = gameHeight;
+    canvasStatic.width = gameWidth;
+
+    canvasStatic.style.height = `${gameHeight}px`;
+    canvasStatic.style.width = `${gameWidth}px`;
+
+    canvasActive.height = gameHeight;
+    canvasActive.width = gameWidth;
+
+    canvasActive.style.height = `${gameHeight}px`;
+    canvasActive.style.width = `${gameWidth}px`;
+  });
   const sizeG = new GameSizes(canvasStatic);
   const sizeB = new BoardSizes(canvasStatic);
   
@@ -31,7 +55,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const gameView = new GameView(game, canvasStatic, canvasActive); 
   
 
-  gameView.start()
+  gameView.start(canvasStatic)
 
 
   // console.log("All Loaded, thank you for asking");

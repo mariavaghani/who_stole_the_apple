@@ -1,7 +1,18 @@
 class BoardSizes {
   constructor(canvasS) {
-    this.DIM_X = canvasS.width;
-    this.DIM_Y = canvasS.height;
+    this.canvas = canvasS;
+    this.sizeBoard();
+    this.canvas.addEventListener('resize', () => {
+      console.log(`document.documentElement.clientWidth: `, document.documentElement.clientWidth);
+      // this.canvas.width = Math.min(document.documentElement.clientWidth-70, 1200);
+      // this.canvas.width = Math.min(document.documentElement.clientWidth-70, 1200);
+      this.sizeBoard();
+    });
+
+  }
+  sizeBoard () {
+    this.DIM_X = this.canvas.width;
+    this.DIM_Y = this.canvas.height;
 
 
     const gridBase = 80;
