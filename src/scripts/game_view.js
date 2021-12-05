@@ -4,6 +4,7 @@ class GameView {
   constructor(game, canvasStatic, canvasActive) {
     this.game = game;
     this.inExecution = false;
+    
     this.ctxA = this.createHiResAwareCtx(canvasActive);
     this.ctxS = this.createHiResAwareCtx(canvasStatic);
     
@@ -92,21 +93,27 @@ class GameView {
 
   mouseMoveHandler(e) {
     let hoverOverButton = false;
+    let hoverOverTool = false;
+    this.mouseX = e.x - this.size.origX;
+    this.mouseY = e.y - this.size.origY;
+
     this.allTools().forEach(tool => {
       if (tool.isDragging) {
         tool.tempX += e.movementX;
         tool.tempY += e.movementY;
-
+        hoverOverTool = true
+      } 
+      if (this.size.mouseOverTool (this.mouseX, this.mouseY, tool) && !tool.isDragging) {
+        tool.hovered = true;
+        hoverOverTool = true;
+      } else {
+        tool.hovered = false;
       }
     });
     
     
-    this.mouseX = e.x - this.size.origX;
-    this.mouseY = e.y - this.size.origY;
 
     if (this.size.overInstructions(this.mouseX, this.mouseY) && !this.showAboutModal) {
-      // document.body.style.cursor = "pointer";
-      // console.log("Showing Instructions!!")
       this.showInstructions = true;
       this.buttonHoverState.instructions = true
       hoverOverButton = true;
@@ -116,7 +123,6 @@ class GameView {
     }
 
     if (this.size.execButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
-      // document.body.style.cursor = "pointer";
       this.buttonHoverState.execute = true;
       hoverOverButton = true;
 
@@ -126,21 +132,33 @@ class GameView {
     
     if (this.size.resetButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
       this.buttonHoverState.reset = true;
-      // document.body.style.cursor = "pointer";
       hoverOverButton = true;
 
     } else {
       this.buttonHoverState.reset = false
     }
     if (this.size.aboutButtonClicked(this.mouseX, this.mouseY) && !this.showAboutModal) {
-      // document.body.style.cursor = "pointer";
       this.buttonHoverState.about = true
       hoverOverButton = true;
 
     } else {
       this.buttonHoverState.about = false
     }
-    hoverOverButton ? document.body.style.cursor = "pointer" : document.body.style.cursor = "default"
+
+    if (this.size.closeAboutButtonClicked(this.mouseX, this.mouseY) && this.showAboutModal) {
+      this.buttonHoverState.closeAbout = true;
+      hoverOverButton = true;
+
+    } else {
+      this.buttonHoverState.closeAbout = false
+    }
+
+    if (hoverOverButton || hoverOverTool) {
+      if (hoverOverButton) document.body.style.cursor = "pointer"
+      if (hoverOverTool) document.body.style.cursor = "grab"
+    } else {
+      document.body.style.cursor = "default"
+    }
   }
 
   mouseUpHandler(e) {
@@ -201,7 +219,7 @@ class GameView {
       }
       if (this.game.showAboutModal) {
         
-        this.game.painter.drawAboutModal(this.ctxA);
+        this.game.painter.drawAboutModal(this.ctxA, this.game.buttonHoverState.closeAbout);
       }
 
       requestAnimationFrame(gameAnimationStep);

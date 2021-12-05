@@ -7,6 +7,7 @@ class Tool {
     this.method = method;
     this.icon = icon;
     this.isDragging = false;
+    this.hovered = false;
   }
 
   size(sideX, sideY) {
@@ -23,7 +24,7 @@ class Tool {
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
     ctxA.font = "12px Arial";
-    ctxA.fillText(this.name, this.x, this.y + 5);
+    // ctxA.fillText(this.name, this.x, this.y + 5);
   }
 
   drawWhileDragging(ctxA, x, y) {
@@ -35,7 +36,23 @@ class Tool {
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
     ctxA.font = "12px Arial";
-    ctxA.fillText(this.name, this.tempX, this.tempY+5);
+    // ctxA.fillText(this.name, this.tempX, this.tempY+5);
+  }
+  drawWhileHovered(ctxA, x, y) {
+    this.x = x;
+    this.y = y;
+    ctxA.save();
+    ctxA.shadowOffsetX = 0;
+    ctxA.shadowOffsetY = 0;
+    ctxA.shadowColor = "white";
+    ctxA.shadowBlur = 50;
+
+    ctxA.drawImage(this.icon, this.x, this.y, this.sideX, this.sideY);
+    // ctxA.fillStyle = this.icon;
+    // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
+    ctxA.font = "12px Arial";
+    ctxA.fillText(this.name, this.x, this.y+2);
+    ctxA.restore();
   }
 
   placeTo(pos, origX, origY) {

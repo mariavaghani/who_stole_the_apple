@@ -23,6 +23,7 @@ class Game {
       reset: false,
       execute: false,
       about: false,
+      closeAbout: false
     }
 
     
@@ -278,7 +279,12 @@ class Game {
         tool.drawWhileDragging(ctxA,
           tool.tempX, tool.tempY);
       } else {
-        tool.draw(ctxA, tool.x, tool.y);
+        if (tool.hovered) {
+          tool.drawWhileHovered(ctxA, tool.x, tool.y)
+        } else {
+
+          tool.draw(ctxA, tool.x, tool.y);
+        }
       }
     });
   }

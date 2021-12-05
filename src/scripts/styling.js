@@ -42,6 +42,7 @@ export const COLOR_PALETTE = {
   execButtonColor: "#576C65",
   resetButtonColor: "#B76969",
   instructionsButtonColor: "#BE9979",
+  errorsColor: "#A56D73",
   msgColor: "#B37C7C",
   aboutBGColor: "#B5BAA0",
 
@@ -123,7 +124,23 @@ export const BTN_STYLES = {
       rad: STYLES.btnRadSm,
       fillColor: LightenDarkenColor(COLOR_PALETTE.instructionsButtonColor, 20),
     },
-  }
+  },
+  closeAboutBtn: {
+    // rad: STYLES.btnRadSm,
+    fillColor: COLOR_PALETTE.backgroundColor,
+    // txt: "About",
+    // fontSize: STYLES.h3FontSize,
+    // font: STYLES.h3Font,
+    // textColor: COLOR_PALETTE.containerColor,
+    accent: {
+      rad: STYLES.btnRadSm,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.instructionsButtonColor, -20),
+    },
+    hover: {
+      // rad: STYLES.btnRadSm,
+      fillColor: LightenDarkenColor(COLOR_PALETTE.backgroundColor, -20),
+    },
+  },
 
 }
 
@@ -155,7 +172,8 @@ export const GAME_ELE = {
       offsetY: 0,
       color: "#6B6B6B",
       blur: 50
-    }
+    },
+  
   },
 
   board: {
@@ -186,6 +204,21 @@ export const GAME_ELE = {
       color: "#6B6B6B",
       blur: 50
     }
-  }
+  },
+
+  errorsDialog: {
+    rad: STYLES.btnRad,
+    fillColor: COLOR_PALETTE.errorsColor,
+    outline: {
+      color: LightenDarkenColor(COLOR_PALETTE.errorsColor, 20),
+      thickness: 7
+    },
+    shadow: {
+      offsetX: 40,
+      offsetY: 40,
+      color: "#6B6B6B",
+      blur: 50
+    }
+  },
 }
 

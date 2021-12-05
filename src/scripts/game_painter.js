@@ -1,4 +1,4 @@
-import {COLOR_PALETTE, GAME_ELE} from "./styling";
+import {COLOR_PALETTE, GAME_ELE, BTN_STYLES} from "./styling";
 // import img from "../assets"
 class GamePainter {
   constructor (ctxS, size, board, level) {
@@ -33,10 +33,10 @@ class GamePainter {
     // this.drawGridOnGameArea(ctxS);
 
     // Draw Grid in tool box
-    this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
+    // this.drawToolGrid(ctxS, this.size.tOrigX, this.size.tOrigY);
   
     // Draw Grid in work area box
-    this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
+    // this.drawToolGrid(ctxS, this.size.wOrigX, this.size.wOrigY);
 
     ctxS.restore();
 
@@ -45,8 +45,11 @@ class GamePainter {
   printMsg(ctxA, msg) {
     ctxA.save();
     ctxA.fillStyle = COLOR_PALETTE.msgColor;
-    ctxA.fillRect(this.size.dialogX, this.size.dialogY,
-      this.size.dialogDX, this.size.dialogDY);
+    // ctxA.fillRect(this.size.dialogX, this.size.dialogY,
+    //   this.size.dialogDX, this.size.dialogDY);
+    this.roundRect(ctxA, this.size.dialogX, this.size.dialogY,
+      this.size.dialogDX, this.size.dialogDY,
+      GAME_ELE.errorsDialog);
 
     ctxA.font = "16px Arial";
     ctxA.textAlign = "center";
@@ -62,7 +65,7 @@ class GamePainter {
 
   }
 
-  drawAboutModal(ctxA) {
+  drawAboutModal(ctxA, hoveringOverCloseBtn) {
     
     ctxA.save();
     ctxA.fillStyle = COLOR_PALETTE.aboutBGColor;
@@ -93,11 +96,9 @@ class GamePainter {
         
     }
       
-    // ctxA.fillRect(this.size.CLOSE_ABOUT_X, this.size.CLOSE_ABOUT_Y,
-    //   this.size.CLOSE_ABOUT_DX, this.size.CLOSE_ABOUT_DY
-    // );
     ctxA.font=`${this.size.CLOSE_ABOUT_DY}px FontAwesome`;
-    ctxA.fillStyle = COLOR_PALETTE.backgroundColor;
+    
+    hoveringOverCloseBtn ? ctxA.fillStyle = BTN_STYLES.closeAboutBtn.fillColor : ctxA.fillStyle = BTN_STYLES.closeAboutBtn.hover.fillColor;
       
       ctxA.fillText(
             "\uf057",
