@@ -38,9 +38,7 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 
-// TODO: make the canvas to appear in the vertical center and the footer at the bottom
 // TODO: add icons to characters
-// TODO: change button font to something better
 // TODO: make size of font responsive to the size
 
 // TODO: fix appearance of level on the title container (?)
