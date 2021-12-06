@@ -1,4 +1,4 @@
-// import COLOR_PALETTE from './styling';
+import { COLOR_PALETTE } from './styling';
 
 
 class Tool {
@@ -16,15 +16,16 @@ class Tool {
   }
 
   draw(ctxA, x, y) {
-
+    ctxA.save();
     this.x = x;
     this.y = y;
 
     ctxA.drawImage(this.icon, this.x, this.y, this.sideX, this.sideY);
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.x, this.y, this.sideX, this.sideY);
-    ctxA.font = "12px Coming Soon";
+    // ctxA.font = "12px Coming Soon";
     // ctxA.fillText(this.name, this.x, this.y + 5);
+    ctxA.restore();
   }
 
   drawWhileDragging(ctxA, x, y) {
@@ -35,7 +36,7 @@ class Tool {
     ctxA.drawImage(this.icon, this.tempX, this.tempY, this.sideX, this.sideY);
     // ctxA.fillStyle = this.icon;
     // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
-    ctxA.font = "12px Coming Soon";
+    // ctxA.font = "12px Coming Soon";
     // ctxA.fillText(this.name, this.tempX, this.tempY+5);
   }
   drawWhileHovered(ctxA, x, y) {
@@ -48,9 +49,11 @@ class Tool {
     ctxA.shadowBlur = 50;
 
     ctxA.drawImage(this.icon, this.x, this.y, this.sideX, this.sideY);
-    // ctxA.fillStyle = this.icon;
+    ctxA.fillStyle = COLOR_PALETTE.boardOutlineColor;
     // ctxA.fillRect(this.tempX, this.tempY, this.sideX, this.sideY);
-    ctxA.font = "12px Coming Soon";
+    const fontSize = Math.max(11, 0.2 * this.sideX)
+
+    ctxA.font = `${fontSize}px Coming Soon`;
     ctxA.fillText(this.name, this.x, this.y+2);
     ctxA.restore();
   }

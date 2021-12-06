@@ -10,6 +10,7 @@ class Board {
     this.char = LEVELS[level].character;
     this.escape = LEVELS[level].escape;
     this.collectables = LEVELS[level].collectables.slice();
+    
     this.char.reset();
     this.populateBoard(level);
     

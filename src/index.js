@@ -38,8 +38,5 @@ window.addEventListener('DOMContentLoaded', () => {
 })
 
 
-// TODO: add icons to characters
-// TODO: make size of font responsive to the size
 
-// TODO: fix appearance of level on the title container (?)
 // TODO: BONUS add dynamic resize on window resize    

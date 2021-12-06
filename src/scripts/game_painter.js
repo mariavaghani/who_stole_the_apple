@@ -52,8 +52,9 @@ class GamePainter {
     this.roundRect(ctxA, this.size.dialogX, this.size.dialogY,
       this.size.dialogDX, this.size.dialogDY,
       dialogStyle);
-
-    ctxA.font = "16px Coming Soon";
+    const fontSize = Math.max(11, 0.08 * this.size.dialogDY)
+    
+    ctxA.font = `${fontSize}px Coming Soon`;
     ctxA.textAlign = "center";
     ctxA.fillStyle = COLOR_PALETTE.containerColor;
     ctxA.fillText(msg,
@@ -79,8 +80,8 @@ class GamePainter {
     this.roundRect(ctxA, this.size.aboutX, this.size.aboutY,
       this.size.aboutDX, this.size.aboutDY,
       GAME_ELE.aboutDialog);
-    const lh = 42;
-    const lhs = 18;
+    const lh = Math.max(14, 0.12 * this.size.aboutDY);
+    const lhs = Math.max(11, 0.07 * this.size.aboutDY);
     ctxA.font = `${lh}px Permanent Marker`;
     ctxA.textAlign = "center";
     ctxA.fillStyle = COLOR_PALETTE.containerColor;
@@ -119,10 +120,10 @@ class GamePainter {
   drawInstructionsContainer (ctxA) {
 
     ctxA.save();
-
+    
     let drawing = new Image();
     drawing.src = "./src/assets/instructions-overlay.png"; // can also be a remote URL e.g. http://
-    ctxA.drawImage(drawing, 0, this.size.origY, this.size.DIM_X, this.size.DIM_Y);
+    ctxA.drawImage(drawing, 0, 0, this.size.DIM_X, this.size.DIM_Y);
    
     ctxA.restore();
   }
@@ -147,16 +148,18 @@ class GamePainter {
       }
       
       // ctxS.drawImage(gameLogo, this.size.TITLE_X, this.size.TITLE_Y, 200, 200);
-      const that = this.size;
+      // const that = this.size;
+      const bigFontSize = Math.max(14, this.size.TITLE_DY * 0.1);
+      const smFontSize = Math.max(11, this.size.TITLE_DY * 0.06)
     const titleOffset = Math.max(this.size.TITLE_DX * 0.55, this.size.TITLE_DY * 0.25)
     this.printText(ctxS, 
       "Who Stole/nThe Apple",
-      this.size.TITLE_DY * 0.1,
+      bigFontSize,
       titleOffset
     );
     this.printText(ctxS, 
       `Level: ${level}`,
-      this.size.TITLE_DY * 0.06,
+      smFontSize,
       this.size.TITLE_Y + this.size.TITLE_DY * 0.35
     );
 
@@ -179,10 +182,11 @@ class GamePainter {
   }
 
   drawToolBoxContainer(ctxS) {
+    ctxS.save();
     this.roundRect(ctxS, this.size.TOOL_X, this.size.TOOL_Y,
       this.size.TOOL_DX, this.size.TOOL_DY,
       GAME_ELE.workArea);
-
+    ctxS.restore();
   }
 
   roundRect (ctx, x, y, xd, yd, options) {
@@ -269,13 +273,13 @@ class GamePainter {
     this.roundRect(ctxA, x, y,
                           width, height,
                           btnFaceStyle);
-
-    ctxA.font = `${style.fontSize}px ${style.font}`;
+    const btnFontSize = Math.max(11, style.fontSize)
+    ctxA.font = `${btnFontSize}px ${style.font}`;
     ctxA.fillStyle = style.textColor;
     ctxA.textAlign = "center";
     ctxA.fillText(style.txt,
       x + width / 2,
-      y + (height + style.fontSize / 2) / 2);
+      y + (height + btnFontSize / 2) / 2);
     ctxA.restore();
   }
 

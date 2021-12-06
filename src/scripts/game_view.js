@@ -47,19 +47,19 @@ class GameView {
     this.mouseX = e.x - this.game.size.origX;
     this.mouseY = e.y - this.game.size.origY;
 
-    if (this.game.size.resetButtonClicked(this.mouseX, this.mouseY)) {
+    if (this.game.size.resetButtonClicked(this.mouseX, this.mouseY) && !this.inExecution && !this.game.showAboutModal) {
       // console.log("Reset!!")
       this.game.resetGame(this.ctxS, this.ctxA);
     }
 
-    if (this.game.size.execButtonClicked(this.mouseX, this.mouseY) && !this.inExecution) {
+    if (this.game.size.execButtonClicked(this.mouseX, this.mouseY) && !this.inExecution && !this.game.showAboutModal) {
       // console.log("Executing!!")
       
       this.inExecution = true;
       this.game.executeWorkingTools();
     }
 
-    if (this.game.size.aboutButtonClicked(this.mouseX, this.mouseY)) {
+    if (this.game.size.aboutButtonClicked(this.mouseX, this.mouseY) && !this.inExecution) {
       this.game.showAboutModal = true;
     }
     if (this.game.size.closeAboutButtonClicked(this.mouseX, this.mouseY) && this.game.showAboutModal) {

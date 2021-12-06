@@ -1,8 +1,8 @@
 import BoardElement from "./board_element";
 
 class Character extends BoardElement{
-  constructor(name, pos) {
-    super(name, pos);
+  constructor(name, pos, icon) {
+    super(name, pos, icon);
     this.orig = pos;
     this.bag = [];
   }
